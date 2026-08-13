@@ -3,667 +3,1040 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>viii.hairstylist</title>
+<meta name="description" content="VIII.HAIRSTYLIST — personal hairstylist in Prague">
+<title>VIII.HAIRSTYLIST — Personal Hairstylist</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet">
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@500;600&display=swap');
-
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+:root{
+    --bg:#0b0b0b;
+    --bg2:#111111;
+    --text:#f1eee8;
+    --muted:#898783;
+    --line:rgba(255,255,255,.12);
+    --soft:rgba(255,255,255,.06);
+    --white:#f4f1eb;
+    --black:#090909;
+    --serif:"Playfair Display",serif;
+    --sans:"DM Sans",sans-serif;
 }
 
-html {
-    scroll-behavior: smooth;
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
 }
 
-body {
-    background: #0b0b0b;
-    color: #f3f0eb;
-    font-family: 'Inter', sans-serif;
-    overflow-x: hidden;
+html{
+    scroll-behavior:smooth;
 }
 
-body::before {
-    content: "";
-    position: fixed;
-    width: 500px;
-    height: 500px;
-    background: radial-gradient(circle, rgba(255,255,255,.045), transparent 70%);
-    top: -200px;
-    left: -150px;
-    pointer-events: none;
-    z-index: -1;
+body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--sans);
+    overflow-x:hidden;
 }
 
-body::after {
-    content: "";
-    position: fixed;
-    width: 500px;
-    height: 500px;
-    background: radial-gradient(circle, rgba(255,255,255,.03), transparent 70%);
-    bottom: -250px;
-    right: -150px;
-    pointer-events: none;
-    z-index: -1;
+body.loading{
+    overflow:hidden;
 }
 
-a {
-    color: inherit;
-    text-decoration: none;
+a{
+    color:inherit;
+    text-decoration:none;
 }
 
 button,
 input,
-select,
-textarea {
-    font-family: inherit;
+textarea,
+select{
+    font:inherit;
 }
 
-/* ================= LANGUAGE ================= */
+/* =========================
+   LOADER
+========================= */
 
-.language-box {
-    position: fixed;
-    top: 22px;
-    right: 22px;
-    z-index: 1000;
+.loader{
+    position:fixed;
+    inset:0;
+    background:#080808;
+    z-index:9999;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transition:opacity .8s ease,visibility .8s ease;
 }
 
-.language-button {
-    display: flex;
-    align-items: center;
-    gap: 9px;
-    background: rgba(20,20,20,.85);
-    border: 1px solid rgba(255,255,255,.12);
-    color: #fff;
-    padding: 11px 15px;
-    border-radius: 40px;
-    cursor: pointer;
-    backdrop-filter: blur(15px);
-    transition: .3s ease;
+.loader.hide{
+    opacity:0;
+    visibility:hidden;
 }
 
-.language-button:hover {
-    border-color: rgba(255,255,255,.3);
-    transform: translateY(-2px);
+.loader-inner{
+    text-align:center;
 }
 
-.language-button span {
-    font-size: 18px;
+.loader-logo{
+    font-size:14px;
+    letter-spacing:7px;
+    animation:pulse 1.5s ease-in-out infinite;
 }
 
-.language-arrow {
-    font-size: 11px;
-    opacity: .6;
-    transition: .3s;
+.loader-line{
+    width:100px;
+    height:1px;
+    background:#333;
+    margin:25px auto 0;
+    overflow:hidden;
 }
 
-.language-box.open .language-arrow {
-    transform: rotate(180deg);
+.loader-line::after{
+    content:"";
+    display:block;
+    height:100%;
+    width:45%;
+    background:#fff;
+    animation:loaderLine 1.2s ease-in-out infinite;
 }
 
-.language-menu {
-    position: absolute;
-    right: 0;
-    top: 54px;
-    width: 205px;
-    padding: 8px;
-    background: rgba(18,18,18,.97);
-    border: 1px solid rgba(255,255,255,.1);
-    border-radius: 18px;
-    box-shadow: 0 20px 60px rgba(0,0,0,.5);
-    opacity: 0;
-    transform: translateY(-10px) scale(.97);
-    pointer-events: none;
-    transition: .25s ease;
-    backdrop-filter: blur(20px);
+@keyframes pulse{
+    50%{opacity:.4}
 }
 
-.language-box.open .language-menu {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-    pointer-events: auto;
+@keyframes loaderLine{
+    0%{transform:translateX(-120%)}
+    100%{transform:translateX(300%)}
 }
 
-.language-option {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    gap: 11px;
-    padding: 11px 12px;
-    border: none;
-    background: transparent;
-    color: #eee;
-    border-radius: 12px;
-    cursor: pointer;
-    text-align: left;
-    transition: .2s;
-    font-size: 14px;
+/* =========================
+   NOISE
+========================= */
+
+.noise{
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    opacity:.035;
+    z-index:100;
+    background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E");
 }
 
-.language-option:hover {
-    background: rgba(255,255,255,.08);
+/* =========================
+   NAV
+========================= */
+
+.nav{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:85px;
+    padding:0 5vw;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    z-index:900;
+    transition:.4s ease;
 }
 
-.language-option.active {
-    background: rgba(255,255,255,.11);
+.nav.scrolled{
+    background:rgba(8,8,8,.82);
+    backdrop-filter:blur(18px);
+    border-bottom:1px solid var(--line);
 }
 
-.flag {
-    font-size: 19px;
+.logo{
+    font-size:14px;
+    letter-spacing:5px;
+    font-weight:500;
 }
 
-/* ================= NAV ================= */
-
-.nav {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 82px;
-    display: flex;
-    align-items: center;
-    padding: 0 45px;
-    z-index: 500;
-    background: linear-gradient(to bottom, rgba(11,11,11,.95), transparent);
+.nav-center{
+    display:flex;
+    gap:32px;
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:2px;
+    color:#aaa;
 }
 
-.logo {
-    font-size: 17px;
-    font-weight: 600;
-    letter-spacing: 4px;
+.nav-center a{
+    position:relative;
 }
 
-.nav-links {
-    margin-left: auto;
-    display: flex;
-    gap: 32px;
-    font-size: 13px;
-    color: #aaa;
+.nav-center a::after{
+    content:"";
+    position:absolute;
+    left:0;
+    bottom:-7px;
+    width:0;
+    height:1px;
+    background:#fff;
+    transition:.3s;
 }
 
-.nav-links a {
-    transition: .25s;
+.nav-center a:hover::after{
+    width:100%;
 }
 
-.nav-links a:hover {
-    color: #fff;
+.language{
+    position:relative;
 }
 
-/* ================= HERO ================= */
-
-.hero {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    position: relative;
-    padding: 130px 9% 80px;
+.language-btn{
+    border:1px solid var(--line);
+    background:rgba(255,255,255,.04);
+    color:#fff;
+    border-radius:100px;
+    padding:9px 13px;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    gap:7px;
+    font-size:11px;
+    letter-spacing:1px;
 }
 
-.hero-content {
-    max-width: 850px;
-    animation: heroIn 1s ease both;
+.language-menu{
+    position:absolute;
+    right:0;
+    top:48px;
+    width:190px;
+    padding:7px;
+    background:#151515;
+    border:1px solid var(--line);
+    border-radius:14px;
+    opacity:0;
+    transform:translateY(-8px);
+    pointer-events:none;
+    transition:.25s;
+    box-shadow:0 20px 50px rgba(0,0,0,.5);
 }
 
-.small-title {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    text-transform: uppercase;
-    letter-spacing: 4px;
-    font-size: 11px;
-    color: #999;
-    margin-bottom: 25px;
+.language.open .language-menu{
+    opacity:1;
+    transform:none;
+    pointer-events:auto;
 }
 
-.small-title::before {
-    content: "";
-    width: 35px;
-    height: 1px;
-    background: #777;
+.lang-option{
+    width:100%;
+    border:0;
+    background:transparent;
+    color:#bbb;
+    padding:10px;
+    text-align:left;
+    border-radius:9px;
+    cursor:pointer;
+    display:flex;
+    gap:10px;
+    align-items:center;
 }
 
-.hero h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(60px, 10vw, 145px);
-    line-height: .9;
-    font-weight: 500;
-    letter-spacing: -6px;
+.lang-option:hover,
+.lang-option.active{
+    background:#242424;
+    color:#fff;
 }
 
-.hero h1 span {
-    display: block;
-    color: #777;
-    font-style: italic;
+/* =========================
+   HERO
+========================= */
+
+.hero{
+    min-height:100vh;
+    padding:130px 5vw 70px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    align-items:center;
+    gap:5vw;
+    position:relative;
 }
 
-.hero-text {
-    max-width: 500px;
-    color: #999;
-    line-height: 1.7;
-    margin-top: 35px;
-    font-size: 15px;
+.hero-left{
+    padding-left:4vw;
+    z-index:2;
 }
 
-.hero-button {
-    display: inline-flex;
-    align-items: center;
-    gap: 15px;
-    margin-top: 40px;
-    padding: 16px 24px;
-    border: 1px solid rgba(255,255,255,.25);
-    border-radius: 50px;
-    transition: .3s;
-    font-size: 13px;
+.eyebrow{
+    display:flex;
+    align-items:center;
+    gap:13px;
+    text-transform:uppercase;
+    letter-spacing:3px;
+    color:#777;
+    font-size:10px;
+    margin-bottom:28px;
 }
 
-.hero-button:hover {
-    background: #f1eee8;
-    color: #111;
-    transform: translateY(-3px);
+.eyebrow::before{
+    content:"";
+    width:35px;
+    height:1px;
+    background:#666;
 }
 
-.hero-button b {
-    font-size: 18px;
+.hero h1{
+    font-family:var(--serif);
+    font-size:clamp(65px,9vw,145px);
+    font-weight:400;
+    line-height:.82;
+    letter-spacing:-7px;
 }
 
-.hero-decoration {
-    position: absolute;
-    right: 9%;
-    bottom: 10%;
-    width: 160px;
-    height: 160px;
-    border: 1px solid rgba(255,255,255,.12);
-    border-radius: 50%;
-    animation: spin 18s linear infinite;
+.hero h1 em{
+    display:block;
+    color:#777;
+    font-weight:400;
 }
 
-.hero-decoration::before,
-.hero-decoration::after {
-    content: "";
-    position: absolute;
-    inset: 22px;
-    border: 1px solid rgba(255,255,255,.08);
-    border-radius: 50%;
+.hero-description{
+    max-width:420px;
+    margin-top:40px;
+    color:#858585;
+    font-size:14px;
+    line-height:1.8;
 }
 
-.hero-decoration::after {
-    inset: 45px;
+.hero-actions{
+    display:flex;
+    gap:12px;
+    margin-top:35px;
 }
 
-@keyframes spin {
-    to { transform: rotate(360deg); }
+.btn{
+    border:1px solid var(--line);
+    padding:15px 21px;
+    border-radius:100px;
+    font-size:11px;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    transition:.35s;
 }
 
-@keyframes heroIn {
-    from {
-        opacity: 0;
-        transform: translateY(40px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+.btn.primary{
+    background:#eeeae3;
+    color:#111;
+    border-color:#eeeae3;
 }
 
-/* ================= SECTIONS ================= */
-
-section {
-    padding: 110px 9%;
+.btn:hover{
+    transform:translateY(-4px);
 }
 
-.section-label {
-    color: #777;
-    font-size: 11px;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    margin-bottom: 18px;
+.btn.secondary:hover{
+    background:#fff;
+    color:#111;
 }
 
-.section-title {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(40px, 6vw, 75px);
-    font-weight: 500;
-    line-height: 1;
+.hero-visual{
+    height:78vh;
+    max-height:780px;
+    position:relative;
 }
 
-/* ================= SERVICES ================= */
-
-.services-grid {
-    margin-top: 55px;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    border-top: 1px solid #252525;
+.hero-image{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    filter:grayscale(100%);
+    opacity:.88;
+    border-radius:2px;
 }
 
-.service {
-    padding: 30px 25px 35px 0;
-    border-bottom: 1px solid #252525;
-    transition: .3s;
+.image-placeholder{
+    background:
+        linear-gradient(135deg,#282828,#111 55%,#292929);
+    display:flex;
+    align-items:center;
+    justify-content:center;
 }
 
-.service:hover {
-    padding-left: 15px;
-    background: linear-gradient(to right, rgba(255,255,255,.03), transparent);
+.image-placeholder span{
+    font-family:var(--serif);
+    font-style:italic;
+    font-size:22px;
+    color:#777;
 }
 
-.service-number {
-    color: #555;
-    font-size: 12px;
+.hero-frame{
+    position:absolute;
+    width:65%;
+    height:70%;
+    right:-25px;
+    bottom:-25px;
+    border:1px solid rgba(255,255,255,.15);
+    pointer-events:none;
 }
 
-.service h3 {
-    margin-top: 30px;
-    font-size: 19px;
-    font-weight: 500;
+.hero-number{
+    position:absolute;
+    right:-10px;
+    top:50%;
+    transform:translateY(-50%) rotate(90deg);
+    color:#555;
+    font-size:10px;
+    letter-spacing:4px;
 }
 
-.service p {
-    color: #777;
-    font-size: 13px;
-    line-height: 1.6;
-    margin-top: 12px;
+/* =========================
+   INTRO
+========================= */
+
+.intro{
+    padding:170px 9vw;
+    display:grid;
+    grid-template-columns:.8fr 1.5fr;
+    gap:8vw;
 }
 
-.price {
-    margin-top: 22px;
-    color: #ddd;
+.section-tag{
+    font-size:10px;
+    text-transform:uppercase;
+    letter-spacing:3px;
+    color:#666;
 }
 
-/* ================= BOOKING ================= */
-
-.booking {
-    background: #101010;
+.intro-text{
+    font-family:var(--serif);
+    font-size:clamp(35px,5vw,70px);
+    line-height:1.1;
+    font-weight:400;
 }
 
-.booking-wrapper {
-    max-width: 850px;
+.intro-text em{
+    color:#777;
 }
 
-.booking-subtitle {
-    color: #888;
-    margin-top: 20px;
-    line-height: 1.7;
-    max-width: 600px;
+/* =========================
+   PORTFOLIO
+========================= */
+
+.portfolio{
+    padding:100px 5vw 160px;
 }
 
-.form {
-    margin-top: 50px;
+.section-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    margin-bottom:60px;
+    padding:0 4vw;
 }
 
-.form-group {
-    margin-bottom: 28px;
+.section-head h2{
+    font-family:var(--serif);
+    font-size:clamp(45px,6vw,85px);
+    font-weight:400;
+    line-height:.95;
 }
 
-.form-label {
-    display: block;
-    margin-bottom: 12px;
-    font-size: 12px;
-    color: #aaa;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
+.section-head p{
+    max-width:280px;
+    color:#777;
+    font-size:12px;
+    line-height:1.7;
 }
 
-.options {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
+.gallery{
+    display:grid;
+    grid-template-columns:repeat(12,1fr);
+    gap:18px;
 }
 
-.option input {
-    display: none;
+.work{
+    position:relative;
+    overflow:hidden;
+    cursor:pointer;
+    background:#151515;
 }
 
-.option label {
-    display: block;
-    padding: 17px;
-    border: 1px solid #292929;
-    border-radius: 12px;
-    cursor: pointer;
-    color: #999;
-    transition: .25s;
-    font-size: 13px;
+.work:nth-child(1){
+    grid-column:span 7;
+    height:650px;
 }
 
-.option label:hover {
-    border-color: #555;
-    color: #fff;
+.work:nth-child(2){
+    grid-column:span 5;
+    height:480px;
 }
 
-.option input:checked + label {
-    background: #eee;
-    color: #111;
-    border-color: #eee;
+.work:nth-child(3){
+    grid-column:span 5;
+    height:520px;
+    margin-top:-150px;
+}
+
+.work:nth-child(4){
+    grid-column:span 7;
+    height:620px;
+}
+
+.work:nth-child(5){
+    grid-column:span 4;
+    height:470px;
+}
+
+.work:nth-child(6){
+    grid-column:span 8;
+    height:600px;
+    margin-top:-120px;
+}
+
+.work img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    filter:grayscale(100%);
+    transition:transform 1s cubic-bezier(.2,.7,.2,1),filter .7s;
+}
+
+.work:hover img{
+    transform:scale(1.07);
+    filter:grayscale(0%);
+}
+
+.work-overlay{
+    position:absolute;
+    inset:0;
+    display:flex;
+    flex-direction:column;
+    justify-content:flex-end;
+    padding:28px;
+    background:linear-gradient(transparent 45%,rgba(0,0,0,.85));
+}
+
+.work-number{
+    font-size:10px;
+    color:#aaa;
+    letter-spacing:2px;
+}
+
+.work-title{
+    margin-top:8px;
+    font-family:var(--serif);
+    font-size:28px;
+}
+
+.work-sub{
+    color:#aaa;
+    font-size:11px;
+    margin-top:5px;
+}
+
+/* =========================
+   SERVICES
+========================= */
+
+.services{
+    padding:120px 9vw 150px;
+    background:#101010;
+}
+
+.service-list{
+    margin-top:60px;
+    border-top:1px solid var(--line);
+}
+
+.service-row{
+    display:grid;
+    grid-template-columns:70px 1fr 120px;
+    gap:20px;
+    align-items:center;
+    padding:28px 0;
+    border-bottom:1px solid var(--line);
+    transition:.35s;
+}
+
+.service-row:hover{
+    padding-left:20px;
+    background:linear-gradient(90deg,rgba(255,255,255,.04),transparent);
+}
+
+.service-no{
+    color:#555;
+    font-size:11px;
+}
+
+.service-name{
+    font-family:var(--serif);
+    font-size:27px;
+}
+
+.service-description{
+    color:#777;
+    font-size:11px;
+    margin-top:7px;
+}
+
+.service-price{
+    text-align:right;
+    color:#aaa;
+    font-size:12px;
+}
+
+/* =========================
+   BOOKING
+========================= */
+
+.booking{
+    padding:150px 9vw;
+}
+
+.booking-grid{
+    display:grid;
+    grid-template-columns:.8fr 1.4fr;
+    gap:9vw;
+}
+
+.booking-copy h2{
+    font-family:var(--serif);
+    font-size:clamp(48px,6vw,85px);
+    line-height:.95;
+    font-weight:400;
+}
+
+.booking-copy p{
+    color:#777;
+    max-width:340px;
+    font-size:13px;
+    line-height:1.8;
+    margin-top:30px;
+}
+
+.booking-form{
+    max-width:720px;
+}
+
+.form-section{
+    margin-bottom:42px;
+}
+
+.form-title{
+    font-size:10px;
+    text-transform:uppercase;
+    letter-spacing:2px;
+    color:#666;
+    margin-bottom:15px;
+}
+
+.choice-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:9px;
+}
+
+.choice input{
+    display:none;
+}
+
+.choice label{
+    min-height:58px;
+    padding:15px;
+    border:1px solid var(--line);
+    border-radius:10px;
+    display:flex;
+    align-items:center;
+    cursor:pointer;
+    color:#999;
+    font-size:12px;
+    transition:.25s;
+}
+
+.choice label:hover{
+    border-color:#666;
+    color:#fff;
+}
+
+.choice input:checked + label{
+    background:#eeeae3;
+    color:#111;
+    border-color:#eeeae3;
+}
+
+.style-choice{
+    position:relative;
+    overflow:hidden;
+    min-height:150px !important;
+    align-items:flex-end !important;
+    background:#171717;
+}
+
+.style-choice span{
+    position:relative;
+    z-index:2;
+    font-family:var(--serif);
+    font-size:20px;
+    color:#eee;
+}
+
+.style-choice::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:linear-gradient(transparent 20%,rgba(0,0,0,.85));
+}
+
+.choice input:checked + .style-choice{
+    background:#eeeae3;
+}
+
+.choice input:checked + .style-choice span{
+    color:#111;
 }
 
 .form-input,
-.form-textarea {
-    width: 100%;
-    padding: 17px;
-    border: 1px solid #292929;
-    border-radius: 12px;
-    background: #0a0a0a;
-    color: #fff;
-    outline: none;
-    transition: .25s;
+.form-textarea{
+    width:100%;
+    border:1px solid var(--line);
+    background:#0d0d0d;
+    color:#fff;
+    border-radius:10px;
+    padding:16px;
+    outline:none;
+    transition:.3s;
 }
 
 .form-input:focus,
-.form-textarea:focus {
-    border-color: #777;
+.form-textarea:focus{
+    border-color:#777;
 }
 
-.form-textarea {
-    min-height: 130px;
-    resize: vertical;
+.form-textarea{
+    min-height:130px;
+    resize:vertical;
 }
 
-.submit {
-    width: 100%;
-    padding: 19px;
-    border: none;
-    border-radius: 12px;
-    background: #eee;
-    color: #111;
-    font-weight: 600;
-    cursor: pointer;
-    transition: .3s;
+.form-two{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
 }
 
-.submit:hover {
-    transform: translateY(-3px);
-    background: #fff;
-    box-shadow: 0 15px 35px rgba(0,0,0,.4);
+.submit{
+    width:100%;
+    padding:18px;
+    background:#eeeae3;
+    color:#111;
+    border:0;
+    border-radius:10px;
+    cursor:pointer;
+    text-transform:uppercase;
+    letter-spacing:2px;
+    font-size:10px;
+    transition:.3s;
 }
 
-/* ================= CONTACT ================= */
-
-.contact-grid {
-    margin-top: 55px;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 15px;
+.submit:hover{
+    transform:translateY(-3px);
+    box-shadow:0 15px 40px rgba(0,0,0,.3);
 }
 
-.contact-card {
-    padding: 30px;
-    border: 1px solid #252525;
-    border-radius: 15px;
-    transition: .3s;
+.success{
+    display:none;
+    margin-top:15px;
+    padding:18px;
+    border:1px solid #333;
+    border-radius:10px;
+    color:#aaa;
+    text-align:center;
+    font-size:12px;
 }
 
-.contact-card:hover {
-    transform: translateY(-5px);
-    border-color: #555;
+.success.show{
+    display:block;
 }
 
-.contact-card span {
-    color: #666;
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 2px;
+/* =========================
+   ABOUT
+========================= */
+
+.about{
+    padding:100px 5vw 150px;
 }
 
-.contact-card h3 {
-    margin-top: 20px;
-    font-size: 16px;
-    font-weight: 400;
+.about-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:5vw;
+    align-items:center;
 }
 
-/* ================= FOOTER ================= */
-
-footer {
-    border-top: 1px solid #222;
-    padding: 45px 9%;
-    display: flex;
-    justify-content: space-between;
-    color: #666;
-    font-size: 12px;
+.about-photo{
+    height:650px;
 }
 
-.footer-logo {
-    color: #ddd;
-    letter-spacing: 3px;
+.about-photo img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    filter:grayscale(100%);
 }
 
-/* ================= SUCCESS ================= */
-
-.success {
-    display: none;
-    margin-top: 25px;
-    padding: 20px;
-    border: 1px solid #333;
-    border-radius: 12px;
-    color: #ccc;
-    text-align: center;
+.about-copy{
+    padding:5vw;
 }
 
-.success.show {
-    display: block;
+.about-copy h2{
+    font-family:var(--serif);
+    font-size:clamp(45px,6vw,80px);
+    font-weight:400;
+    line-height:.95;
 }
 
-/* ================= MOBILE ================= */
+.about-copy p{
+    color:#777;
+    line-height:1.9;
+    font-size:13px;
+    margin-top:30px;
+    max-width:430px;
+}
 
-@media (max-width: 800px) {
+/* =========================
+   INSTAGRAM
+========================= */
 
-    .nav {
-        padding: 0 20px;
+.instagram{
+    padding:120px 9vw;
+    text-align:center;
+}
+
+.instagram h2{
+    font-family:var(--serif);
+    font-size:clamp(45px,7vw,90px);
+    font-weight:400;
+}
+
+.instagram p{
+    color:#777;
+    margin-top:18px;
+}
+
+.insta-btn{
+    display:inline-block;
+    margin-top:30px;
+    border-bottom:1px solid #555;
+    padding-bottom:7px;
+    font-size:12px;
+    letter-spacing:2px;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+footer{
+    border-top:1px solid var(--line);
+    padding:50px 5vw;
+    display:flex;
+    justify-content:space-between;
+    color:#666;
+    font-size:11px;
+}
+
+.footer-logo{
+    color:#ddd;
+    letter-spacing:5px;
+}
+
+/* =========================
+   REVEAL
+========================= */
+
+.reveal{
+    opacity:0;
+    transform:translateY(45px);
+    transition:opacity .9s ease,transform .9s ease;
+}
+
+.reveal.visible{
+    opacity:1;
+    transform:none;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:900px){
+
+    .nav{
+        height:70px;
+        padding:0 20px;
     }
 
-    .nav-links {
-        display: none;
+    .nav-center{
+        display:none;
     }
 
-    .language-box {
-        top: 18px;
-        right: 18px;
+    .hero{
+        grid-template-columns:1fr;
+        padding:120px 6vw 70px;
     }
 
-    .hero {
-        padding: 130px 7% 80px;
+    .hero-left{
+        padding-left:0;
     }
 
-    .hero h1 {
-        font-size: 65px;
-        letter-spacing: -3px;
+    .hero h1{
+        font-size:70px;
+        letter-spacing:-4px;
     }
 
-    .hero-decoration {
-        width: 100px;
-        height: 100px;
-        right: 5%;
-        bottom: 7%;
+    .hero-visual{
+        height:65vh;
+        margin-top:20px;
     }
 
-    section {
-        padding: 80px 7%;
+    .intro{
+        grid-template-columns:1fr;
+        padding:110px 7vw;
+        gap:30px;
     }
 
-    .services-grid,
-    .contact-grid {
-        grid-template-columns: 1fr;
+    .section-head{
+        display:block;
+        padding:0;
     }
 
-    .options {
-        grid-template-columns: 1fr;
+    .section-head p{
+        margin-top:20px;
     }
 
-    footer {
-        padding: 35px 7%;
-        flex-direction: column;
-        gap: 15px;
+    .gallery{
+        display:block;
+    }
+
+    .work,
+    .work:nth-child(n){
+        height:500px;
+        margin:0 0 14px;
+    }
+
+    .services{
+        padding:100px 7vw;
+    }
+
+    .service-row{
+        grid-template-columns:35px 1fr;
+    }
+
+    .service-price{
+        grid-column:2;
+        text-align:left;
+    }
+
+    .booking{
+        padding:100px 7vw;
+    }
+
+    .booking-grid{
+        grid-template-columns:1fr;
+        gap:60px;
+    }
+
+    .choice-grid{
+        grid-template-columns:1fr;
+    }
+
+    .form-two{
+        grid-template-columns:1fr;
+    }
+
+    .about{
+        padding:80px 7vw;
+    }
+
+    .about-grid{
+        grid-template-columns:1fr;
+    }
+
+    .about-photo{
+        height:500px;
+    }
+
+    footer{
+        flex-direction:column;
+        gap:15px;
+    }
+}
+
+@media(max-width:500px){
+
+    .hero h1{
+        font-size:58px;
+    }
+
+    .hero-actions{
+        flex-direction:column;
+    }
+
+    .btn{
+        text-align:center;
+    }
+
+    .hero-visual{
+        height:55vh;
+    }
+
+    .work,
+    .work:nth-child(n){
+        height:430px;
     }
 }
 </style>
 </head>
 
-<body>
+<body class="loading">
 
-<!-- LANGUAGE -->
-<div class="language-box" id="languageBox">
+<div class="noise"></div>
 
-    <button class="language-button" onclick="toggleLanguages()">
-        <span id="currentFlag">🇺🇦</span>
-        <span id="currentLanguage">UA</span>
-        <span class="language-arrow">▼</span>
-    </button>
-
-    <div class="language-menu">
-
-        <button class="language-option active" data-lang="uk" onclick="setLanguage('uk')">
-            <span class="flag">🇺🇦</span>
-            Українська
-        </button>
-
-        <button class="language-option" data-lang="cs" onclick="setLanguage('cs')">
-            <span class="flag">🇨🇿</span>
-            Čeština
-        </button>
-
-        <button class="language-option" data-lang="en" onclick="setLanguage('en')">
-            <span class="flag">🇬🇧</span>
-            English
-        </button>
-
-        <button class="language-option" data-lang="ru" onclick="setLanguage('ru')">
-            <span class="flag">🇷🇺</span>
-            Русский
-        </button>
-
-        <button class="language-option" data-lang="hy" onclick="setLanguage('hy')">
-            <span class="flag">🇦🇲</span>
-            Հայերեն
-        </button>
-
-        <button class="language-option" data-lang="vi" onclick="setLanguage('vi')">
-            <span class="flag">🇻🇳</span>
-            Tiếng Việt
-        </button>
-
-        <button class="language-option" data-lang="zh" onclick="setLanguage('zh')">
-            <span class="flag">🇨🇳</span>
-            中文
-        </button>
-
-        <button class="language-option" data-lang="ja" onclick="setLanguage('ja')">
-            <span class="flag">🇯🇵</span>
-            日本語
-        </button>
-
+<!-- LOADER -->
+<div class="loader" id="loader">
+    <div class="loader-inner">
+        <div class="loader-logo">VIII.HAIRSTYLIST</div>
+        <div class="loader-line"></div>
     </div>
 </div>
 
 
 <!-- NAV -->
-<nav class="nav">
+<nav class="nav" id="nav">
 
     <a href="#" class="logo">VIII.HAIRSTYLIST</a>
 
-    <div class="nav-links">
-        <a href="#services" data-i18n="navServices">Послуги</a>
-        <a href="#booking" data-i18n="navBooking">Запис</a>
-        <a href="#contact" data-i18n="navContact">Контакти</a>
+    <div class="nav-center">
+        <a href="#portfolio" data-i18n="navPortfolio">Portfolio</a>
+        <a href="#services" data-i18n="navServices">Services</a>
+        <a href="#booking" data-i18n="navBooking">Booking</a>
+        <a href="#contact" data-i18n="navContact">Contact</a>
+    </div>
+
+    <div class="language" id="language">
+
+        <button class="language-btn" onclick="toggleLanguage()">
+            <span id="currentFlag">🇺🇦</span>
+            <span id="currentCode">UA</span>
+            <span>⌄</span>
+        </button>
+
+        <div class="language-menu">
+
+            <button class="lang-option" data-lang="uk">🇺🇦 Українська</button>
+            <button class="lang-option" data-lang="cs">🇨🇿 Čeština</button>
+            <button class="lang-option" data-lang="en">🇬🇧 English</button>
+            <button class="lang-option" data-lang="ru">🇷🇺 Русский</button>
+            <button class="lang-option" data-lang="hy">🇦🇲 Հայերեն</button>
+            <button class="lang-option" data-lang="vi">🇻🇳 Tiếng Việt</button>
+            <button class="lang-option" data-lang="zh">🇨🇳 中文</button>
+            <button class="lang-option" data-lang="ja">🇯🇵 日本語</button>
+
+        </div>
     </div>
 
 </nav>
@@ -672,72 +1045,284 @@ footer {
 <!-- HERO -->
 <header class="hero">
 
-    <div class="hero-content">
+    <div class="hero-left reveal">
 
-        <div class="small-title" data-i18n="heroSmall">
-            Personal hairstylist
+        <div class="eyebrow" data-i18n="heroEyebrow">
+            Personal hairstylist · Prague
         </div>
 
         <h1>
             VIII.
-            <span>hairstylist</span>
+            <em>hairstylist</em>
         </h1>
 
-        <p class="hero-text" data-i18n="heroText">
-            Індивідуальний підхід, стиль та увага до деталей.
-            Обери свій образ і запишись на зручний час.
+        <p class="hero-description" data-i18n="heroDescription">
+            Hair is not just a haircut. It is the way you enter a room.
+            Personal style, clean lines and attention to every detail.
         </p>
 
-        <a href="#booking" class="hero-button">
-            <span data-i18n="heroButton">Записатися</span>
-            <b>→</b>
-        </a>
+        <div class="hero-actions">
+
+            <a href="#booking" class="btn primary" data-i18n="book">
+                Book appointment
+            </a>
+
+            <a href="#portfolio" class="btn secondary" data-i18n="viewWork">
+                View work
+            </a>
+
+        </div>
 
     </div>
 
-    <div class="hero-decoration"></div>
+
+    <div class="hero-visual reveal">
+
+        <!-- ЗАМІНИ hero.jpg НА СВОЄ ФОТО -->
+        <img
+            class="hero-image"
+            src="images/hero.jpg"
+            alt="VIII hairstylist"
+            onerror="this.style.display='none';this.parentElement.classList.add('image-placeholder')"
+        >
+
+        <div class="hero-frame"></div>
+
+        <div class="hero-number">
+            VIII / 001
+        </div>
+
+    </div>
 
 </header>
 
 
-<!-- SERVICES -->
-<section id="services">
+<!-- INTRO -->
+<section class="intro reveal">
 
-    <div class="section-label" data-i18n="servicesLabel">
+    <div class="section-tag" data-i18n="introTag">
+        The philosophy
+    </div>
+
+    <div class="intro-text" data-i18n="introText">
+        A haircut should feel
+        <em>like you.</em>
+        Not like everyone else.
+    </div>
+
+</section>
+
+
+<!-- PORTFOLIO -->
+<section class="portfolio" id="portfolio">
+
+    <div class="section-head reveal">
+
+        <div>
+            <div class="section-tag" data-i18n="portfolioTag">
+                Selected work
+            </div>
+
+            <h2 data-i18n="portfolioTitle">
+                The<br>looks.
+            </h2>
+        </div>
+
+        <p data-i18n="portfolioDescription">
+            Вибери стиль, який тобі подобається.
+            Під час запису можна вказати його як приклад.
+        </p>
+
+    </div>
+
+
+    <div class="gallery">
+
+        <!-- PHOTO 01 -->
+        <div class="work reveal">
+
+            <img
+                src="images/haircut-01.jpg"
+                alt="Haircut"
+                onerror="this.style.display='none';this.parentElement.classList.add('image-placeholder')"
+            >
+
+            <div class="work-overlay">
+                <span class="work-number">01 / CUT</span>
+                <div class="work-title">Modern Cut</div>
+                <div class="work-sub">Clean · Natural · Modern</div>
+            </div>
+
+        </div>
+
+
+        <!-- PHOTO 02 -->
+        <div class="work reveal">
+
+            <img
+                src="images/haircut-02.jpg"
+                alt="Haircut"
+                onerror="this.style.display='none';this.parentElement.classList.add('image-placeholder')"
+            >
+
+            <div class="work-overlay">
+                <span class="work-number">02 / CUT</span>
+                <div class="work-title">Soft Layers</div>
+                <div class="work-sub">Texture · Movement</div>
+            </div>
+
+        </div>
+
+
+        <!-- PHOTO 03 -->
+        <div class="work reveal">
+
+            <img
+                src="images/haircut-03.jpg"
+                alt="Haircut"
+                onerror="this.style.display='none';this.parentElement.classList.add('image-placeholder')"
+            >
+
+            <div class="work-overlay">
+                <span class="work-number">03 / CUT</span>
+                <div class="work-title">Sharp Form</div>
+                <div class="work-sub">Precise · Bold</div>
+            </div>
+
+        </div>
+
+
+        <!-- PHOTO 04 -->
+        <div class="work reveal">
+
+            <img
+                src="images/haircut-04.jpg"
+                alt="Haircut"
+                onerror="this.style.display='none';this.parentElement.classList.add('image-placeholder')"
+            >
+
+            <div class="work-overlay">
+                <span class="work-number">04 / STYLE</span>
+                <div class="work-title">Editorial</div>
+                <div class="work-sub">Volume · Texture</div>
+            </div>
+
+        </div>
+
+
+        <!-- PHOTO 05 -->
+        <div class="work reveal">
+
+            <img
+                src="images/haircut-05.jpg"
+                alt="Haircut"
+                onerror="this.style.display='none';this.parentElement.classList.add('image-placeholder')"
+            >
+
+            <div class="work-overlay">
+                <span class="work-number">05 / CUT</span>
+                <div class="work-title">Short Form</div>
+                <div class="work-sub">Minimal · Clean</div>
+            </div>
+
+        </div>
+
+
+        <!-- PHOTO 06 -->
+        <div class="work reveal">
+
+            <img
+                src="images/haircut-06.jpg"
+                alt="Haircut"
+                onerror="this.style.display='none';this.parentElement.classList.add('image-placeholder')"
+            >
+
+            <div class="work-overlay">
+                <span class="work-number">06 / STYLE</span>
+                <div class="work-title">Signature</div>
+                <div class="work-sub">Personal · Distinct</div>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- SERVICES -->
+<section class="services" id="services">
+
+    <div class="section-tag reveal" data-i18n="servicesTag">
         Services
     </div>
 
-    <h2 class="section-title" data-i18n="servicesTitle">
-        Твій стиль.<br>Твої правила.
-    </h2>
+    <div class="section-head reveal" style="padding:0;margin-top:20px">
 
-    <div class="services-grid">
+        <h2 data-i18n="servicesTitle">
+            Simple.<br>Precise.
+        </h2>
 
-        <div class="service">
-            <span class="service-number">01</span>
-            <h3 data-i18n="service1">Жіноча стрижка</h3>
-            <p data-i18n="service1Desc">
-                Форма, довжина та укладка відповідно до твого образу.
-            </p>
-            <div class="price">від 500 Kč</div>
+    </div>
+
+
+    <div class="service-list">
+
+        <div class="service-row reveal">
+            <div class="service-no">01</div>
+
+            <div>
+                <div class="service-name" data-i18n="service1">Women's haircut</div>
+                <div class="service-description" data-i18n="service1d">
+                    Cut · shape · styling
+                </div>
+            </div>
+
+            <div class="service-price">from 500 Kč</div>
         </div>
 
-        <div class="service">
-            <span class="service-number">02</span>
-            <h3 data-i18n="service2">Чоловіча стрижка</h3>
-            <p data-i18n="service2Desc">
-                Акуратна форма та сучасний стиль.
-            </p>
-            <div class="price">від 400 Kč</div>
+
+        <div class="service-row reveal">
+            <div class="service-no">02</div>
+
+            <div>
+                <div class="service-name" data-i18n="service2">Men's haircut</div>
+                <div class="service-description" data-i18n="service2d">
+                    Cut · shape · finish
+                </div>
+            </div>
+
+            <div class="service-price">from 400 Kč</div>
         </div>
 
-        <div class="service">
-            <span class="service-number">03</span>
-            <h3 data-i18n="service3">Укладка</h3>
-            <p data-i18n="service3Desc">
-                Завершальний штрих для особливого дня або події.
-            </p>
-            <div class="price">від 350 Kč</div>
+
+        <div class="service-row reveal">
+            <div class="service-no">03</div>
+
+            <div>
+                <div class="service-name" data-i18n="service3">Styling</div>
+                <div class="service-description" data-i18n="service3d">
+                    Event · editorial · everyday
+                </div>
+            </div>
+
+            <div class="service-price">from 350 Kč</div>
+        </div>
+
+
+        <div class="service-row reveal">
+            <div class="service-no">04</div>
+
+            <div>
+                <div class="service-name" data-i18n="service4">Consultation</div>
+                <div class="service-description" data-i18n="service4d">
+                    Find the right look for you
+                </div>
+            </div>
+
+            <div class="service-price" data-i18n="priceOnRequest">
+                on request
+            </div>
         </div>
 
     </div>
@@ -748,57 +1333,92 @@ footer {
 <!-- BOOKING -->
 <section class="booking" id="booking">
 
-    <div class="booking-wrapper">
+    <div class="booking-grid">
 
-        <div class="section-label" data-i18n="bookingLabel">
-            Appointment
+        <div class="booking-copy reveal">
+
+            <div class="section-tag" data-i18n="bookingTag">
+                Appointment
+            </div>
+
+            <h2 data-i18n="bookingTitle">
+                Let's create<br>your look.
+            </h2>
+
+            <p data-i18n="bookingText">
+                Розкажи трохи про себе та бажаний результат.
+                Це допоможе підготуватися до твоєї зустрічі.
+            </p>
+
         </div>
-
-        <h2 class="section-title" data-i18n="bookingTitle">
-            Розкажи,<br>чого хочеш.
-        </h2>
-
-        <p class="booking-subtitle" data-i18n="bookingSubtitle">
-            Вибери потрібні параметри — так майстру буде простіше
-            зрозуміти твоє бажання ще до зустрічі.
-        </p>
 
 
         <form
-            class="form"
+            class="booking-form reveal"
+            id="bookingForm"
             action="https://formspree.io/f/xnpavyge"
             method="POST"
-            id="bookingForm"
         >
 
-            <!-- SERVICE -->
+            <!-- STYLE -->
+            <div class="form-section">
 
-            <div class="form-group">
+                <div class="form-title" data-i18n="chooseStyle">
+                    01 — Choose your style
+                </div>
 
-                <label class="form-label" data-i18n="questionService">
-                    Що хочеш зробити?
-                </label>
+                <div class="choice-grid">
 
-                <div class="options">
+                    <div class="choice">
+                        <input type="radio" name="Стиль" id="modern" value="Modern Cut" required>
 
-                    <div class="option">
-                        <input type="radio" name="Послуга" id="female" value="Жіноча стрижка" required>
-                        <label for="female" data-i18n="female">
-                            ✂ Жіноча стрижка
+                        <label class="style-choice" for="modern">
+                            <img
+                                src="images/style-modern.jpg"
+                                alt=""
+                                style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.65;filter:grayscale(100%)"
+                                onerror="this.style.display='none'"
+                            >
+                            <span>Modern Cut</span>
                         </label>
                     </div>
 
-                    <div class="option">
-                        <input type="radio" name="Послуга" id="male" value="Чоловіча стрижка">
-                        <label for="male" data-i18n="male">
-                            ✂ Чоловіча стрижка
+
+                    <div class="choice">
+                        <input type="radio" name="Стиль" id="layers" value="Soft Layers">
+
+                        <label class="style-choice" for="layers">
+                            <img
+                                src="images/style-layers.jpg"
+                                alt=""
+                                style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.65;filter:grayscale(100%)"
+                                onerror="this.style.display='none'"
+                            >
+                            <span>Soft Layers</span>
                         </label>
                     </div>
 
-                    <div class="option">
-                        <input type="radio" name="Послуга" id="style" value="Укладка">
-                        <label for="style" data-i18n="style">
-                            ✨ Укладка
+
+                    <div class="choice">
+                        <input type="radio" name="Стиль" id="short" value="Short">
+
+                        <label class="style-choice" for="short">
+                            <img
+                                src="images/style-short.jpg"
+                                alt=""
+                                style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.65;filter:grayscale(100%)"
+                                onerror="this.style.display='none'"
+                            >
+                            <span>Short</span>
+                        </label>
+                    </div>
+
+
+                    <div class="choice">
+                        <input type="radio" name="Стиль" id="custom" value="Not sure">
+
+                        <label class="style-choice" for="custom">
+                            <span data-i18n="notSure">I'm not sure yet</span>
                         </label>
                     </div>
 
@@ -808,33 +1428,89 @@ footer {
 
 
             <!-- LENGTH -->
+            <div class="form-section">
 
-            <div class="form-group">
+                <div class="form-title" data-i18n="hairLength">
+                    02 — Hair length
+                </div>
 
-                <label class="form-label" data-i18n="questionLength">
-                    Яка довжина волосся?
-                </label>
+                <div class="choice-grid">
 
-                <div class="options">
+                    <div class="choice">
+                        <input type="radio" name="Довжина" id="lengthShort" value="Short">
 
-                    <div class="option">
-                        <input type="radio" name="Довжина" id="short" value="Коротке">
-                        <label for="short" data-i18n="short">
-                            Коротке
+                        <label for="lengthShort" data-i18n="short">
+                            Short
                         </label>
                     </div>
 
-                    <div class="option">
-                        <input type="radio" name="Довжина" id="medium" value="Середнє">
-                        <label for="medium" data-i18n="medium">
-                            Середнє
+                    <div class="choice">
+                        <input type="radio" name="Довжина" id="lengthMedium" value="Medium">
+
+                        <label for="lengthMedium" data-i18n="medium">
+                            Medium
                         </label>
                     </div>
 
-                    <div class="option">
-                        <input type="radio" name="Довжина" id="long" value="Довге">
-                        <label for="long" data-i18n="long">
-                            Довге
+                    <div class="choice">
+                        <input type="radio" name="Довжина" id="lengthLong" value="Long">
+
+                        <label for="lengthLong" data-i18n="long">
+                            Long
+                        </label>
+                    </div>
+
+                    <div class="choice">
+                        <input type="radio" name="Довжина" id="lengthOther" value="Other">
+
+                        <label for="lengthOther" data-i18n="other">
+                            Other
+                        </label>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- SERVICE -->
+            <div class="form-section">
+
+                <div class="form-title" data-i18n="serviceQuestion">
+                    03 — What are you booking?
+                </div>
+
+                <div class="choice-grid">
+
+                    <div class="choice">
+                        <input type="radio" name="Послуга" id="women" value="Women's haircut" required>
+
+                        <label for="women" data-i18n="women">
+                            Women's haircut
+                        </label>
+                    </div>
+
+                    <div class="choice">
+                        <input type="radio" name="Послуга" id="men" value="Men's haircut">
+
+                        <label for="men" data-i18n="men">
+                            Men's haircut
+                        </label>
+                    </div>
+
+                    <div class="choice">
+                        <input type="radio" name="Послуга" id="styling" value="Styling">
+
+                        <label for="styling" data-i18n="styling">
+                            Styling
+                        </label>
+                    </div>
+
+                    <div class="choice">
+                        <input type="radio" name="Послуга" id="consultation" value="Consultation">
+
+                        <label for="consultation" data-i18n="consultation">
+                            Consultation
                         </label>
                     </div>
 
@@ -844,107 +1520,102 @@ footer {
 
 
             <!-- WISHES -->
+            <div class="form-section">
 
-            <div class="form-group">
-
-                <label class="form-label" data-i18n="questionWishes">
-                    Що саме хочеш?
-                </label>
+                <div class="form-title" data-i18n="wishes">
+                    04 — Tell me more
+                </div>
 
                 <textarea
                     class="form-textarea"
                     name="Побажання"
                     data-placeholder="wishesPlaceholder"
-                    placeholder="Наприклад: хочу коротше з боків, залишити довжину зверху..."
+                    placeholder="Tell me what you would like..."
                 ></textarea>
 
             </div>
 
 
-            <!-- NAME -->
+            <!-- CONTACT -->
+            <div class="form-section">
 
-            <div class="form-group">
+                <div class="form-title" data-i18n="yourDetails">
+                    05 — Your details
+                </div>
 
-                <label class="form-label" data-i18n="questionName">
-                    Твоє ім'я
-                </label>
+                <div class="form-two">
 
-                <input
-                    class="form-input"
-                    type="text"
-                    name="Ім'я"
-                    data-placeholder="namePlaceholder"
-                    placeholder="Напиши своє ім'я"
-                    required
-                >
+                    <input
+                        class="form-input"
+                        type="text"
+                        name="Ім'я"
+                        required
+                        data-placeholder="namePlaceholder"
+                        placeholder="Your name"
+                    >
 
-            </div>
+                    <input
+                        class="form-input"
+                        type="text"
+                        name="Контакт"
+                        required
+                        data-placeholder="contactPlaceholder"
+                        placeholder="Phone / Instagram"
+                    >
 
-
-            <!-- PHONE -->
-
-            <div class="form-group">
-
-                <label class="form-label" data-i18n="questionPhone">
-                    Телефон / Instagram
-                </label>
-
-                <input
-                    class="form-input"
-                    type="text"
-                    name="Контакт"
-                    data-placeholder="phonePlaceholder"
-                    placeholder="+420... або @instagram"
-                    required
-                >
+                </div>
 
             </div>
 
 
             <!-- DATE -->
+            <div class="form-section">
 
-            <div class="form-group">
+                <div class="form-title" data-i18n="dateTime">
+                    06 — Preferred date & time
+                </div>
 
-                <label class="form-label" data-i18n="questionDate">
-                    Бажана дата
-                </label>
+                <div class="form-two">
 
-                <input
-                    class="form-input"
-                    type="date"
-                    name="Дата"
-                    required
-                >
+                    <input
+                        class="form-input"
+                        type="date"
+                        name="Дата"
+                        required
+                    >
 
-            </div>
+                    <input
+                        class="form-input"
+                        type="time"
+                        name="Час"
+                        required
+                    >
 
-
-            <!-- TIME -->
-
-            <div class="form-group">
-
-                <label class="form-label" data-i18n="questionTime">
-                    Бажаний час
-                </label>
-
-                <input
-                    class="form-input"
-                    type="time"
-                    name="Час"
-                    required
-                >
+                </div>
 
             </div>
 
 
-            <input type="hidden" name="_subject" value="Нова заявка — viii.hairstylist">
+            <input
+                type="hidden"
+                name="_subject"
+                value="New appointment — VIII.HAIRSTYLIST"
+            >
 
-            <button class="submit" type="submit" data-i18n="submit">
-                Надіслати заявку →
+            <button
+                class="submit"
+                type="submit"
+                data-i18n="sendRequest"
+            >
+                Send appointment request →
             </button>
 
-            <div class="success" id="success" data-i18n="success">
-                Дякую! Заявку відправлено. Я зв'яжуся з тобою найближчим часом.
+            <div
+                class="success"
+                id="success"
+                data-i18n="success"
+            >
+                Thank you! Your request has been sent.
             </div>
 
         </form>
@@ -954,50 +1625,80 @@ footer {
 </section>
 
 
-<!-- CONTACT -->
+<!-- ABOUT -->
+<section class="about">
 
-<section id="contact">
+    <div class="about-grid">
 
-    <div class="section-label" data-i18n="contactLabel">
-        Contact
-    </div>
+        <div class="about-photo reveal">
 
-    <h2 class="section-title" data-i18n="contactTitle">
-        Будемо<br>на зв'язку.
-    </h2>
+            <img
+                src="images/about.jpg"
+                alt="VIII Hairstylist"
+                onerror="this.style.display='none';this.parentElement.classList.add('image-placeholder')"
+            >
 
-    <div class="contact-grid">
-
-        <a class="contact-card" href="https://www.instagram.com/viii.hairstylist/" target="_blank">
-            <span>Instagram</span>
-            <h3>@viii.hairstylist ↗</h3>
-        </a>
-
-        <div class="contact-card">
-            <span data-i18n="location">Location</span>
-            <h3>Prague, Czechia</h3>
         </div>
 
-        <a class="contact-card" href="#booking">
-            <span data-i18n="bookingCard">Booking</span>
-            <h3 data-i18n="bookingCardText">Записатися →</h3>
-        </a>
+
+        <div class="about-copy reveal">
+
+            <div class="section-tag" data-i18n="aboutTag">
+                About
+            </div>
+
+            <h2 data-i18n="aboutTitle">
+                Details make<br>the difference.
+            </h2>
+
+            <p data-i18n="aboutText">
+                Персональна робота з волоссям, де головне — не просто повторити
+                тренд, а підібрати форму, яка підходить саме тобі.
+            </p>
+
+        </div>
 
     </div>
 
 </section>
 
 
-<!-- FOOTER -->
+<!-- INSTAGRAM -->
+<section class="instagram" id="contact">
 
+    <div class="section-tag reveal">
+        Instagram
+    </div>
+
+    <h2 class="reveal">
+        @viii.hairstylist
+    </h2>
+
+    <p class="reveal" data-i18n="instagramText">
+        More work, looks & everyday inspiration.
+    </p>
+
+    <a
+        class="insta-btn reveal"
+        href="https://www.instagram.com/viii.hairstylist/"
+        target="_blank"
+        rel="noopener"
+    >
+        OPEN INSTAGRAM ↗
+    </a>
+
+</section>
+
+
+<!-- FOOTER -->
 <footer>
 
     <div class="footer-logo">
         VIII.HAIRSTYLIST
     </div>
 
-    <div>
-        © 2026 viii.hairstylist
+    <div data-i18n="footerText">
+        Personal hairstylist · Prague · 2026
     </div>
 
 </footer>
@@ -1005,625 +1706,871 @@ footer {
 
 <script>
 
-/* =====================================================
+/* ==========================================
    TRANSLATIONS
-===================================================== */
+========================================== */
 
 const translations = {
 
-uk: {
-    code: "UA",
-    flag: "🇺🇦",
+uk:{
+    code:"UA",
+    flag:"🇺🇦",
 
-    navServices: "Послуги",
-    navBooking: "Запис",
-    navContact: "Контакти",
+    navPortfolio:"Портфоліо",
+    navServices:"Послуги",
+    navBooking:"Запис",
+    navContact:"Контакти",
 
-    heroSmall: "Персональний hairstylist",
-    heroText: "Індивідуальний підхід, стиль та увага до деталей. Обери свій образ і запишись на зручний час.",
-    heroButton: "Записатися",
+    heroEyebrow:"Персональний hairstylist · Прага",
+    heroDescription:"Волосся — це не просто стрижка. Це те, як ти входиш у кімнату. Персональний стиль, чисті лінії та увага до кожної деталі.",
+    book:"Записатися",
+    viewWork:"Дивитися роботи",
 
-    servicesLabel: "Послуги",
-    servicesTitle: "Твій стиль.<br>Твої правила.",
+    introTag:"Філософія",
+    introText:"Стрижка повинна відчуватися <em>як ти.</em> А не як хтось інший.",
 
-    service1: "Жіноча стрижка",
-    service1Desc: "Форма, довжина та укладка відповідно до твого образу.",
-    service2: "Чоловіча стрижка",
-    service2Desc: "Акуратна форма та сучасний стиль.",
-    service3: "Укладка",
-    service3Desc: "Завершальний штрих для особливого дня або події.",
+    portfolioTag:"Вибрані роботи",
+    portfolioTitle:"Обрані<br>образи.",
+    portfolioDescription:"Вибери стиль, який тобі подобається. Під час запису можна вказати його як приклад.",
 
-    bookingLabel: "Запис",
-    bookingTitle: "Розкажи,<br>чого хочеш.",
-    bookingSubtitle: "Вибери потрібні параметри — так майстру буде простіше зрозуміти твоє бажання ще до зустрічі.",
+    servicesTag:"Послуги",
+    servicesTitle:"Просто.<br>Точно.",
 
-    questionService: "Що хочеш зробити?",
-    female: "✂ Жіноча стрижка",
-    male: "✂ Чоловіча стрижка",
-    style: "✨ Укладка",
+    service1:"Жіноча стрижка",
+    service1d:"Стрижка · форма · укладка",
+    service2:"Чоловіча стрижка",
+    service2d:"Стрижка · форма · фінальний стиль",
+    service3:"Укладка",
+    service3d:"Подія · editorial · everyday",
+    service4:"Консультація",
+    service4d:"Підбір стилю саме для тебе",
+    priceOnRequest:"за запитом",
 
-    questionLength: "Яка довжина волосся?",
-    short: "Коротке",
-    medium: "Середнє",
-    long: "Довге",
+    bookingTag:"Запис",
+    bookingTitle:"Створимо<br>твій образ.",
+    bookingText:"Розкажи трохи про себе та бажаний результат. Це допоможе підготуватися до твоєї зустрічі.",
 
-    questionWishes: "Що саме хочеш?",
-    wishesPlaceholder: "Наприклад: хочу коротше з боків, залишити довжину зверху...",
+    chooseStyle:"01 — Обери стиль",
+    notSure:"Ще не знаю",
 
-    questionName: "Твоє ім'я",
-    namePlaceholder: "Напиши своє ім'я",
+    hairLength:"02 — Довжина волосся",
+    short:"Коротке",
+    medium:"Середнє",
+    long:"Довге",
+    other:"Інше",
 
-    questionPhone: "Телефон / Instagram",
-    phonePlaceholder: "+420... або @instagram",
+    serviceQuestion:"03 — Що хочеш зробити?",
+    women:"Жіноча стрижка",
+    men:"Чоловіча стрижка",
+    styling:"Укладка",
+    consultation:"Консультація",
 
-    questionDate: "Бажана дата",
-    questionTime: "Бажаний час",
+    wishes:"04 — Розкажи більше",
+    wishesPlaceholder:"Напиши, який результат ти хочеш отримати...",
 
-    submit: "Надіслати заявку →",
-    success: "Дякую! Заявку відправлено. Я зв'яжуся з тобою найближчим часом.",
+    yourDetails:"05 — Твої дані",
+    namePlaceholder:"Твоє ім'я",
+    contactPlaceholder:"Телефон / Instagram",
 
-    contactLabel: "Контакти",
-    contactTitle: "Будемо<br>на зв'язку.",
-    location: "Локація",
-    bookingCard: "Запис",
-    bookingCardText: "Записатися →"
+    dateTime:"06 — Бажані дата та час",
+
+    sendRequest:"Надіслати заявку →",
+    success:"Дякую! Твою заявку відправлено. Я зв'яжуся з тобою найближчим часом.",
+
+    aboutTag:"Про майстра",
+    aboutTitle:"Деталі<br>мають значення.",
+    aboutText:"Персональна робота з волоссям, де головне — не просто повторити тренд, а підібрати форму, яка підходить саме тобі.",
+
+    instagramText:"Більше робіт, образів та натхнення.",
+
+    footerText:"Персональний hairstylist · Прага · 2026"
 },
 
-cs: {
-    code: "CZ",
-    flag: "🇨🇿",
+cs:{
+    code:"CZ",
+    flag:"🇨🇿",
 
-    navServices: "Služby",
-    navBooking: "Rezervace",
-    navContact: "Kontakt",
+    navPortfolio:"Portfolio",
+    navServices:"Služby",
+    navBooking:"Rezervace",
+    navContact:"Kontakt",
 
-    heroSmall: "Osobní hairstylistka",
-    heroText: "Individuální přístup, styl a pozornost k detailům. Vyber si svůj look a rezervuj si termín.",
-    heroButton: "Rezervovat",
+    heroEyebrow:"Osobní hairstylistka · Praha",
+    heroDescription:"Vlasy nejsou jen střih. Jsou způsob, jakým vstoupíš do místnosti. Osobní styl, čisté linie a pozornost ke každému detailu.",
+    book:"Rezervovat",
+    viewWork:"Moje práce",
 
-    servicesLabel: "Služby",
-    servicesTitle: "Tvůj styl.<br>Tvoje pravidla.",
+    introTag:"Filozofie",
+    introText:"Střih by měl působit <em>jako ty.</em> Ne jako někdo jiný.",
 
-    service1: "Dámský střih",
-    service1Desc: "Tvar, délka a styling podle tvého looku.",
-    service2: "Pánský střih",
-    service2Desc: "Čistý tvar a moderní styl.",
-    service3: "Styling",
-    service3Desc: "Finální úprava pro speciální den nebo událost.",
+    portfolioTag:"Vybrané práce",
+    portfolioTitle:"Vybrané<br>looky.",
+    portfolioDescription:"Vyber si styl, který se ti líbí. Při rezervaci ho můžeš uvést jako inspiraci.",
 
-    bookingLabel: "Rezervace",
-    bookingTitle: "Řekni mi,<br>co chceš.",
-    bookingSubtitle: "Vyber požadované možnosti — pomůže mi to lépe pochopit tvoje přání ještě před návštěvou.",
+    servicesTag:"Služby",
+    servicesTitle:"Jednoduše.<br>Přesně.",
 
-    questionService: "Co chceš?",
-    female: "✂ Dámský střih",
-    male: "✂ Pánský střih",
-    style: "✨ Styling",
+    service1:"Dámský střih",
+    service1d:"Střih · tvar · styling",
+    service2:"Pánský střih",
+    service2d:"Střih · tvar · finální úprava",
+    service3:"Styling",
+    service3d:"Event · editorial · everyday",
+    service4:"Konzultace",
+    service4d:"Výběr stylu pro tebe",
+    priceOnRequest:"na dotaz",
 
-    questionLength: "Jakou máš délku vlasů?",
-    short: "Krátké",
-    medium: "Střední",
-    long: "Dlouhé",
+    bookingTag:"Rezervace",
+    bookingTitle:"Vytvořme<br>tvůj look.",
+    bookingText:"Řekni mi něco o sobě a o výsledku, který si přeješ.",
 
-    questionWishes: "Co přesně si přeješ?",
-    wishesPlaceholder: "Například: kratší po stranách, nahoře nechat délku...",
+    chooseStyle:"01 — Vyber styl",
+    notSure:"Ještě nevím",
 
-    questionName: "Tvoje jméno",
-    namePlaceholder: "Napiš své jméno",
+    hairLength:"02 — Délka vlasů",
+    short:"Krátké",
+    medium:"Střední",
+    long:"Dlouhé",
+    other:"Jiné",
 
-    questionPhone: "Telefon / Instagram",
-    phonePlaceholder: "+420... nebo @instagram",
+    serviceQuestion:"03 — Co chceš?",
+    women:"Dámský střih",
+    men:"Pánský střih",
+    styling:"Styling",
+    consultation:"Konzultace",
 
-    questionDate: "Preferované datum",
-    questionTime: "Preferovaný čas",
+    wishes:"04 — Řekni více",
+    wishesPlaceholder:"Napiš, jakého výsledku chceš dosáhnout...",
 
-    submit: "Odeslat žádost →",
-    success: "Děkuji! Žádost byla odeslána. Brzy se ozvu.",
+    yourDetails:"05 — Tvé údaje",
+    namePlaceholder:"Tvoje jméno",
+    contactPlaceholder:"Telefon / Instagram",
 
-    contactLabel: "Kontakt",
-    contactTitle: "Zůstaňme<br>v kontaktu.",
-    location: "Lokace",
-    bookingCard: "Rezervace",
-    bookingCardText: "Rezervovat →"
+    dateTime:"06 — Preferované datum a čas",
+
+    sendRequest:"Odeslat žádost →",
+    success:"Děkuji! Tvá žádost byla odeslána. Brzy se ozvu.",
+
+    aboutTag:"O mně",
+    aboutTitle:"Na detailech<br>záleží.",
+    aboutText:"Osobní práce s vlasy, kde nejde jen o kopírování trendů, ale o nalezení tvaru, který sedí právě tobě.",
+
+    instagramText:"Více práce, looků a inspirace.",
+
+    footerText:"Osobní hairstylistka · Praha · 2026"
 },
 
-en: {
-    code: "EN",
-    flag: "🇬🇧",
+en:{
+    code:"EN",
+    flag:"🇬🇧",
 
-    navServices: "Services",
-    navBooking: "Booking",
-    navContact: "Contact",
+    navPortfolio:"Portfolio",
+    navServices:"Services",
+    navBooking:"Booking",
+    navContact:"Contact",
 
-    heroSmall: "Personal hairstylist",
-    heroText: "Personal approach, style and attention to detail. Choose your look and book your appointment.",
-    heroButton: "Book now",
+    heroEyebrow:"Personal hairstylist · Prague",
+    heroDescription:"Hair is not just a haircut. It is the way you enter a room. Personal style, clean lines and attention to every detail.",
+    book:"Book appointment",
+    viewWork:"View work",
 
-    servicesLabel: "Services",
-    servicesTitle: "Your style.<br>Your rules.",
+    introTag:"The philosophy",
+    introText:"A haircut should feel <em>like you.</em> Not like everyone else.",
 
-    service1: "Women's haircut",
-    service1Desc: "Shape, length and styling according to your look.",
-    service2: "Men's haircut",
-    service2Desc: "Clean shape and modern style.",
-    service3: "Styling",
-    service3Desc: "The finishing touch for a special day or event.",
+    portfolioTag:"Selected work",
+    portfolioTitle:"The<br>looks.",
+    portfolioDescription:"Choose a style you like. You can mention it as inspiration when booking.",
 
-    bookingLabel: "Appointment",
-    bookingTitle: "Tell me<br>what you want.",
-    bookingSubtitle: "Choose the options below — it helps me understand your wishes before we meet.",
+    servicesTag:"Services",
+    servicesTitle:"Simple.<br>Precise.",
 
-    questionService: "What would you like?",
-    female: "✂ Women's haircut",
-    male: "✂ Men's haircut",
-    style: "✨ Styling",
+    service1:"Women's haircut",
+    service1d:"Cut · shape · styling",
+    service2:"Men's haircut",
+    service2d:"Cut · shape · finish",
+    service3:"Styling",
+    service3d:"Event · editorial · everyday",
+    service4:"Consultation",
+    service4d:"Find the right look for you",
+    priceOnRequest:"on request",
 
-    questionLength: "What is your hair length?",
-    short: "Short",
-    medium: "Medium",
-    long: "Long",
+    bookingTag:"Appointment",
+    bookingTitle:"Let's create<br>your look.",
+    bookingText:"Tell me a little about yourself and the result you would like.",
 
-    questionWishes: "What exactly do you want?",
-    wishesPlaceholder: "For example: shorter on the sides, keep the length on top...",
+    chooseStyle:"01 — Choose your style",
+    notSure:"I'm not sure yet",
 
-    questionName: "Your name",
-    namePlaceholder: "Enter your name",
+    hairLength:"02 — Hair length",
+    short:"Short",
+    medium:"Medium",
+    long:"Long",
+    other:"Other",
 
-    questionPhone: "Phone / Instagram",
-    phonePlaceholder: "+420... or @instagram",
+    serviceQuestion:"03 — What are you booking?",
+    women:"Women's haircut",
+    men:"Men's haircut",
+    styling:"Styling",
+    consultation:"Consultation",
 
-    questionDate: "Preferred date",
-    questionTime: "Preferred time",
+    wishes:"04 — Tell me more",
+    wishesPlaceholder:"Tell me what result you would like...",
 
-    submit: "Send request →",
-    success: "Thank you! Your request has been sent. I will contact you soon.",
+    yourDetails:"05 — Your details",
+    namePlaceholder:"Your name",
+    contactPlaceholder:"Phone / Instagram",
 
-    contactLabel: "Contact",
-    contactTitle: "Let's stay<br>in touch.",
-    location: "Location",
-    bookingCard: "Booking",
-    bookingCardText: "Book now →"
+    dateTime:"06 — Preferred date & time",
+
+    sendRequest:"Send appointment request →",
+    success:"Thank you! Your request has been sent. I will contact you soon.",
+
+    aboutTag:"About",
+    aboutTitle:"Details make<br>the difference.",
+    aboutText:"Personal work with hair where the goal is not simply to follow trends, but to find a shape that works for you.",
+
+    instagramText:"More work, looks & everyday inspiration.",
+
+    footerText:"Personal hairstylist · Prague · 2026"
 },
 
-ru: {
-    code: "RU",
-    flag: "🇷🇺",
+ru:{
+    code:"RU",
+    flag:"🇷🇺",
 
-    navServices: "Услуги",
-    navBooking: "Запись",
-    navContact: "Контакты",
+    navPortfolio:"Портфолио",
+    navServices:"Услуги",
+    navBooking:"Запись",
+    navContact:"Контакты",
 
-    heroSmall: "Персональный hairstylist",
-    heroText: "Индивидуальный подход, стиль и внимание к деталям. Выбери свой образ и запишись на удобное время.",
-    heroButton: "Записаться",
+    heroEyebrow:"Персональный hairstylist · Прага",
+    heroDescription:"Волосы — это не просто стрижка. Это то, как ты входишь в комнату. Персональный стиль, чистые линии и внимание к деталям.",
+    book:"Записаться",
+    viewWork:"Смотреть работы",
 
-    servicesLabel: "Услуги",
-    servicesTitle: "Твой стиль.<br>Твои правила.",
+    introTag:"Философия",
+    introText:"Стрижка должна ощущаться <em>как ты.</em> А не как кто-то другой.",
 
-    service1: "Женская стрижка",
-    service1Desc: "Форма, длина и укладка в соответствии с твоим образом.",
-    service2: "Мужская стрижка",
-    service2Desc: "Аккуратная форма и современный стиль.",
-    service3: "Укладка",
-    service3Desc: "Финальный штрих для особенного дня или события.",
+    portfolioTag:"Избранные работы",
+    portfolioTitle:"Выбранные<br>образы.",
+    portfolioDescription:"Выбери стиль, который тебе нравится. При записи можешь указать его как пример.",
 
-    bookingLabel: "Запись",
-    bookingTitle: "Расскажи,<br>чего хочешь.",
-    bookingSubtitle: "Выбери нужные параметры — так мастеру будет проще понять твое желание до встречи.",
+    servicesTag:"Услуги",
+    servicesTitle:"Просто.<br>Точно.",
 
-    questionService: "Что хочешь сделать?",
-    female: "✂ Женская стрижка",
-    male: "✂ Мужская стрижка",
-    style: "✨ Укладка",
+    service1:"Женская стрижка",
+    service1d:"Стрижка · форма · укладка",
+    service2:"Мужская стрижка",
+    service2d:"Стрижка · форма · финальный стиль",
+    service3:"Укладка",
+    service3d:"Событие · editorial · everyday",
+    service4:"Консультация",
+    service4d:"Подбор стиля именно для тебя",
+    priceOnRequest:"по запросу",
 
-    questionLength: "Какая длина волос?",
-    short: "Короткие",
-    medium: "Средние",
-    long: "Длинные",
+    bookingTag:"Запись",
+    bookingTitle:"Создадим<br>твой образ.",
+    bookingText:"Расскажи немного о себе и желаемом результате.",
 
-    questionWishes: "Что именно хочешь?",
-    wishesPlaceholder: "Например: короче по бокам, оставить длину сверху...",
+    chooseStyle:"01 — Выбери стиль",
+    notSure:"Еще не знаю",
 
-    questionName: "Твое имя",
-    namePlaceholder: "Напиши свое имя",
+    hairLength:"02 — Длина волос",
+    short:"Короткие",
+    medium:"Средние",
+    long:"Длинные",
+    other:"Другое",
 
-    questionPhone: "Телефон / Instagram",
-    phonePlaceholder: "+420... или @instagram",
+    serviceQuestion:"03 — Что хочешь?",
+    women:"Женская стрижка",
+    men:"Мужская стрижка",
+    styling:"Укладка",
+    consultation:"Консультация",
 
-    questionDate: "Желаемая дата",
-    questionTime: "Желаемое время",
+    wishes:"04 — Расскажи больше",
+    wishesPlaceholder:"Напиши, какой результат ты хочешь получить...",
 
-    submit: "Отправить заявку →",
-    success: "Спасибо! Заявка отправлена. Я свяжусь с тобой в ближайшее время.",
+    yourDetails:"05 — Твои данные",
+    namePlaceholder:"Твое имя",
+    contactPlaceholder:"Телефон / Instagram",
 
-    contactLabel: "Контакты",
-    contactTitle: "Будем<br>на связи.",
-    location: "Локация",
-    bookingCard: "Запись",
-    bookingCardText: "Записаться →"
+    dateTime:"06 — Желаемые дата и время",
+
+    sendRequest:"Отправить заявку →",
+    success:"Спасибо! Заявка отправлена. Я свяжусь с тобой.",
+
+    aboutTag:"О мастере",
+    aboutTitle:"Детали<br>имеют значение.",
+    aboutText:"Персональная работа с волосами, где главное — не просто повторить тренд, а подобрать форму именно для тебя.",
+
+    instagramText:"Больше работ, образов и вдохновения.",
+
+    footerText:"Персональный hairstylist · Прага · 2026"
 },
 
-hy: {
-    code: "AM",
-    flag: "🇦🇲",
+hy:{
+    code:"AM",
+    flag:"🇦🇲",
 
-    navServices: "Ծառայություններ",
-    navBooking: "Ամրագրում",
-    navContact: "Կապ",
+    navPortfolio:"Պորտֆոլիո",
+    navServices:"Ծառայություններ",
+    navBooking:"Ամրագրում",
+    navContact:"Կապ",
 
-    heroSmall: "Անձնական hairstylist",
-    heroText: "Անհատական մոտեցում, ոճ և ուշադրություն մանրուքներին։ Ընտրիր քո տեսքը և ամրագրիր այցը։",
-    heroButton: "Ամրագրել",
+    heroEyebrow:"Անձնական hairstylist · Պրահա",
+    heroDescription:"Մազերը պարզապես սանրվածք չեն։ Անձնական ոճ, մաքուր գծեր և ուշադրություն յուրաքանչյուր մանրուքին։",
+    book:"Ամրագրել",
+    viewWork:"Դիտել աշխատանքները",
 
-    servicesLabel: "Ծառայություններ",
-    servicesTitle: "Քո ոճը։<br>Քո կանոնները։",
+    introTag:"Փիլիսոփայություն",
+    introText:"Սանրվածքը պետք է զգացվի <em>քո նման</em>։",
 
-    service1: "Կանացի սանրվածք",
-    service1Desc: "Ձև, երկարություն և հարդարում՝ ըստ քո ոճի։",
-    service2: "Տղամարդու սանրվածք",
-    service2Desc: "Կոկիկ ձև և ժամանակակից ոճ։",
-    service3: "Հարդարում",
-    service3Desc: "Վերջնական շեշտադրում հատուկ օրվա համար։",
+    portfolioTag:"Աշխատանքներ",
+    portfolioTitle:"Ընտրված<br>look-եր։",
+    portfolioDescription:"Ընտրիր քեզ դուր եկած ոճը և նշիր այն ամրագրման ժամանակ։",
 
-    bookingLabel: "Ամրագրում",
-    bookingTitle: "Ասա ինձ,<br>ինչ ես ուզում։",
-    bookingSubtitle: "Ընտրիր ցանկալի տարբերակները, որպեսզի ավելի լավ հասկանամ քո ցանկությունը։",
+    servicesTag:"Ծառայություններ",
+    servicesTitle:"Պարզ։<br>Ճշգրիտ։",
 
-    questionService: "Ի՞նչ ես ցանկանում։",
-    female: "✂ Կանացի սանրվածք",
-    male: "✂ Տղամարդու սանրվածք",
-    style: "✨ Հարդարում",
+    service1:"Կանացի սանրվածք",
+    service1d:"Սանրվածք · ձև · հարդարում",
+    service2:"Տղամարդու սանրվածք",
+    service2d:"Սանրվածք · ձև · ավարտ",
+    service3:"Հարդարում",
+    service3d:"Միջոցառում · editorial · everyday",
+    service4:"Խորհրդատվություն",
+    service4d:"Ընտրիր քեզ համապատասխան ոճը",
+    priceOnRequest:"ըստ հարցման",
 
-    questionLength: "Ի՞նչ երկարության են մազերը։",
-    short: "Կարճ",
-    medium: "Միջին",
-    long: "Երկար",
+    bookingTag:"Ամրագրում",
+    bookingTitle:"Ստեղծենք<br>քո look-ը։",
+    bookingText:"Պատմիր մի փոքր քո և ցանկալի արդյունքի մասին։",
 
-    questionWishes: "Ի՞նչ ես ցանկանում։",
-    wishesPlaceholder: "Գրիր քո ցանկությունները...",
+    chooseStyle:"01 — Ընտրիր ոճը",
+    notSure:"Դեռ չգիտեմ",
 
-    questionName: "Քո անունը",
-    namePlaceholder: "Գրիր քո անունը",
+    hairLength:"02 — Մազերի երկարություն",
+    short:"Կարճ",
+    medium:"Միջին",
+    long:"Երկար",
+    other:"Այլ",
 
-    questionPhone: "Հեռախոս / Instagram",
-    phonePlaceholder: "+420... կամ @instagram",
+    serviceQuestion:"03 — Ի՞նչ ես ցանկանում։",
+    women:"Կանացի սանրվածք",
+    men:"Տղամարդու սանրվածք",
+    styling:"Հարդարում",
+    consultation:"Խորհրդատվություն",
 
-    questionDate: "Ցանկալի ամսաթիվ",
-    questionTime: "Ցանկալի ժամ",
+    wishes:"04 — Ասա ավելին",
+    wishesPlaceholder:"Գրիր, թե ինչ արդյունք ես ցանկանում...",
 
-    submit: "Ուղարկել հայտը →",
-    success: "Շնորհակալություն։ Հայտը ուղարկվել է։ Շուտով կկապվեմ քեզ հետ։",
+    yourDetails:"05 — Քո տվյալները",
+    namePlaceholder:"Քո անունը",
+    contactPlaceholder:"Հեռախոս / Instagram",
 
-    contactLabel: "Կապ",
-    contactTitle: "Մնանք<br>կապի մեջ։",
-    location: "Տեղակայություն",
-    bookingCard: "Ամրագրում",
-    bookingCardText: "Ամրագրել →"
+    dateTime:"06 — Ցանկալի ամսաթիվ և ժամ",
+
+    sendRequest:"Ուղարկել հայտը →",
+    success:"Շնորհակալություն։ Հայտը ուղարկվել է։",
+
+    aboutTag:"Մեր մասին",
+    aboutTitle:"Մանրուքները<br>կարևոր են։",
+    aboutText:"Անհատական աշխատանք մազերի հետ՝ ոչ միայն թրենդը կրկնելու, այլ քեզ համապատասխան ձև գտնելու համար։",
+
+    instagramText:"Ավելի շատ աշխատանքներ և ոգեշնչում։",
+
+    footerText:"Անձնական hairstylist · Պրահա · 2026"
 },
 
-vi: {
-    code: "VN",
-    flag: "🇻🇳",
+vi:{
+    code:"VN",
+    flag:"🇻🇳",
 
-    navServices: "Dịch vụ",
-    navBooking: "Đặt lịch",
-    navContact: "Liên hệ",
+    navPortfolio:"Portfolio",
+    navServices:"Dịch vụ",
+    navBooking:"Đặt lịch",
+    navContact:"Liên hệ",
 
-    heroSmall: "Personal hairstylist",
-    heroText: "Phong cách cá nhân, sự tinh tế và chú ý đến từng chi tiết. Chọn phong cách của bạn và đặt lịch.",
-    heroButton: "Đặt lịch",
+    heroEyebrow:"Personal hairstylist · Prague",
+    heroDescription:"Mái tóc không chỉ là một kiểu cắt. Đó là cách bạn bước vào một căn phòng. Phong cách cá nhân và sự chú ý đến từng chi tiết.",
+    book:"Đặt lịch",
+    viewWork:"Xem tác phẩm",
 
-    servicesLabel: "Dịch vụ",
-    servicesTitle: "Phong cách của bạn.<br>Quy tắc của bạn.",
+    introTag:"Triết lý",
+    introText:"Một kiểu tóc nên cảm thấy <em>giống bạn.</em>",
 
-    service1: "Cắt tóc nữ",
-    service1Desc: "Kiểu dáng, độ dài và tạo kiểu phù hợp với bạn.",
-    service2: "Cắt tóc nam",
-    service2Desc: "Gọn gàng và hiện đại.",
-    service3: "Tạo kiểu",
-    service3Desc: "Hoàn thiện diện mạo cho ngày đặc biệt.",
+    portfolioTag:"Tác phẩm",
+    portfolioTitle:"Những<br>look nổi bật.",
+    portfolioDescription:"Chọn phong cách bạn thích và sử dụng làm cảm hứng khi đặt lịch.",
 
-    bookingLabel: "Đặt lịch",
-    bookingTitle: "Hãy nói<br>bạn muốn gì.",
-    bookingSubtitle: "Chọn các lựa chọn bên dưới để tôi hiểu mong muốn của bạn.",
+    servicesTag:"Dịch vụ",
+    servicesTitle:"Đơn giản.<br>Chính xác.",
 
-    questionService: "Bạn muốn làm gì?",
-    female: "✂ Cắt tóc nữ",
-    male: "✂ Cắt tóc nam",
-    style: "✨ Tạo kiểu",
+    service1:"Cắt tóc nữ",
+    service1d:"Cắt · tạo dáng · styling",
+    service2:"Cắt tóc nam",
+    service2d:"Cắt · tạo dáng · hoàn thiện",
+    service3:"Tạo kiểu",
+    service3d:"Sự kiện · editorial · everyday",
+    service4:"Tư vấn",
+    service4d:"Tìm phong cách phù hợp với bạn",
+    priceOnRequest:"liên hệ",
 
-    questionLength: "Độ dài tóc?",
-    short: "Ngắn",
-    medium: "Trung bình",
-    long: "Dài",
+    bookingTag:"Đặt lịch",
+    bookingTitle:"Tạo nên<br>phong cách của bạn.",
+    bookingText:"Hãy chia sẻ một chút về bạn và kết quả bạn mong muốn.",
 
-    questionWishes: "Bạn muốn gì?",
-    wishesPlaceholder: "Ví dụ: ngắn hơn hai bên, giữ độ dài phía trên...",
+    chooseStyle:"01 — Chọn phong cách",
+    notSure:"Tôi chưa chắc",
 
-    questionName: "Tên của bạn",
-    namePlaceholder: "Nhập tên",
+    hairLength:"02 — Độ dài tóc",
+    short:"Ngắn",
+    medium:"Trung bình",
+    long:"Dài",
+    other:"Khác",
 
-    questionPhone: "Điện thoại / Instagram",
-    phonePlaceholder: "+420... hoặc @instagram",
+    serviceQuestion:"03 — Bạn muốn gì?",
+    women:"Cắt tóc nữ",
+    men:"Cắt tóc nam",
+    styling:"Tạo kiểu",
+    consultation:"Tư vấn",
 
-    questionDate: "Ngày mong muốn",
-    questionTime: "Giờ mong muốn",
+    wishes:"04 — Nói thêm",
+    wishesPlaceholder:"Hãy mô tả kết quả bạn mong muốn...",
 
-    submit: "Gửi yêu cầu →",
-    success: "Cảm ơn! Yêu cầu đã được gửi. Tôi sẽ liên hệ với bạn sớm.",
+    yourDetails:"05 — Thông tin của bạn",
+    namePlaceholder:"Tên của bạn",
+    contactPlaceholder:"Điện thoại / Instagram",
 
-    contactLabel: "Liên hệ",
-    contactTitle: "Hãy giữ<br>liên lạc.",
-    location: "Địa điểm",
-    bookingCard: "Đặt lịch",
-    bookingCardText: "Đặt lịch →"
+    dateTime:"06 — Ngày & giờ mong muốn",
+
+    sendRequest:"Gửi yêu cầu →",
+    success:"Cảm ơn! Yêu cầu của bạn đã được gửi.",
+
+    aboutTag:"Giới thiệu",
+    aboutTitle:"Chi tiết tạo<br>nên khác biệt.",
+    aboutText:"Làm tóc cá nhân, tập trung vào việc tìm ra kiểu dáng phù hợp với bạn.",
+
+    instagramText:"Xem thêm tác phẩm và cảm hứng.",
+
+    footerText:"Personal hairstylist · Prague · 2026"
 },
 
-zh: {
-    code: "CN",
-    flag: "🇨🇳",
+zh:{
+    code:"CN",
+    flag:"🇨🇳",
 
-    navServices: "服务",
-    navBooking: "预约",
-    navContact: "联系",
+    navPortfolio:"作品",
+    navServices:"服务",
+    navBooking:"预约",
+    navContact:"联系",
 
-    heroSmall: "私人发型师",
-    heroText: "注重个人风格、细节和整体造型。选择你的风格并预约时间。",
-    heroButton: "立即预约",
+    heroEyebrow:"私人发型师 · 布拉格",
+    heroDescription:"头发不只是一个发型。它是你进入一个房间时的第一印象。个人风格、干净线条以及对细节的关注。",
+    book:"立即预约",
+    viewWork:"查看作品",
 
-    servicesLabel: "服务",
-    servicesTitle: "你的风格。<br>你的规则。",
+    introTag:"理念",
+    introText:"发型应该感觉 <em>像你。</em>",
 
-    service1: "女士剪发",
-    service1Desc: "根据你的风格设计长度、形状和造型。",
-    service2: "男士剪发",
-    service2Desc: "干净利落的现代造型。",
-    service3: "造型",
-    service3Desc: "为特殊日子完成最后的造型。",
-    
-    bookingLabel: "预约",
-    bookingTitle: "告诉我<br>你想要什么。",
-    bookingSubtitle: "选择下面的选项，让我提前了解你的需求。",
+    portfolioTag:"精选作品",
+    portfolioTitle:"精选<br>造型。",
+    portfolioDescription:"选择你喜欢的风格，预约时可以将其作为参考。",
 
-    questionService: "你想做什么？",
-    female: "✂ 女士剪发",
-    male: "✂ 男士剪发",
-    style: "✨ 造型",
+    servicesTag:"服务",
+    servicesTitle:"简单。<br>精准。",
 
-    questionLength: "头发长度？",
-    short: "短发",
-    medium: "中长",
-    long: "长发",
+    service1:"女士剪发",
+    service1d:"剪发 · 造型 · styling",
+    service2:"男士剪发",
+    service2d:"剪发 · 造型 · 完成",
+    service3:"造型",
+    service3d:"活动 · editorial · everyday",
+    service4:"咨询",
+    service4d:"找到最适合你的风格",
+    priceOnRequest:"请咨询",
 
-    questionWishes: "具体想要什么？",
-    wishesPlaceholder: "例如：两侧短一些，上面保留长度...",
+    bookingTag:"预约",
+    bookingTitle:"创造<br>你的风格。",
+    bookingText:"告诉我一些关于你和理想效果的信息。",
 
-    questionName: "你的名字",
-    namePlaceholder: "输入姓名",
+    chooseStyle:"01 — 选择风格",
+    notSure:"还不确定",
 
-    questionPhone: "电话 / Instagram",
-    phonePlaceholder: "+420... 或 @instagram",
+    hairLength:"02 — 头发长度",
+    short:"短发",
+    medium:"中长",
+    long:"长发",
+    other:"其他",
 
-    questionDate: "希望日期",
-    questionTime: "希望时间",
+    serviceQuestion:"03 — 你想做什么？",
+    women:"女士剪发",
+    men:"男士剪发",
+    styling:"造型",
+    consultation:"咨询",
 
-    submit: "发送预约 →",
-    success: "谢谢！预约已发送。我会尽快联系你。",
+    wishes:"04 — 告诉我更多",
+    wishesPlaceholder:"描述你想要的效果...",
 
-    contactLabel: "联系",
-    contactTitle: "保持<br>联系。",
-    location: "地点",
-    bookingCard: "预约",
-    bookingCardText: "立即预约 →"
+    yourDetails:"05 — 你的信息",
+    namePlaceholder:"你的名字",
+    contactPlaceholder:"电话 / Instagram",
+
+    dateTime:"06 — 希望的日期和时间",
+
+    sendRequest:"发送预约 →",
+    success:"谢谢！你的预约已经发送。",
+
+    aboutTag:"关于",
+    aboutTitle:"细节决定<br>不同。",
+    aboutText:"专注于个人发型设计，不只是追随趋势，而是找到真正适合你的造型。",
+
+    instagramText:"更多作品与灵感。",
+
+    footerText:"Personal hairstylist · Prague · 2026"
 },
 
-ja: {
-    code: "JP",
-    flag: "🇯🇵",
+ja:{
+    code:"JP",
+    flag:"🇯🇵",
 
-    navServices: "サービス",
-    navBooking: "予約",
-    navContact: "お問い合わせ",
+    navPortfolio:"ポートフォリオ",
+    navServices:"サービス",
+    navBooking:"予約",
+    navContact:"お問い合わせ",
 
-    heroSmall: "パーソナルヘアスタイリスト",
-    heroText: "あなたらしいスタイルと細部へのこだわり。希望のスタイルを選んで予約してください。",
-    heroButton: "予約する",
+    heroEyebrow:"パーソナルヘアスタイリスト · プラハ",
+    heroDescription:"髪型はただのカットではありません。あなたらしいスタイルと細部へのこだわり。",
+    book:"予約する",
+    viewWork:"作品を見る",
 
-    servicesLabel: "サービス",
-    servicesTitle: "あなたのスタイル。<br>あなたのルール。",
+    introTag:"コンセプト",
+    introText:"ヘアスタイルは <em>あなたらしく</em> あるべき。",
 
-    service1: "レディースカット",
-    service1Desc: "あなたのスタイルに合わせた長さ・形・仕上げ。",
-    service2: "メンズカット",
-    service2Desc: "清潔感のあるモダンなスタイル。",
-    service3: "スタイリング",
-    service3Desc: "特別な日のための仕上げ。",
-    
-    bookingLabel: "予約",
-    bookingTitle: "希望を<br>教えてください。",
-    bookingSubtitle: "下の項目を選択して、希望のスタイルを教えてください。",
+    portfolioTag:"Selected work",
+    portfolioTitle:"The<br>looks.",
+    portfolioDescription:"好きなスタイルを選んで、予約時に参考として伝えることができます。",
 
-    questionService: "何をしたいですか？",
-    female: "✂ レディースカット",
-    male: "✂ メンズカット",
-    style: "✨ スタイリング",
+    servicesTag:"サービス",
+    servicesTitle:"シンプル。<br>正確に。",
 
-    questionLength: "髪の長さは？",
-    short: "ショート",
-    medium: "ミディアム",
-    long: "ロング",
+    service1:"レディースカット",
+    service1d:"カット · フォルム · スタイリング",
+    service2:"メンズカット",
+    service2d:"カット · フォルム · 仕上げ",
+    service3:"スタイリング",
+    service3d:"イベント · editorial · everyday",
+    service4:"カウンセリング",
+    service4d:"あなたに合うスタイルを提案",
+    priceOnRequest:"要相談",
 
-    questionWishes: "どんなスタイルにしたいですか？",
-    wishesPlaceholder: "例：サイドを短く、トップは長さを残したい...",
+    bookingTag:"予約",
+    bookingTitle:"あなたの<br>スタイルを作ろう。",
+    bookingText:"あなたについて、そして希望する仕上がりを教えてください。",
 
-    questionName: "お名前",
-    namePlaceholder: "お名前を入力",
+    chooseStyle:"01 — スタイルを選ぶ",
+    notSure:"まだ決めていない",
 
-    questionPhone: "電話 / Instagram",
-    phonePlaceholder: "+420... または @instagram",
+    hairLength:"02 — 髪の長さ",
+    short:"ショート",
+    medium:"ミディアム",
+    long:"ロング",
+    other:"その他",
 
-    questionDate: "希望日",
-    questionTime: "希望時間",
+    serviceQuestion:"03 — 何をしたいですか？",
+    women:"レディースカット",
+    men:"メンズカット",
+    styling:"スタイリング",
+    consultation:"カウンセリング",
 
-    submit: "予約を送信 →",
-    success: "ありがとうございます！予約を送信しました。近日中にご連絡します。",
+    wishes:"04 — 詳しく教えてください",
+    wishesPlaceholder:"希望する仕上がりを教えてください...",
 
-    contactLabel: "お問い合わせ",
-    contactTitle: "また<br>連絡しましょう。",
-    location: "場所",
-    bookingCard: "予約",
-    bookingCardText: "予約する →"
+    yourDetails:"05 — あなたの情報",
+    namePlaceholder:"お名前",
+    contactPlaceholder:"電話 / Instagram",
+
+    dateTime:"06 — 希望日時",
+
+    sendRequest:"予約を送信 →",
+    success:"ありがとうございます！予約を送信しました。",
+
+    aboutTag:"About",
+    aboutTitle:"細部が<br>違いを作る。",
+    aboutText:"トレンドをそのままコピーするのではなく、あなたに本当に似合う形を見つけます。",
+
+    instagramText:"作品やインスピレーションをもっと見る。",
+
+    footerText:"Personal hairstylist · Prague · 2026"
 }
 
 };
 
 
-/* =====================================================
-   LANGUAGE FUNCTIONS
-===================================================== */
+/* ==========================================
+   LANGUAGE
+========================================== */
 
-function toggleLanguages() {
+function toggleLanguage(){
+
     document
-        .getElementById("languageBox")
+        .getElementById("language")
         .classList.toggle("open");
+
 }
 
 
-function setLanguage(lang) {
+function setLanguage(lang){
 
-    const t = translations[lang];
+    const t=translations[lang];
 
-    if (!t) return;
+    if(!t)return;
 
-    document.documentElement.lang = lang;
+    document.documentElement.lang=lang;
 
-    document.getElementById("currentFlag").textContent = t.flag;
-    document.getElementById("currentLanguage").textContent = t.code;
+    document.getElementById("currentFlag").textContent=t.flag;
+    document.getElementById("currentCode").textContent=t.code;
 
-    document.querySelectorAll("[data-i18n]").forEach(element => {
+    document.querySelectorAll("[data-i18n]").forEach(el=>{
 
-        const key = element.getAttribute("data-i18n");
+        const key=el.dataset.i18n;
 
-        if (t[key]) {
-            element.innerHTML = t[key];
+        if(t[key]){
+            el.innerHTML=t[key];
         }
 
     });
 
 
-    document.querySelectorAll("[data-placeholder]").forEach(element => {
+    document.querySelectorAll("[data-placeholder]").forEach(el=>{
 
-        const key = element.getAttribute("data-placeholder");
+        const key=el.dataset.placeholder;
 
-        if (t[key]) {
-            element.placeholder = t[key];
+        if(t[key]){
+            el.placeholder=t[key];
         }
 
     });
 
 
-    document.querySelectorAll(".language-option").forEach(option => {
+    document.querySelectorAll(".lang-option").forEach(el=>{
 
-        option.classList.toggle(
+        el.classList.toggle(
             "active",
-            option.dataset.lang === lang
+            el.dataset.lang===lang
         );
 
     });
 
 
-    localStorage.setItem("siteLanguage", lang);
+    localStorage.setItem("siteLanguage",lang);
 
     document
-        .getElementById("languageBox")
+        .getElementById("language")
         .classList.remove("open");
 }
 
 
-/* =====================================================
-   CLOSE LANGUAGE MENU
-===================================================== */
+document.querySelectorAll(".lang-option").forEach(btn=>{
 
-document.addEventListener("click", function(event) {
+    btn.addEventListener("click",()=>{
 
-    const box = document.getElementById("languageBox");
+        setLanguage(btn.dataset.lang);
 
-    if (!box.contains(event.target)) {
-        box.classList.remove("open");
-    }
+    });
 
 });
 
 
-/* =====================================================
-   LOAD SAVED LANGUAGE
-===================================================== */
-
-const savedLanguage =
+const savedLanguage=
     localStorage.getItem("siteLanguage") || "uk";
 
 setLanguage(savedLanguage);
 
 
-/* =====================================================
-   FORMSPREE AJAX
-===================================================== */
+/* ==========================================
+   CLOSE LANGUAGE
+========================================== */
 
-const form = document.getElementById("bookingForm");
-const success = document.getElementById("success");
+document.addEventListener("click",e=>{
 
-form.addEventListener("submit", async function(event) {
+    const language=document.getElementById("language");
 
-    event.preventDefault();
+    if(!language.contains(e.target)){
+        language.classList.remove("open");
+    }
 
-    const button = form.querySelector(".submit");
+});
 
-    const originalText = button.textContent;
 
-    button.disabled = true;
-    button.textContent = "Sending...";
+/* ==========================================
+   LOADER
+========================================== */
 
-    try {
+window.addEventListener("load",()=>{
 
-        const response = await fetch(form.action, {
-            method: "POST",
-            body: new FormData(form),
-            headers: {
-                "Accept": "application/json"
+    setTimeout(()=>{
+
+        document
+            .getElementById("loader")
+            .classList.add("hide");
+
+        document.body.classList.remove("loading");
+
+    },700);
+
+});
+
+
+/* ==========================================
+   NAV SCROLL
+========================================== */
+
+window.addEventListener("scroll",()=>{
+
+    const nav=document.getElementById("nav");
+
+    if(window.scrollY>60){
+        nav.classList.add("scrolled");
+    }else{
+        nav.classList.remove("scrolled");
+    }
+
+});
+
+
+/* ==========================================
+   SCROLL REVEAL
+========================================== */
+
+const observer=new IntersectionObserver(
+
+    entries=>{
+
+        entries.forEach(entry=>{
+
+            if(entry.isIntersecting){
+
+                entry.target.classList.add("visible");
+
+                observer.unobserve(entry.target);
+
             }
+
         });
 
-        if (response.ok) {
+    },
+
+    {
+        threshold:.12
+    }
+
+);
+
+
+document
+    .querySelectorAll(".reveal")
+    .forEach(el=>observer.observe(el));
+
+
+/* ==========================================
+   FORMSPREE
+========================================== */
+
+const form=document.getElementById("bookingForm");
+const success=document.getElementById("success");
+
+form.addEventListener("submit",async e=>{
+
+    e.preventDefault();
+
+    const button=form.querySelector(".submit");
+
+    const language=
+        localStorage.getItem("siteLanguage") || "uk";
+
+    const original=button.textContent;
+
+    button.disabled=true;
+    button.textContent="...";
+
+    try{
+
+        const response=await fetch(
+
+            form.action,
+
+            {
+                method:"POST",
+                body:new FormData(form),
+                headers:{
+                    "Accept":"application/json"
+                }
+            }
+
+        );
+
+
+        if(response.ok){
 
             success.classList.add("show");
 
             form.reset();
 
-            const lang =
-                localStorage.getItem("siteLanguage") || "uk";
+            button.textContent=
+                translations[language].sendRequest;
 
-            button.textContent =
-                translations[lang].submit;
+            success.scrollIntoView({
+                behavior:"smooth",
+                block:"center"
+            });
 
-            setTimeout(() => {
+            setTimeout(()=>{
+
                 success.classList.remove("show");
-            }, 8000);
 
-        } else {
+            },8000);
 
-            button.textContent = "Error — try again";
+        }else{
+
+            button.textContent="Error — try again";
 
         }
 
-    } catch (error) {
+    }catch(error){
 
-        button.textContent = "Error — try again";
+        button.textContent="Error — try again";
 
     }
 
-    button.disabled = false;
+    setTimeout(()=>{
+
+        if(button.textContent==="Error — try again"){
+            button.textContent=original;
+        }
+
+    },3000);
+
+    button.disabled=false;
 
 });
+
+
+/* ==========================================
+   SET MINIMUM DATE
+========================================== */
+
+const dateInput=
+    document.querySelector('input[type="date"]');
+
+if(dateInput){
+
+    const today=
+        new Date().toISOString().split("T")[0];
+
+    dateInput.min=today;
+
+}
 
 </script>
 
