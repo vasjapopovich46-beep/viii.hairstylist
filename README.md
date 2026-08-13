@@ -680,7 +680,7 @@ html
       }
     }
   </style>
-</head>
+  </head>
 
 <body>
 
