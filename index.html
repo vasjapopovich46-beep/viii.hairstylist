@@ -7,2284 +7,2822 @@
 <title>SCISSORS — Barber Studio</title>
 
 <style>
-
 *{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
 }
 
 html{
-  scroll-behavior:smooth;
+    scroll-behavior:smooth;
 }
 
 body{
-  background:#080808;
-  color:#f5f1e8;
-  font-family:Arial,Helvetica,sans-serif;
-  overflow-x:hidden;
+    background:#080808;
+    color:#f5f1e8;
+    font-family:Arial,Helvetica,sans-serif;
+    overflow-x:hidden;
 }
 
 button,
 input,
-textarea,
-select{
-  font-family:inherit;
+textarea{
+    font-family:inherit;
 }
 
 button{
-  cursor:pointer;
+    cursor:pointer;
 }
 
 a{
-  color:inherit;
-  text-decoration:none;
+    text-decoration:none;
+    color:inherit;
 }
 
-/* ================= HEADER ================= */
+
+/* =====================================================
+   LANGUAGE SCREEN
+===================================================== */
+
+.language-screen{
+    position:fixed;
+    inset:0;
+    z-index:99999;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:
+        radial-gradient(
+            circle at center,
+            #18140d 0%,
+            #080808 55%,
+            #050505 100%
+        );
+
+    transition:
+        opacity .8s ease,
+        visibility .8s ease;
+}
+
+.language-screen.hide{
+    opacity:0;
+    visibility:hidden;
+    pointer-events:none;
+}
+
+.language-decoration{
+    position:absolute;
+    inset:0;
+    overflow:hidden;
+    pointer-events:none;
+}
+
+.language-decoration::before{
+    content:"✂";
+    position:absolute;
+
+    right:5%;
+    top:10%;
+
+    font-size:45vw;
+
+    line-height:1;
+
+    color:rgba(201,167,106,.035);
+
+    transform:rotate(-25deg);
+}
+
+.language-decoration::after{
+    content:"SCISSORS";
+    position:absolute;
+
+    left:50%;
+    bottom:-50px;
+
+    transform:translateX(-50%);
+
+    font-size:18vw;
+    font-weight:900;
+    letter-spacing:-10px;
+
+    color:rgba(255,255,255,.025);
+}
+
+.language-content{
+    position:relative;
+    z-index:2;
+
+    width:min(600px,90%);
+
+    text-align:center;
+
+    animation:languageIn 1s ease;
+}
+
+@keyframes languageIn{
+    from{
+        opacity:0;
+        transform:translateY(30px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+.language-small{
+    color:#c9a76a;
+
+    font-size:10px;
+    letter-spacing:5px;
+
+    text-transform:uppercase;
+
+    margin-bottom:25px;
+}
+
+.language-logo{
+    font-size:clamp(55px,12vw,110px);
+
+    line-height:.8;
+
+    font-weight:900;
+
+    letter-spacing:-6px;
+
+    margin-bottom:25px;
+}
+
+.language-logo span{
+    color:#c9a76a;
+}
+
+.language-title{
+    color:#aaa;
+
+    font-size:14px;
+
+    letter-spacing:2px;
+
+    text-transform:uppercase;
+
+    margin-bottom:45px;
+}
+
+.language-buttons{
+    display:grid;
+
+    grid-template-columns:
+    repeat(3,1fr);
+
+    gap:12px;
+}
+
+.language-card{
+    min-height:155px;
+
+    border:1px solid #292929;
+
+    background:#101010;
+
+    color:#eee;
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:14px;
+
+    transition:.35s;
+
+    position:relative;
+
+    overflow:hidden;
+}
+
+.language-card::before{
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    background:
+        linear-gradient(
+            135deg,
+            transparent,
+            rgba(201,167,106,.12),
+            transparent
+        );
+
+    transform:translateX(-100%);
+
+    transition:.6s;
+}
+
+.language-card:hover::before{
+    transform:translateX(100%);
+}
+
+.language-card:hover{
+    border-color:#c9a76a;
+
+    transform:translateY(-6px);
+
+    background:#15130f;
+}
+
+.flag{
+    font-size:42px;
+
+    position:relative;
+    z-index:2;
+}
+
+.language-name{
+    font-size:13px;
+
+    letter-spacing:2px;
+
+    text-transform:uppercase;
+
+    position:relative;
+    z-index:2;
+}
+
+.language-native{
+    color:#666;
+
+    font-size:11px;
+
+    position:relative;
+    z-index:2;
+}
+
+.language-footer{
+    margin-top:45px;
+
+    color:#444;
+
+    font-size:9px;
+
+    letter-spacing:3px;
+
+    text-transform:uppercase;
+}
+
+
+/* =====================================================
+   HEADER
+===================================================== */
 
 header{
-  position:fixed;
-  top:0;
-  left:0;
-  right:0;
-  height:80px;
+    position:fixed;
 
-  padding:0 6%;
+    top:0;
+    left:0;
+    right:0;
 
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
+    height:80px;
 
-  z-index:1000;
+    padding:0 6%;
 
-  background:rgba(8,8,8,.82);
-  backdrop-filter:blur(18px);
+    display:flex;
 
-  border-bottom:1px solid rgba(255,255,255,.08);
+    align-items:center;
+    justify-content:space-between;
+
+    z-index:1000;
+
+    background:rgba(8,8,8,.82);
+
+    backdrop-filter:blur(18px);
+
+    border-bottom:1px solid rgba(255,255,255,.08);
 }
 
 .logo{
-  font-size:23px;
-  font-weight:900;
-  letter-spacing:5px;
+    font-size:23px;
+
+    font-weight:900;
+
+    letter-spacing:5px;
 }
 
 .logo span{
-  color:#c9a76a;
+    color:#c9a76a;
 }
 
 nav{
-  display:flex;
-  gap:28px;
+    display:flex;
+    gap:28px;
 }
 
 nav a{
-  color:#aaa;
-  font-size:10px;
-  letter-spacing:2px;
-  text-transform:uppercase;
-  transition:.3s;
+    color:#aaa;
+
+    font-size:10px;
+
+    letter-spacing:2px;
+
+    text-transform:uppercase;
+
+    transition:.3s;
 }
 
 nav a:hover{
-  color:#c9a76a;
+    color:#c9a76a;
 }
 
-.language{
-  display:flex;
-  gap:5px;
+.header-language{
+    display:flex;
+    gap:4px;
 }
 
-.language button{
-  background:none;
-  border:1px solid transparent;
-  color:#777;
+.header-language button{
+    background:none;
 
-  padding:7px 9px;
+    border:1px solid transparent;
 
-  font-size:10px;
-  letter-spacing:1px;
+    color:#777;
+
+    padding:7px 9px;
+
+    font-size:10px;
+
+    letter-spacing:1px;
 }
 
-.language button.active,
-.language button:hover{
-  color:#c9a76a;
-  border-color:#c9a76a;
+.header-language button.active,
+.header-language button:hover{
+    color:#c9a76a;
+
+    border-color:#c9a76a;
 }
 
 .book{
-  border:1px solid #c9a76a;
-  color:#c9a76a;
+    border:1px solid #c9a76a;
 
-  padding:11px 18px;
+    color:#c9a76a;
 
-  font-size:10px;
-  letter-spacing:2px;
+    padding:11px 18px;
 
-  text-transform:uppercase;
+    font-size:10px;
 
-  transition:.3s;
+    letter-spacing:2px;
+
+    text-transform:uppercase;
+
+    transition:.3s;
 }
 
 .book:hover{
-  background:#c9a76a;
-  color:#080808;
+    background:#c9a76a;
+
+    color:#080808;
 }
 
-/* ================= HERO ================= */
+
+/* =====================================================
+   HERO
+===================================================== */
 
 .hero{
-  min-height:100vh;
+    min-height:100vh;
 
-  display:flex;
-  align-items:center;
+    display:flex;
 
-  padding:150px 8% 100px;
+    align-items:center;
 
-  position:relative;
+    padding:150px 8% 100px;
 
-  overflow:hidden;
+    position:relative;
 
-  background:
-    linear-gradient(
-      90deg,
-      rgba(8,8,8,.98),
-      rgba(8,8,8,.75),
-      rgba(8,8,8,.35)
-    ),
-    url("01-textured-crop-fade.jpg")
-    center/cover no-repeat;
+    overflow:hidden;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(8,8,8,.98),
+            rgba(8,8,8,.76),
+            rgba(8,8,8,.35)
+        ),
+        url("01-textured-crop-fade.jpg")
+        center/cover no-repeat;
 }
 
 .hero-content{
-  position:relative;
-  z-index:5;
+    position:relative;
 
-  max-width:850px;
+    z-index:5;
+
+    max-width:850px;
 }
 
 .eyebrow{
-  color:#c9a76a;
+    color:#c9a76a;
 
-  font-size:11px;
-  letter-spacing:5px;
+    font-size:11px;
 
-  text-transform:uppercase;
+    letter-spacing:5px;
 
-  margin-bottom:25px;
+    text-transform:uppercase;
+
+    margin-bottom:25px;
 }
 
 h1{
-  font-size:clamp(70px,13vw,170px);
+    font-size:clamp(70px,13vw,170px);
 
-  line-height:.78;
+    line-height:.78;
 
-  letter-spacing:-9px;
+    letter-spacing:-9px;
 
-  text-transform:uppercase;
+    text-transform:uppercase;
 
-  font-weight:900;
+    font-weight:900;
 }
 
 h1 span{
-  color:transparent;
-  -webkit-text-stroke:1px #f5f1e8;
+    color:transparent;
+
+    -webkit-text-stroke:1px #f5f1e8;
 }
 
 .hero-description{
-  max-width:520px;
+    max-width:520px;
 
-  margin-top:40px;
+    margin-top:40px;
 
-  color:#aaa;
+    color:#aaa;
 
-  font-size:16px;
+    font-size:16px;
 
-  line-height:1.8;
+    line-height:1.8;
 }
 
 .hero-buttons{
-  display:flex;
-  gap:15px;
+    display:flex;
 
-  margin-top:35px;
+    gap:15px;
+
+    margin-top:35px;
 }
 
 .button{
-  display:inline-block;
+    display:inline-block;
 
-  padding:17px 30px;
+    padding:17px 30px;
 
-  font-size:10px;
+    font-size:10px;
 
-  letter-spacing:2px;
+    letter-spacing:2px;
 
-  text-transform:uppercase;
+    text-transform:uppercase;
 
-  transition:.3s;
+    transition:.3s;
 }
 
 .gold{
-  background:#c9a76a;
-  color:#080808;
-  border:none;
+    background:#c9a76a;
+
+    color:#080808;
+
+    border:none;
 }
 
 .gold:hover{
-  transform:translateY(-3px);
+    transform:translateY(-3px);
 
-  box-shadow:
-  0 15px 40px rgba(201,167,106,.25);
+    box-shadow:
+        0 15px 40px
+        rgba(201,167,106,.25);
 }
 
 .outline{
-  border:1px solid #555;
-  background:transparent;
-  color:#eee;
+    border:1px solid #555;
+
+    background:transparent;
+
+    color:#eee;
 }
 
 .outline:hover{
-  border-color:#c9a76a;
-  color:#c9a76a;
+    border-color:#c9a76a;
+
+    color:#c9a76a;
 }
 
-/* ================= SCISSORS ================= */
+
+/* =====================================================
+   SCISSORS
+===================================================== */
 
 .scissors{
-  position:absolute;
+    position:absolute;
 
-  right:3%;
-  top:50%;
+    right:3%;
+    top:50%;
 
-  width:460px;
-  height:460px;
+    width:460px;
+    height:460px;
 
-  opacity:.15;
+    opacity:.15;
 
-  transform:
-  translateY(-50%)
-  rotate(-18deg);
+    transform:
+        translateY(-50%)
+        rotate(-18deg);
 
-  animation:floatScissors 6s ease-in-out infinite;
+    animation:
+        floatScissors
+        6s ease-in-out infinite;
 }
 
 .blade{
-  position:absolute;
+    position:absolute;
 
-  width:330px;
-  height:30px;
+    width:330px;
+    height:30px;
 
-  left:45px;
-  top:220px;
+    left:45px;
+    top:220px;
 
-  border-radius:50px;
+    border-radius:50px;
 
-  background:
-  linear-gradient(
-    90deg,
-    #fff,
-    #777,
-    #222
-  );
+    background:
+        linear-gradient(
+            90deg,
+            #fff,
+            #777,
+            #222
+        );
 
-  transform-origin:right center;
+    transform-origin:right center;
 }
 
 .blade.one{
-  transform:rotate(25deg);
+    transform:rotate(25deg);
 }
 
 .blade.two{
-  transform:rotate(-25deg);
+    transform:rotate(-25deg);
 }
 
 .ring{
-  position:absolute;
+    position:absolute;
 
-  width:115px;
-  height:115px;
+    width:115px;
+    height:115px;
 
-  border-radius:50%;
+    border-radius:50%;
 
-  border:22px solid #999;
+    border:22px solid #999;
 
-  right:0;
+    right:0;
 }
 
 .ring.one{
-  top:105px;
+    top:105px;
 }
 
 .ring.two{
-  top:260px;
+    top:260px;
 }
 
 .pivot{
-  position:absolute;
+    position:absolute;
 
-  width:38px;
-  height:38px;
+    width:38px;
+    height:38px;
 
-  border-radius:50%;
+    border-radius:50%;
 
-  background:#c9a76a;
+    background:#c9a76a;
 
-  left:62px;
-  top:220px;
+    left:62px;
+    top:220px;
 
-  box-shadow:0 0 40px #c9a76a;
+    box-shadow:
+        0 0 40px #c9a76a;
 }
 
 @keyframes floatScissors{
 
-  0%,100%{
-    transform:
-    translateY(-50%)
-    rotate(-18deg);
-  }
+    0%,100%{
+        transform:
+            translateY(-50%)
+            rotate(-18deg);
+    }
 
-  50%{
-    transform:
-    translateY(calc(-50% - 20px))
-    rotate(-10deg);
-  }
-
+    50%{
+        transform:
+            translateY(calc(-50% - 20px))
+            rotate(-10deg);
+    }
 }
 
-/* ================= MARQUEE ================= */
+
+/* =====================================================
+   MARQUEE
+===================================================== */
 
 .marquee{
-  overflow:hidden;
+    overflow:hidden;
 
-  padding:20px 0;
+    padding:20px 0;
 
-  border-top:1px solid #222;
-  border-bottom:1px solid #222;
+    border-top:1px solid #222;
 
-  white-space:nowrap;
+    border-bottom:1px solid #222;
+
+    white-space:nowrap;
 }
 
 .marquee-text{
-  display:inline-block;
+    display:inline-block;
 
-  color:#c9a76a;
+    color:#c9a76a;
 
-  font-size:11px;
+    font-size:11px;
 
-  letter-spacing:6px;
+    letter-spacing:6px;
 
-  text-transform:uppercase;
+    text-transform:uppercase;
 
-  animation:marquee 20s linear infinite;
+    animation:
+        marquee
+        20s linear infinite;
 }
 
 @keyframes marquee{
 
-  from{
-    transform:translateX(0);
-  }
+    from{
+        transform:translateX(0);
+    }
 
-  to{
-    transform:translateX(-50%);
-  }
-
+    to{
+        transform:translateX(-50%);
+    }
 }
 
-/* ================= GENERAL ================= */
+
+/* =====================================================
+   SECTIONS
+===================================================== */
 
 section{
-  padding:120px 8%;
+    padding:120px 8%;
 }
 
 .label{
-  color:#c9a76a;
+    color:#c9a76a;
 
-  font-size:10px;
+    font-size:10px;
 
-  letter-spacing:4px;
+    letter-spacing:4px;
 
-  text-transform:uppercase;
+    text-transform:uppercase;
 
-  margin-bottom:20px;
+    margin-bottom:20px;
 }
 
 .section-title{
-  font-size:clamp(50px,8vw,100px);
+    font-size:clamp(50px,8vw,100px);
 
-  line-height:.85;
+    line-height:.85;
 
-  letter-spacing:-5px;
+    letter-spacing:-5px;
 
-  text-transform:uppercase;
+    text-transform:uppercase;
 
-  margin-bottom:65px;
+    margin-bottom:65px;
 }
 
-/* ================= SERVICES ================= */
+
+/* =====================================================
+   SERVICES
+===================================================== */
 
 .services{
-  display:grid;
+    display:grid;
 
-  grid-template-columns:1fr 1fr;
+    grid-template-columns:1fr 1fr;
 
-  border-top:1px solid #292929;
+    border-top:1px solid #292929;
 }
 
 .service{
-  padding:40px 20px;
+    padding:40px 20px;
 
-  border-bottom:1px solid #292929;
+    border-bottom:1px solid #292929;
 
-  transition:.4s;
+    transition:.4s;
 }
 
 .service:nth-child(odd){
-  border-right:1px solid #292929;
+    border-right:1px solid #292929;
 }
 
 .service:hover{
-  background:#111;
+    background:#111;
 }
 
 .service-number{
-  color:#555;
-  font-size:11px;
+    color:#555;
+
+    font-size:11px;
 }
 
 .service h3{
-  margin-top:20px;
+    margin-top:20px;
 
-  font-size:24px;
+    font-size:24px;
 
-  text-transform:uppercase;
+    text-transform:uppercase;
 }
 
 .service p{
-  margin-top:12px;
+    margin-top:12px;
 
-  max-width:470px;
+    max-width:470px;
 
-  color:#777;
+    color:#777;
 
-  line-height:1.7;
+    line-height:1.7;
 }
 
 .price{
-  margin-top:20px;
+    margin-top:20px;
 
-  color:#c9a76a;
+    color:#c9a76a;
 
-  font-size:20px;
+    font-size:20px;
 }
 
-/* ================= ABOUT ================= */
+
+/* =====================================================
+   ABOUT
+===================================================== */
 
 .about{
-  display:grid;
+    display:grid;
 
-  grid-template-columns:1fr 1fr;
+    grid-template-columns:1fr 1fr;
 
-  gap:90px;
+    gap:90px;
 
-  align-items:center;
+    align-items:center;
 }
 
 .about-image{
-  height:620px;
+    height:620px;
 
-  overflow:hidden;
+    overflow:hidden;
 
-  border:1px solid #292929;
+    border:1px solid #292929;
 }
 
 .about-image img{
-  width:100%;
-  height:100%;
+    width:100%;
 
-  object-fit:cover;
+    height:100%;
 
-  transition:1s;
+    object-fit:cover;
+
+    transition:1s;
 }
 
 .about-image:hover img{
-  transform:scale(1.05);
+    transform:scale(1.05);
 }
 
 .about-text p{
-  color:#999;
+    color:#999;
 
-  line-height:1.9;
+    line-height:1.9;
 
-  margin-bottom:25px;
+    margin-bottom:25px;
 }
 
 .signature{
-  margin-top:35px;
+    margin-top:35px;
 
-  color:#c9a76a;
+    color:#c9a76a;
 
-  font-style:italic;
+    font-style:italic;
 
-  font-size:20px;
+    font-size:20px;
 }
 
-/* ================= QUOTE ================= */
+
+/* =====================================================
+   QUOTE
+===================================================== */
 
 .quote{
-  padding:180px 8%;
+    padding:180px 8%;
 
-  background:#111;
+    background:#111;
 
-  text-align:center;
+    text-align:center;
 
-  border-top:1px solid #222;
-  border-bottom:1px solid #222;
+    border-top:1px solid #222;
+
+    border-bottom:1px solid #222;
 }
 
 .quote h2{
-  font-size:clamp(45px,7vw,95px);
+    font-size:clamp(45px,7vw,95px);
 
-  line-height:.85;
+    line-height:.85;
 
-  letter-spacing:-5px;
+    letter-spacing:-5px;
 
-  text-transform:uppercase;
+    text-transform:uppercase;
 }
 
 .quote span{
-  color:#c9a76a;
+    color:#c9a76a;
 }
 
-/* ================= GALLERY ================= */
+
+/* =====================================================
+   GALLERY
+===================================================== */
 
 .gallery{
-  display:grid;
+    display:grid;
 
-  grid-template-columns:
-  1fr 1fr 1fr;
+    grid-template-columns:
+        1fr 1fr 1fr;
 
-  gap:15px;
+    gap:15px;
 }
 
 .gallery-card{
-  height:480px;
+    height:480px;
 
-  position:relative;
+    position:relative;
 
-  overflow:hidden;
+    overflow:hidden;
 
-  background:#111;
+    background:#111;
 
-  border:1px solid #292929;
+    border:1px solid #292929;
 }
 
 .gallery-card:nth-child(2){
-  transform:translateY(70px);
+    transform:translateY(70px);
 }
 
 .gallery-card img{
-  width:100%;
-  height:100%;
+    width:100%;
 
-  object-fit:cover;
+    height:100%;
 
-  display:block;
+    object-fit:cover;
 
-  filter:brightness(.68);
+    display:block;
 
-  transition:.7s;
+    filter:brightness(.68);
+
+    transition:.7s;
 }
 
 .gallery-card:hover img{
-  transform:scale(1.08);
+    transform:scale(1.08);
 
-  filter:brightness(.95);
+    filter:brightness(.95);
 }
 
 .gallery-overlay{
-  position:absolute;
+    position:absolute;
 
-  left:25px;
-  bottom:25px;
+    left:25px;
+    bottom:25px;
 
-  z-index:2;
+    z-index:2;
 
-  font-size:11px;
+    font-size:11px;
 
-  letter-spacing:3px;
+    letter-spacing:3px;
 
-  text-transform:uppercase;
+    text-transform:uppercase;
 
-  text-shadow:0 2px 10px #000;
+    text-shadow:
+        0 2px 10px #000;
 }
 
-/* ================= BOOKING ================= */
+
+/* =====================================================
+   BOOKING
+===================================================== */
 
 .booking-section{
-  background:#0d0d0d;
+    background:#0d0d0d;
 }
 
 .booking-wrapper{
-  max-width:900px;
+    max-width:900px;
 
-  margin:auto;
+    margin:auto;
 }
 
 .booking-head{
-  text-align:center;
+    text-align:center;
 
-  margin-bottom:55px;
+    margin-bottom:55px;
 }
 
 .progress{
-  width:100%;
+    width:100%;
 
-  height:3px;
+    height:3px;
 
-  background:#292929;
+    background:#292929;
 
-  margin-bottom:35px;
+    margin-bottom:35px;
 }
 
 .progress-bar{
-  height:100%;
+    height:100%;
 
-  width:16.66%;
+    width:16.66%;
 
-  background:#c9a76a;
+    background:#c9a76a;
 
-  transition:.4s;
+    transition:.4s;
 }
 
 .step{
-  display:none;
+    display:none;
 
-  animation:stepIn .45s ease;
+    animation:
+        stepIn
+        .45s ease;
 }
 
 .step.active{
-  display:block;
+    display:block;
 }
 
 @keyframes stepIn{
 
-  from{
-    opacity:0;
-    transform:translateX(30px);
-  }
+    from{
+        opacity:0;
 
-  to{
-    opacity:1;
-    transform:translateX(0);
-  }
+        transform:
+            translateX(30px);
+    }
 
+    to{
+        opacity:1;
+
+        transform:
+            translateX(0);
+    }
 }
 
 .step-number{
-  color:#c9a76a;
+    color:#c9a76a;
 
-  font-size:11px;
+    font-size:11px;
 
-  letter-spacing:3px;
+    letter-spacing:3px;
 
-  margin-bottom:15px;
+    margin-bottom:15px;
 }
 
 .step h3{
-  font-size:clamp(35px,5vw,60px);
+    font-size:clamp(35px,5vw,60px);
 
-  line-height:1;
+    line-height:1;
 
-  letter-spacing:-2px;
+    letter-spacing:-2px;
 
-  text-transform:uppercase;
+    text-transform:uppercase;
 
-  margin-bottom:15px;
+    margin-bottom:15px;
 }
 
 .step-description{
-  color:#777;
+    color:#777;
 
-  margin-bottom:35px;
+    margin-bottom:35px;
 
-  line-height:1.6;
+    line-height:1.6;
 }
 
 .options{
-  display:grid;
+    display:grid;
 
-  grid-template-columns:
-  1fr 1fr;
+    grid-template-columns:
+        1fr 1fr;
 
-  gap:12px;
+    gap:12px;
 }
 
 .option{
-  min-height:85px;
+    min-height:85px;
 
-  padding:20px;
+    padding:20px;
 
-  background:#151515;
+    background:#151515;
 
-  border:1px solid #292929;
+    border:1px solid #292929;
 
-  color:#eee;
+    color:#eee;
 
-  text-align:left;
+    text-align:left;
 
-  transition:.3s;
+    transition:.3s;
 }
 
 .option:hover{
-  border-color:#c9a76a;
+    border-color:#c9a76a;
 
-  transform:translateY(-2px);
+    transform:translateY(-2px);
 }
 
 .option.selected{
-  border-color:#c9a76a;
+    border-color:#c9a76a;
 
-  background:#19160f;
+    background:#19160f;
 
-  box-shadow:
-  inset 0 0 0 1px #c9a76a;
+    box-shadow:
+        inset 0 0 0 1px #c9a76a;
 }
 
 .option strong{
-  display:block;
+    display:block;
 
-  font-size:16px;
+    font-size:16px;
 
-  margin-bottom:6px;
+    margin-bottom:6px;
 }
 
 .option span{
-  color:#777;
+    color:#777;
 
-  font-size:12px;
+    font-size:12px;
 }
 
 .booking-navigation{
-  display:flex;
+    display:flex;
 
-  justify-content:space-between;
+    justify-content:space-between;
 
-  gap:15px;
+    gap:15px;
 
-  margin-top:35px;
+    margin-top:35px;
 }
 
 .nav-button{
-  padding:16px 25px;
+    padding:16px 25px;
 
-  border:1px solid #444;
+    border:1px solid #444;
 
-  background:transparent;
+    background:transparent;
 
-  color:#eee;
+    color:#eee;
 
-  text-transform:uppercase;
+    text-transform:uppercase;
 
-  letter-spacing:2px;
+    letter-spacing:2px;
 
-  font-size:10px;
+    font-size:10px;
 }
 
 .nav-button:hover{
-  border-color:#c9a76a;
+    border-color:#c9a76a;
 
-  color:#c9a76a;
+    color:#c9a76a;
 }
 
 .nav-button.next{
-  background:#c9a76a;
+    background:#c9a76a;
 
-  border-color:#c9a76a;
+    border-color:#c9a76a;
 
-  color:#080808;
+    color:#080808;
 }
 
 .nav-button.next:hover{
-  transform:translateY(-2px);
+    transform:translateY(-2px);
 }
 
 .form-field{
-  margin-bottom:20px;
+    margin-bottom:20px;
 }
 
 .form-field label{
-  display:block;
+    display:block;
 
-  color:#777;
+    color:#777;
 
-  font-size:10px;
+    font-size:10px;
 
-  letter-spacing:2px;
+    letter-spacing:2px;
 
-  text-transform:uppercase;
+    text-transform:uppercase;
 
-  margin-bottom:8px;
+    margin-bottom:8px;
 }
 
 .form-field input,
 .form-field textarea{
-  width:100%;
+    width:100%;
 
-  padding:18px 5px;
+    padding:18px 5px;
 
-  background:transparent;
+    background:transparent;
 
-  border:none;
+    border:none;
 
-  border-bottom:1px solid #333;
+    border-bottom:1px solid #333;
 
-  color:#fff;
+    color:#fff;
 
-  outline:none;
+    outline:none;
 
-  font-size:15px;
+    font-size:15px;
 }
 
 .form-field textarea{
-  min-height:130px;
+    min-height:130px;
 
-  resize:vertical;
+    resize:vertical;
 }
 
 .form-field input:focus,
 .form-field textarea:focus{
-  border-color:#c9a76a;
+    border-color:#c9a76a;
 }
 
 .summary{
-  padding:25px;
+    padding:25px;
 
-  margin-top:30px;
+    margin-top:30px;
 
-  background:#141414;
+    background:#141414;
 
-  border:1px solid #292929;
+    border:1px solid #292929;
 }
 
 .summary-title{
-  color:#c9a76a;
+    color:#c9a76a;
 
-  font-size:10px;
+    font-size:10px;
 
-  letter-spacing:3px;
+    letter-spacing:3px;
 
-  text-transform:uppercase;
+    text-transform:uppercase;
 
-  margin-bottom:15px;
+    margin-bottom:15px;
 }
 
 .summary-row{
-  display:flex;
+    display:flex;
 
-  justify-content:space-between;
+    justify-content:space-between;
 
-  gap:20px;
+    gap:20px;
 
-  padding:10px 0;
+    padding:10px 0;
 
-  border-bottom:1px solid #242424;
+    border-bottom:1px solid #242424;
 
-  color:#aaa;
+    color:#aaa;
 
-  font-size:13px;
+    font-size:13px;
 }
 
 .summary-row:last-child{
-  border-bottom:none;
+    border-bottom:none;
 }
 
 .summary-row strong{
-  color:#fff;
+    color:#fff;
 }
 
 .success{
-  display:none;
+    display:none;
 
-  text-align:center;
+    text-align:center;
 
-  padding:50px 20px;
+    padding:50px 20px;
 }
 
 .success.show{
-  display:block;
+    display:block;
 }
 
 .success-icon{
-  width:75px;
-  height:75px;
+    width:75px;
+    height:75px;
 
-  margin:0 auto 25px;
+    margin:0 auto 25px;
 
-  display:flex;
+    display:flex;
 
-  align-items:center;
-  justify-content:center;
+    align-items:center;
 
-  border:1px solid #c9a76a;
+    justify-content:center;
 
-  border-radius:50%;
+    border:1px solid #c9a76a;
 
-  color:#c9a76a;
+    border-radius:50%;
 
-  font-size:30px;
+    color:#c9a76a;
+
+    font-size:30px;
 }
 
 .success h3{
-  font-size:45px;
+    font-size:45px;
 
-  text-transform:uppercase;
+    text-transform:uppercase;
 
-  margin-bottom:15px;
+    margin-bottom:15px;
 }
 
 .success p{
-  color:#888;
+    color:#888;
 
-  line-height:1.7;
+    line-height:1.7;
 }
 
-/* ================= FOOTER ================= */
+
+/* =====================================================
+   FOOTER
+===================================================== */
 
 footer{
-  padding:40px 8%;
+    padding:40px 8%;
 
-  border-top:1px solid #222;
+    border-top:1px solid #222;
 
-  display:flex;
+    display:flex;
 
-  justify-content:space-between;
+    justify-content:space-between;
 
-  color:#555;
+    color:#555;
 
-  font-size:10px;
+    font-size:10px;
 
-  letter-spacing:2px;
+    letter-spacing:2px;
 
-  text-transform:uppercase;
+    text-transform:uppercase;
 }
 
-/* ================= MOBILE ================= */
+
+/* =====================================================
+   MOBILE
+===================================================== */
 
 @media(max-width:800px){
 
-  header{
-    height:70px;
+    header{
+        height:70px;
 
-    padding:0 5%;
-  }
+        padding:0 5%;
+    }
 
-  nav{
-    display:none;
-  }
+    nav{
+        display:none;
+    }
 
-  .logo{
-    font-size:19px;
-  }
+    .logo{
+        font-size:19px;
+    }
 
-  .book{
-    display:none;
-  }
+    .book{
+        display:none;
+    }
 
-  .language button{
-    padding:6px;
-  }
+    .header-language button{
+        padding:6px;
+    }
 
-  .hero{
-    padding:130px 7% 100px;
+    .language-buttons{
+        grid-template-columns:1fr;
+    }
 
-    background-position:65% center;
-  }
+    .language-card{
+        min-height:100px;
 
-  h1{
-    font-size:75px;
+        flex-direction:row;
 
-    letter-spacing:-5px;
-  }
+        justify-content:flex-start;
 
-  .hero-description{
-    font-size:14px;
-  }
+        padding:20px 25px;
+    }
 
-  .hero-buttons{
-    flex-wrap:wrap;
-  }
+    .flag{
+        font-size:35px;
 
-  .scissors{
-    width:330px;
-    height:330px;
+        width:50px;
+    }
 
-    right:-150px;
+    .language-name{
+        font-size:12px;
+    }
 
-    opacity:.08;
-  }
+    .language-native{
+        display:none;
+    }
 
-  section{
-    padding:80px 7%;
-  }
+    .hero{
+        padding:130px 7% 100px;
 
-  .services{
-    grid-template-columns:1fr;
-  }
+        background-position:
+            65% center;
+    }
 
-  .service:nth-child(odd){
-    border-right:none;
-  }
+    h1{
+        font-size:75px;
 
-  .about{
-    grid-template-columns:1fr;
+        letter-spacing:-5px;
+    }
 
-    gap:50px;
-  }
+    .hero-description{
+        font-size:14px;
+    }
 
-  .about-image{
-    height:450px;
-  }
+    .hero-buttons{
+        flex-wrap:wrap;
+    }
 
-  .gallery{
-    grid-template-columns:1fr;
-  }
+    .scissors{
+        width:330px;
+        height:330px;
 
-  .gallery-card{
-    height:450px;
-  }
+        right:-150px;
 
-  .gallery-card:nth-child(2){
-    transform:none;
-  }
+        opacity:.08;
+    }
 
-  .options{
-    grid-template-columns:1fr;
-  }
+    section{
+        padding:80px 7%;
+    }
 
-  .step h3{
-    font-size:38px;
-  }
+    .services{
+        grid-template-columns:1fr;
+    }
 
-  .booking-navigation{
-    flex-direction:column-reverse;
-  }
+    .service:nth-child(odd){
+        border-right:none;
+    }
 
-  .nav-button{
-    width:100%;
-  }
+    .about{
+        grid-template-columns:1fr;
 
-  footer{
-    flex-direction:column;
+        gap:50px;
+    }
 
-    gap:15px;
-  }
+    .about-image{
+        height:450px;
+    }
 
+    .gallery{
+        grid-template-columns:1fr;
+    }
+
+    .gallery-card{
+        height:450px;
+    }
+
+    .gallery-card:nth-child(2){
+        transform:none;
+    }
+
+    .options{
+        grid-template-columns:1fr;
+    }
+
+    .step h3{
+        font-size:38px;
+    }
+
+    .booking-navigation{
+        flex-direction:column-reverse;
+    }
+
+    .nav-button{
+        width:100%;
+    }
+
+    footer{
+        flex-direction:column;
+
+        gap:15px;
+    }
 }
-
 </style>
 </head>
 
+
 <body>
 
-<!-- ================= HEADER ================= -->
+
+<!-- =====================================================
+     LANGUAGE SCREEN
+===================================================== -->
+
+<div
+    class="language-screen"
+    id="languageScreen"
+>
+
+    <div class="language-decoration"></div>
+
+    <div class="language-content">
+
+        <div class="language-small">
+            Barber Studio / Prague
+        </div>
+
+        <div class="language-logo">
+            SCISSORS<span>.</span>
+        </div>
+
+        <div
+            class="language-title"
+            id="languageTitle"
+        >
+            Choose your language
+        </div>
+
+
+        <div class="language-buttons">
+
+            <button
+                class="language-card"
+                onclick="chooseInitialLanguage('cs')"
+            >
+
+                <span class="flag">
+                    🇨🇿
+                </span>
+
+                <span
+                    class="language-name"
+                >
+                    Čeština
+                </span>
+
+                <span
+                    class="language-native"
+                >
+                    Czech
+                </span>
+
+            </button>
+
+
+            <button
+                class="language-card"
+                onclick="chooseInitialLanguage('uk')"
+            >
+
+                <span class="flag">
+                    🇺🇦
+                </span>
+
+                <span
+                    class="language-name"
+                >
+                    Українська
+                </span>
+
+                <span
+                    class="language-native"
+                >
+                    Ukrainian
+                </span>
+
+            </button>
+
+
+            <button
+                class="language-card"
+                onclick="chooseInitialLanguage('en')"
+            >
+
+                <span class="flag">
+                    🇬🇧
+                </span>
+
+                <span
+                    class="language-name"
+                >
+                    English
+                </span>
+
+                <span
+                    class="language-native"
+                >
+                    English
+                </span>
+
+            </button>
+
+        </div>
+
+
+        <div class="language-footer">
+            Cut with character.
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
 
 <header>
 
-  <a href="#" class="logo">
-    SCISSORS<span>.</span>
-  </a>
+    <a
+        href="#"
+        class="logo"
+    >
+        SCISSORS<span>.</span>
+    </a>
 
-  <nav>
-    <a href="#services" data-i18n="navServices">Послуги</a>
-    <a href="#about" data-i18n="navAbout">Про нас</a>
-    <a href="#gallery" data-i18n="navGallery">Роботи</a>
-    <a href="#booking" data-i18n="navBooking">Запис</a>
-  </nav>
 
-  <div class="language">
+    <nav>
 
-    <button onclick="setLanguage('uk')" id="lang-uk">
-      UA
-    </button>
+        <a
+            href="#services"
+            data-i18n="navServices"
+        >
+            Послуги
+        </a>
 
-    <button onclick="setLanguage('cs')" id="lang-cs">
-      CZ
-    </button>
+        <a
+            href="#about"
+            data-i18n="navAbout"
+        >
+            Про нас
+        </a>
 
-    <button onclick="setLanguage('en')" id="lang-en">
-      EN
-    </button>
+        <a
+            href="#gallery"
+            data-i18n="navGallery"
+        >
+            Роботи
+        </a>
 
-  </div>
+        <a
+            href="#booking"
+            data-i18n="navBooking"
+        >
+            Запис
+        </a>
+
+    </nav>
+
+
+    <div class="header-language">
+
+        <button
+            onclick="changeLanguage('cs')"
+            id="header-cs"
+        >
+            CZ
+        </button>
+
+        <button
+            onclick="changeLanguage('uk')"
+            id="header-uk"
+        >
+            UA
+        </button>
+
+        <button
+            onclick="changeLanguage('en')"
+            id="header-en"
+        >
+            EN
+        </button>
+
+    </div>
 
 </header>
 
 
-<!-- ================= HERO ================= -->
+<!-- =====================================================
+     HERO
+===================================================== -->
 
 <section class="hero">
 
-  <div class="hero-content">
+    <div class="hero-content">
 
-    <div class="eyebrow" data-i18n="eyebrow">
-      Barber Studio / Prague
+        <div
+            class="eyebrow"
+            data-i18n="eyebrow"
+        >
+            Barber Studio / Prague
+        </div>
+
+
+        <h1>
+            Your<br>
+            <span>Style.</span>
+        </h1>
+
+
+        <p
+            class="hero-description"
+            data-i18n="heroDescription"
+        >
+            Стрижки, борода та стиль.
+            Розкажи нам, що хочеш —
+            ми зробимо все інше.
+        </p>
+
+
+        <div class="hero-buttons">
+
+            <a
+                href="#booking"
+                class="button gold"
+                data-i18n="heroButton"
+            >
+                Почати запис
+            </a>
+
+            <a
+                href="#services"
+                class="button outline"
+                data-i18n="servicesButton"
+            >
+                Послуги
+            </a>
+
+        </div>
+
     </div>
 
-    <h1>
-      Your<br>
-      <span>Style.</span>
-    </h1>
 
-    <p
-      class="hero-description"
-      data-i18n="heroDescription"
-    >
-      Стрижки, борода та стиль.
-      Розкажи нам, що хочеш — ми
-      зробимо все інше.
-    </p>
+    <div class="scissors">
 
-    <div class="hero-buttons">
+        <div class="blade one"></div>
 
-      <a
-        href="#booking"
-        class="button gold"
-        data-i18n="heroButton"
-      >
-        Почати запис
-      </a>
+        <div class="blade two"></div>
 
-      <a
-        href="#services"
-        class="button outline"
-        data-i18n="servicesButton"
-      >
-        Послуги
-      </a>
+        <div class="ring one"></div>
+
+        <div class="ring two"></div>
+
+        <div class="pivot"></div>
 
     </div>
-
-  </div>
-
-
-  <div class="scissors">
-
-    <div class="blade one"></div>
-    <div class="blade two"></div>
-
-    <div class="ring one"></div>
-    <div class="ring two"></div>
-
-    <div class="pivot"></div>
-
-  </div>
 
 </section>
 
 
-<!-- ================= MARQUEE ================= -->
+<!-- =====================================================
+     MARQUEE
+===================================================== -->
 
 <div class="marquee">
 
-  <div class="marquee-text">
+    <div class="marquee-text">
 
-    ✂ SCISSORS BARBER STUDIO
-    &nbsp;&nbsp;&nbsp;
-    CUT • SHAVE • STYLE
-    &nbsp;&nbsp;&nbsp;
-    ✂ SCISSORS BARBER STUDIO
-    &nbsp;&nbsp;&nbsp;
-    CUT • SHAVE • STYLE
+        ✂ SCISSORS BARBER STUDIO
+        &nbsp;&nbsp;&nbsp;
+        CUT • SHAVE • STYLE
+        &nbsp;&nbsp;&nbsp;
+        ✂ SCISSORS BARBER STUDIO
+        &nbsp;&nbsp;&nbsp;
+        CUT • SHAVE • STYLE
 
-  </div>
+    </div>
 
 </div>
 
 
-<!-- ================= SERVICES ================= -->
+<!-- =====================================================
+     SERVICES
+===================================================== -->
 
 <section id="services">
 
-  <div
-    class="label"
-    data-i18n="servicesLabel"
-  >
-    01 / Послуги
-  </div>
-
-  <h2 class="section-title">
-    Cut.<br>
-    Shave.<br>
-    Style.
-  </h2>
-
-  <div class="services">
-
-    <div class="service">
-
-      <div class="service-number">
-        01
-      </div>
-
-      <h3 data-i18n="service1Title">
-        Classic Haircut
-      </h3>
-
-      <p data-i18n="service1Text">
-        Класична чоловіча стрижка
-        з підбором форми під тебе.
-      </p>
-
-      <div class="price">
-        €25
-      </div>
-
+    <div
+        class="label"
+        data-i18n="servicesLabel"
+    >
+        01 / Послуги
     </div>
 
 
-    <div class="service">
+    <h2 class="section-title">
+        Cut.<br>
+        Shave.<br>
+        Style.
+    </h2>
 
-      <div class="service-number">
-        02
-      </div>
 
-      <h3 data-i18n="service2Title">
-        Hair + Beard
-      </h3>
+    <div class="services">
 
-      <p data-i18n="service2Text">
-        Стрижка волосся та
-        оформлення бороди.
-      </p>
+        <div class="service">
 
-      <div class="price">
-        €35
-      </div>
+            <div class="service-number">
+                01
+            </div>
+
+            <h3 data-i18n="service1Title">
+                Classic Haircut
+            </h3>
+
+            <p data-i18n="service1Text">
+                Класична чоловіча стрижка
+                з підбором форми під тебе.
+            </p>
+
+            <div class="price">
+                €25
+            </div>
+
+        </div>
+
+
+        <div class="service">
+
+            <div class="service-number">
+                02
+            </div>
+
+            <h3 data-i18n="service2Title">
+                Hair + Beard
+            </h3>
+
+            <p data-i18n="service2Text">
+                Стрижка волосся та
+                оформлення бороди.
+            </p>
+
+            <div class="price">
+                €35
+            </div>
+
+        </div>
+
+
+        <div class="service">
+
+            <div class="service-number">
+                03
+            </div>
+
+            <h3 data-i18n="service3Title">
+                Beard
+            </h3>
+
+            <p data-i18n="service3Text">
+                Корекція форми та контурів
+                бороди.
+            </p>
+
+            <div class="price">
+                €18
+            </div>
+
+        </div>
+
+
+        <div class="service">
+
+            <div class="service-number">
+                04
+            </div>
+
+            <h3 data-i18n="service4Title">
+                Premium
+            </h3>
+
+            <p data-i18n="service4Text">
+                Повний комплекс волосся,
+                борода та стайлінг.
+            </p>
+
+            <div class="price">
+                €45
+            </div>
+
+        </div>
 
     </div>
-
-
-    <div class="service">
-
-      <div class="service-number">
-        03
-      </div>
-
-      <h3 data-i18n="service3Title">
-        Beard
-      </h3>
-
-      <p data-i18n="service3Text">
-        Корекція форми та контурів
-        бороди.
-      </p>
-
-      <div class="price">
-        €18
-      </div>
-
-    </div>
-
-
-    <div class="service">
-
-      <div class="service-number">
-        04
-      </div>
-
-      <h3 data-i18n="service4Title">
-        Premium
-      </h3>
-
-      <p data-i18n="service4Text">
-        Повний комплекс волосся,
-        борода та стайлінг.
-      </p>
-
-      <div class="price">
-        €45
-      </div>
-
-    </div>
-
-  </div>
 
 </section>
 
 
-<!-- ================= ABOUT ================= -->
+<!-- =====================================================
+     ABOUT
+===================================================== -->
 
 <section id="about">
 
-  <div class="about">
+    <div class="about">
 
-    <div class="about-image">
+        <div class="about-image">
 
-      <img
-        src="04-classic-textured-fade.jpg"
-        alt="Barber"
-      >
+            <img
+                src="04-classic-textured-fade.jpg"
+                alt="Barber"
+            >
+
+        </div>
+
+
+        <div class="about-text">
+
+            <div
+                class="label"
+                data-i18n="aboutLabel"
+            >
+                02 / Про нас
+            </div>
+
+
+            <h2 class="section-title">
+                More<br>
+                than<br>
+                a cut.
+            </h2>
+
+
+            <p data-i18n="aboutText1">
+                SCISSORS — місце для тих,
+                хто цінує стиль, якість
+                та увагу до деталей.
+            </p>
+
+
+            <p data-i18n="aboutText2">
+                Традиційний барберинг
+                поєднується із сучасними
+                техніками.
+            </p>
+
+
+            <div class="signature">
+                — Your barber
+            </div>
+
+        </div>
 
     </div>
-
-
-    <div class="about-text">
-
-      <div
-        class="label"
-        data-i18n="aboutLabel"
-      >
-        02 / Про нас
-      </div>
-
-      <h2 class="section-title">
-        More<br>
-        than<br>
-        a cut.
-      </h2>
-
-      <p data-i18n="aboutText1">
-        SCISSORS — місце для тих,
-        хто цінує стиль, якість
-        та увагу до деталей.
-      </p>
-
-      <p data-i18n="aboutText2">
-        Традиційний барберинг
-        поєднується із сучасними
-        техніками.
-      </p>
-
-      <div class="signature">
-        — Your barber
-      </div>
-
-    </div>
-
-  </div>
 
 </section>
 
 
-<!-- ================= QUOTE ================= -->
+<!-- =====================================================
+     QUOTE
+===================================================== -->
 
 <div class="quote">
 
-  <h2>
-    Sharp scissors.<br>
-    <span>Sharp style.</span>
-  </h2>
+    <h2>
+        Sharp scissors.<br>
+        <span>Sharp style.</span>
+    </h2>
 
 </div>
 
 
-<!-- ================= GALLERY ================= -->
+<!-- =====================================================
+     GALLERY
+===================================================== -->
 
 <section id="gallery">
 
-  <div
-    class="label"
-    data-i18n="galleryLabel"
-  >
-    03 / Наші роботи
-  </div>
-
-  <h2 class="section-title">
-    The<br>
-    Cuts.
-  </h2>
-
-
-  <div class="gallery">
-
-    <div class="gallery-card">
-
-      <img
-        src="01-textured-crop-fade.jpg"
-        alt="Textured Crop"
-      >
-
-      <div class="gallery-overlay">
-        Textured Crop
-      </div>
-
+    <div
+        class="label"
+        data-i18n="galleryLabel"
+    >
+        03 / Наші роботи
     </div>
 
 
-    <div class="gallery-card">
+    <h2 class="section-title">
+        The<br>
+        Cuts.
+    </h2>
 
-      <img
-        src="02-pink-shag-mullet.jpg"
-        alt="Shag Mullet"
-      >
 
-      <div class="gallery-overlay">
-        Shag Mullet
-      </div>
+    <div class="gallery">
+
+        <div class="gallery-card">
+
+            <img
+                src="01-textured-crop-fade.jpg"
+                alt="Textured Crop"
+            >
+
+            <div class="gallery-overlay">
+                Textured Crop
+            </div>
+
+        </div>
+
+
+        <div class="gallery-card">
+
+            <img
+                src="02-pink-shag-mullet.jpg"
+                alt="Shag Mullet"
+            >
+
+            <div class="gallery-overlay">
+                Shag Mullet
+            </div>
+
+        </div>
+
+
+        <div class="gallery-card">
+
+            <img
+                src="03-blue-flat-top-fade.jpg"
+                alt="Flat Top Fade"
+            >
+
+            <div class="gallery-overlay">
+                Flat Top Fade
+            </div>
+
+        </div>
 
     </div>
-
-
-    <div class="gallery-card">
-
-      <img
-        src="03-blue-flat-top-fade.jpg"
-        alt="Flat Top Fade"
-      >
-
-      <div class="gallery-overlay">
-        Flat Top Fade
-      </div>
-
-    </div>
-
-  </div>
 
 </section>
 
 
-<!-- ================= BOOKING QUIZ ================= -->
+<!-- =====================================================
+     BOOKING
+===================================================== -->
 
 <section
-  id="booking"
-  class="booking-section"
+    id="booking"
+    class="booking-section"
 >
 
-  <div class="booking-wrapper">
+    <div class="booking-wrapper">
 
-    <div class="booking-head">
+        <div class="booking-head">
 
-      <div class="label">
-        04 / Booking
-      </div>
+            <div class="label">
+                04 / Booking
+            </div>
 
-      <h2
-        class="section-title"
-        data-i18n="bookingTitle"
-      >
-        Tell us<br>
-        your style.
-      </h2>
 
-      <div class="progress">
+            <h2
+                class="section-title"
+                data-i18n="bookingTitle"
+            >
+                Tell us<br>
+                your style.
+            </h2>
+
+
+            <div class="progress">
+
+                <div
+                    class="progress-bar"
+                    id="progressBar"
+                ></div>
+
+            </div>
+
+        </div>
+
+
+        <!-- STEP 1 -->
 
         <div
-          class="progress-bar"
-          id="progressBar"
-        ></div>
-
-      </div>
-
-    </div>
-
-
-    <!-- STEP 1 -->
-
-    <div
-      class="step active"
-      data-step="1"
-    >
-
-      <div class="step-number">
-        01 / 06
-      </div>
-
-      <h3 data-i18n="q1">
-        Що хочеш зробити?
-      </h3>
-
-      <p
-        class="step-description"
-        data-i18n="q1desc"
-      >
-        Обери те, що тобі потрібно.
-      </p>
-
-
-      <div class="options">
-
-        <button
-          type="button"
-          class="option"
-          data-question="service"
-          data-value="haircut"
+            class="step active"
+            data-step="1"
         >
 
-          <strong data-i18n="haircut">
-            ✂️ Стрижка
-          </strong>
+            <div class="step-number">
+                01 / 06
+            </div>
 
-          <span data-i18n="haircutDesc">
-            Волосся
-          </span>
 
-        </button>
+            <h3 data-i18n="q1">
+                Що хочеш зробити?
+            </h3>
 
 
-        <button
-          type="button"
-          class="option"
-          data-question="service"
-          data-value="beard"
-        >
+            <p
+                class="step-description"
+                data-i18n="q1desc"
+            >
+                Обери те, що тобі потрібно.
+            </p>
 
-          <strong data-i18n="beard">
-            🧔 Борода
-          </strong>
 
-          <span data-i18n="beardDesc">
-            Форма та контури
-          </span>
+            <div class="options">
 
-        </button>
+                <button
+                    class="option"
+                    data-question="service"
+                    data-value="haircut"
+                >
 
+                    <strong data-i18n="haircut">
+                        ✂️ Стрижка
+                    </strong>
 
-        <button
-          type="button"
-          class="option"
-          data-question="service"
-          data-value="hairBeard"
-        >
+                    <span data-i18n="haircutDesc">
+                        Волосся
+                    </span>
 
-          <strong data-i18n="hairBeard">
-            ✂️ + 🧔 Стрижка + борода
-          </strong>
+                </button>
 
-          <span data-i18n="hairBeardDesc">
-            Повний образ
-          </span>
 
-        </button>
+                <button
+                    class="option"
+                    data-question="service"
+                    data-value="beard"
+                >
 
+                    <strong data-i18n="beard">
+                        🧔 Борода
+                    </strong>
 
-        <button
-          type="button"
-          class="option"
-          data-question="service"
-          data-value="consultation"
-        >
+                    <span data-i18n="beardDesc">
+                        Форма та контури
+                    </span>
 
-          <strong data-i18n="consultation">
-            💬 Не знаю
-          </strong>
+                </button>
 
-          <span data-i18n="consultationDesc">
-            Порадьте мені
-          </span>
 
-        </button>
+                <button
+                    class="option"
+                    data-question="service"
+                    data-value="hairBeard"
+                >
 
-      </div>
+                    <strong data-i18n="hairBeard">
+                        ✂️ + 🧔 Стрижка + борода
+                    </strong>
 
-    </div>
+                    <span data-i18n="hairBeardDesc">
+                        Повний образ
+                    </span>
 
+                </button>
 
-    <!-- STEP 2 -->
 
-    <div
-      class="step"
-      data-step="2"
-    >
+                <button
+                    class="option"
+                    data-question="service"
+                    data-value="consultation"
+                >
 
-      <div class="step-number">
-        02 / 06
-      </div>
+                    <strong data-i18n="consultation">
+                        💬 Не знаю
+                    </strong>
 
-      <h3 data-i18n="q2">
-        Який стиль хочеш?
-      </h3>
+                    <span data-i18n="consultationDesc">
+                        Порадьте мені
+                    </span>
 
-      <p
-        class="step-description"
-        data-i18n="q2desc"
-      >
-        Якщо не знаєш назву — просто
-        обери «Порадьте мені».
-      </p>
+                </button>
 
+            </div>
 
-      <div class="options">
+        </div>
 
-        <button
-          type="button"
-          class="option"
-          data-question="style"
-          data-value="fade"
-        >
 
-          <strong>
-            Fade
-          </strong>
-
-          <span data-i18n="fadeDesc">
-            Плавний перехід
-          </span>
-
-        </button>
-
-
-        <button
-          type="button"
-          class="option"
-          data-question="style"
-          data-value="classic"
-        >
-
-          <strong data-i18n="classic">
-            Classic
-          </strong>
-
-          <span data-i18n="classicDesc">
-            Класичний стиль
-          </span>
-
-        </button>
-
-
-        <button
-          type="button"
-          class="option"
-          data-question="style"
-          data-value="crop"
-        >
-
-          <strong>
-            Crop
-          </strong>
-
-          <span data-i18n="cropDesc">
-            Короткий текстурний стиль
-          </span>
-
-        </button>
-
-
-        <button
-          type="button"
-          class="option"
-          data-question="style"
-          data-value="longer"
-        >
-
-          <strong data-i18n="longer">
-            Longer
-          </strong>
-
-          <span data-i18n="longerDesc">
-            Залишити більше довжини
-          </span>
-
-        </button>
-
-
-        <button
-          type="button"
-          class="option"
-          data-question="style"
-          data-value="advice"
-        >
-
-          <strong data-i18n="advice">
-            💬 Порадьте мені
-          </strong>
-
-          <span data-i18n="adviceDesc">
-            Барбер підбере варіант
-          </span>
-
-        </button>
-
-      </div>
-
-    </div>
-
-
-    <!-- STEP 3 -->
-
-    <div
-      class="step"
-      data-step="3"
-    >
-
-      <div class="step-number">
-        03 / 06
-      </div>
-
-      <h3 data-i18n="q3">
-        Скільки залишити?
-      </h3>
-
-      <p
-        class="step-description"
-        data-i18n="q3desc"
-      >
-        Приблизно опиши бажану довжину.
-      </p>
-
-
-      <div class="options">
-
-        <button
-          type="button"
-          class="option"
-          data-question="length"
-          data-value="short"
-        >
-
-          <strong data-i18n="short">
-            Дуже коротко
-          </strong>
-
-          <span data-i18n="shortDesc">
-            Максимально коротко
-          </span>
-
-        </button>
-
-
-        <button
-          type="button"
-          class="option"
-          data-question="length"
-          data-value="medium"
-        >
-
-          <strong data-i18n="medium">
-            Середньо
-          </strong>
-
-          <span data-i18n="mediumDesc">
-            Збалансована довжина
-          </span>
-
-        </button>
-
-
-        <button
-          type="button"
-          class="option"
-          data-question="length"
-          data-value="long"
-        >
-
-          <strong data-i18n="long">
-            Довше
-          </strong>
-
-          <span data-i18n="longDesc">
-            Хочу залишити довжину
-          </span>
-
-        </button>
-
-
-        <button
-          type="button"
-          class="option"
-          data-question="length"
-          data-value="dontknow"
-        >
-
-          <strong data-i18n="dontKnow">
-            Не знаю
-          </strong>
-
-          <span data-i18n="dontKnowDesc">
-            Порадьте по довжині
-          </span>
-
-        </button>
-
-      </div>
-
-    </div>
-
-
-    <!-- STEP 4 -->
-
-    <div
-      class="step"
-      data-step="4"
-    >
-
-      <div class="step-number">
-        04 / 06
-      </div>
-
-      <h3 data-i18n="q4">
-        А що з бородою?
-      </h3>
-
-      <p
-        class="step-description"
-        data-i18n="q4desc"
-      >
-        Обери варіант, який підходить.
-      </p>
-
-
-      <div class="options">
-
-        <button
-          type="button"
-          class="option"
-          data-question="beard"
-          data-value="none"
-        >
-
-          <strong data-i18n="noBeard">
-            Без бороди
-          </strong>
-
-          <span data-i18n="noBeardDesc">
-            Нічого не робити
-          </span>
-
-        </button>
-
-
-        <button
-          type="button"
-          class="option"
-          data-question="beard"
-          data-value="trim"
-        >
-
-          <strong data-i18n="trimBeard">
-            Підрівняти
-          </strong>
-
-          <span data-i18n="trimBeardDesc">
-            Зберегти форму
-          </span>
-
-        </button>
-
-
-        <button
-          type="button"
-          class="option"
-          data-question="beard"
-          data-value="shape"
-        >
-
-          <strong data-i18n="shapeBeard">
-            Нова форма
-          </strong>
-
-          <span data-i18n="shapeBeardDesc">
-            Створити нову форму
-          </span>
-
-        </button>
-
-
-        <button
-          type="button"
-          class="option"
-          data-question="beard"
-          data-value="remove"
-        >
-
-          <strong data-i18n="removeBeard">
-            Повністю прибрати
-          </strong>
-
-          <span data-i18n="removeBeardDesc">
-            Чисте обличчя
-          </span>
-
-        </button>
-
-      </div>
-
-    </div>
-
-
-    <!-- STEP 5 -->
-
-    <div
-      class="step"
-      data-step="5"
-    >
-
-      <div class="step-number">
-        05 / 06
-      </div>
-
-      <h3 data-i18n="q5">
-        Розкажи свої побажання
-      </h3>
-
-      <p
-        class="step-description"
-        data-i18n="q5desc"
-      >
-        Тут можеш написати все, що важливо
-        для твоєї стрижки.
-      </p>
-
-
-      <div class="form-field">
-
-        <label data-i18n="wishesLabel">
-          Твої побажання
-        </label>
-
-        <textarea
-          id="wishes"
-          name="wishes"
-          data-i18n-placeholder="wishesPlaceholder"
-          placeholder="Наприклад: хочу залишити довжину зверху, боки коротше, як на фото..."
-        ></textarea>
-
-      </div>
-
-
-      <div class="form-field">
-
-        <label data-i18n="photoLabel">
-          Якщо маєш приклад — можеш описати його
-        </label>
-
-        <input
-          type="text"
-          id="reference"
-          name="reference"
-          data-i18n-placeholder="referencePlaceholder"
-          placeholder="Наприклад: хочу приблизно як у David Beckham"
-        >
-
-      </div>
-
-    </div>
-
-
-    <!-- STEP 6 -->
-
-    <div
-      class="step"
-      data-step="6"
-    >
-
-      <div class="step-number">
-        06 / 06
-      </div>
-
-      <h3 data-i18n="q6">
-        Коли та як з тобою зв'язатись?
-      </h3>
-
-      <p
-        class="step-description"
-        data-i18n="q6desc"
-      >
-        Залиш контакти — ми підтвердимо запис.
-      </p>
-
-
-      <div class="form-field">
-
-        <label data-i18n="nameLabel">
-          Ім'я
-        </label>
-
-        <input
-          type="text"
-          id="clientName"
-          data-i18n-placeholder="namePlaceholder"
-          placeholder="Твоє ім'я"
-          required
-        >
-
-      </div>
-
-
-      <div class="form-field">
-
-        <label data-i18n="phoneLabel">
-          Телефон
-        </label>
-
-        <input
-          type="tel"
-          id="clientPhone"
-          data-i18n-placeholder="phonePlaceholder"
-          placeholder="+420 ..."
-          required
-        >
-
-      </div>
-
-
-      <div class="form-field">
-
-        <label data-i18n="emailLabel">
-          Email
-        </label>
-
-        <input
-          type="email"
-          id="clientEmail"
-          data-i18n-placeholder="emailPlaceholder"
-          placeholder="you@email.com"
-          required
-        >
-
-      </div>
-
-
-      <div class="form-field">
-
-        <label data-i18n="dateLabel">
-          Бажана дата
-        </label>
-
-        <input
-          type="date"
-          id="clientDate"
-          required
-        >
-
-      </div>
-
-
-      <div class="form-field">
-
-        <label data-i18n="timeLabel">
-          Бажаний час
-        </label>
-
-        <input
-          type="time"
-          id="clientTime"
-          required
-        >
-
-      </div>
-
-
-      <div class="summary">
+        <!-- STEP 2 -->
 
         <div
-          class="summary-title"
-          data-i18n="summaryTitle"
+            class="step"
+            data-step="2"
         >
-          Твій запис
+
+            <div class="step-number">
+                02 / 06
+            </div>
+
+
+            <h3 data-i18n="q2">
+                Який стиль хочеш?
+            </h3>
+
+
+            <p
+                class="step-description"
+                data-i18n="q2desc"
+            >
+                Якщо не знаєш назву —
+                просто обери «Порадьте мені».
+            </p>
+
+
+            <div class="options">
+
+                <button
+                    class="option"
+                    data-question="style"
+                    data-value="fade"
+                >
+
+                    <strong>
+                        Fade
+                    </strong>
+
+                    <span data-i18n="fadeDesc">
+                        Плавний перехід
+                    </span>
+
+                </button>
+
+
+                <button
+                    class="option"
+                    data-question="style"
+                    data-value="classic"
+                >
+
+                    <strong data-i18n="classic">
+                        Classic
+                    </strong>
+
+                    <span data-i18n="classicDesc">
+                        Класичний стиль
+                    </span>
+
+                </button>
+
+
+                <button
+                    class="option"
+                    data-question="style"
+                    data-value="crop"
+                >
+
+                    <strong>
+                        Crop
+                    </strong>
+
+                    <span data-i18n="cropDesc">
+                        Короткий текстурний стиль
+                    </span>
+
+                </button>
+
+
+                <button
+                    class="option"
+                    data-question="style"
+                    data-value="longer"
+                >
+
+                    <strong data-i18n="longer">
+                        Longer
+                    </strong>
+
+                    <span data-i18n="longerDesc">
+                        Залишити більше довжини
+                    </span>
+
+                </button>
+
+
+                <button
+                    class="option"
+                    data-question="style"
+                    data-value="advice"
+                >
+
+                    <strong data-i18n="advice">
+                        💬 Порадьте мені
+                    </strong>
+
+                    <span data-i18n="adviceDesc">
+                        Барбер підбере варіант
+                    </span>
+
+                </button>
+
+            </div>
+
         </div>
 
-        <div class="summary-row">
-          <span data-i18n="summaryService">
-            Послуга
-          </span>
 
-          <strong id="summaryService">
-            —
-          </strong>
+        <!-- STEP 3 -->
+
+        <div
+            class="step"
+            data-step="3"
+        >
+
+            <div class="step-number">
+                03 / 06
+            </div>
+
+
+            <h3 data-i18n="q3">
+                Скільки залишити?
+            </h3>
+
+
+            <p
+                class="step-description"
+                data-i18n="q3desc"
+            >
+                Приблизно опиши бажану довжину.
+            </p>
+
+
+            <div class="options">
+
+                <button
+                    class="option"
+                    data-question="length"
+                    data-value="short"
+                >
+
+                    <strong data-i18n="short">
+                        Дуже коротко
+                    </strong>
+
+                    <span data-i18n="shortDesc">
+                        Максимально коротко
+                    </span>
+
+                </button>
+
+
+                <button
+                    class="option"
+                    data-question="length"
+                    data-value="medium"
+                >
+
+                    <strong data-i18n="medium">
+                        Середньо
+                    </strong>
+
+                    <span data-i18n="mediumDesc">
+                        Збалансована довжина
+                    </span>
+
+                </button>
+
+
+                <button
+                    class="option"
+                    data-question="length"
+                    data-value="long"
+                >
+
+                    <strong data-i18n="long">
+                        Довше
+                    </strong>
+
+                    <span data-i18n="longDesc">
+                        Хочу залишити довжину
+                    </span>
+
+                </button>
+
+
+                <button
+                    class="option"
+                    data-question="length"
+                    data-value="dontknow"
+                >
+
+                    <strong data-i18n="dontKnow">
+                        Не знаю
+                    </strong>
+
+                    <span data-i18n="dontKnowDesc">
+                        Порадьте по довжині
+                    </span>
+
+                </button>
+
+            </div>
+
         </div>
 
-        <div class="summary-row">
-          <span data-i18n="summaryStyle">
-            Стиль
-          </span>
 
-          <strong id="summaryStyle">
-            —
-          </strong>
+        <!-- STEP 4 -->
+
+        <div
+            class="step"
+            data-step="4"
+        >
+
+            <div class="step-number">
+                04 / 06
+            </div>
+
+
+            <h3 data-i18n="q4">
+                А що з бородою?
+            </h3>
+
+
+            <p
+                class="step-description"
+                data-i18n="q4desc"
+            >
+                Обери варіант, який підходить.
+            </p>
+
+
+            <div class="options">
+
+                <button
+                    class="option"
+                    data-question="beard"
+                    data-value="none"
+                >
+
+                    <strong data-i18n="noBeard">
+                        Без бороди
+                    </strong>
+
+                    <span data-i18n="noBeardDesc">
+                        Нічого не робити
+                    </span>
+
+                </button>
+
+
+                <button
+                    class="option"
+                    data-question="beard"
+                    data-value="trim"
+                >
+
+                    <strong data-i18n="trimBeard">
+                        Підрівняти
+                    </strong>
+
+                    <span data-i18n="trimBeardDesc">
+                        Зберегти форму
+                    </span>
+
+                </button>
+
+
+                <button
+                    class="option"
+                    data-question="beard"
+                    data-value="shape"
+                >
+
+                    <strong data-i18n="shapeBeard">
+                        Нова форма
+                    </strong>
+
+                    <span data-i18n="shapeBeardDesc">
+                        Створити нову форму
+                    </span>
+
+                </button>
+
+
+                <button
+                    class="option"
+                    data-question="beard"
+                    data-value="remove"
+                >
+
+                    <strong data-i18n="removeBeard">
+                        Повністю прибрати
+                    </strong>
+
+                    <span data-i18n="removeBeardDesc">
+                        Чисте обличчя
+                    </span>
+
+                </button>
+
+            </div>
+
         </div>
 
-        <div class="summary-row">
-          <span data-i18n="summaryLength">
-            Довжина
-          </span>
 
-          <strong id="summaryLength">
-            —
-          </strong>
+        <!-- STEP 5 -->
+
+        <div
+            class="step"
+            data-step="5"
+        >
+
+            <div class="step-number">
+                05 / 06
+            </div>
+
+
+            <h3 data-i18n="q5">
+                Розкажи свої побажання
+            </h3>
+
+
+            <p
+                class="step-description"
+                data-i18n="q5desc"
+            >
+                Тут можеш написати все,
+                що важливо для твоєї стрижки.
+            </p>
+
+
+            <div class="form-field">
+
+                <label data-i18n="wishesLabel">
+                    Твої побажання
+                </label>
+
+                <textarea
+                    id="wishes"
+                    data-i18n-placeholder="wishesPlaceholder"
+                    placeholder="Наприклад: хочу залишити довжину зверху..."
+                ></textarea>
+
+            </div>
+
+
+            <div class="form-field">
+
+                <label data-i18n="photoLabel">
+                    Якщо маєш приклад — можеш описати його
+                </label>
+
+                <input
+                    type="text"
+                    id="reference"
+                    data-i18n-placeholder="referencePlaceholder"
+                    placeholder="Наприклад: хочу приблизно як у David Beckham"
+                >
+
+            </div>
+
         </div>
 
-        <div class="summary-row">
-          <span data-i18n="summaryBeard">
-            Борода
-          </span>
 
-          <strong id="summaryBeard">
-            —
-          </strong>
+        <!-- STEP 6 -->
+
+        <div
+            class="step"
+            data-step="6"
+        >
+
+            <div class="step-number">
+                06 / 06
+            </div>
+
+
+            <h3 data-i18n="q6">
+                Коли та як з тобою зв'язатись?
+            </h3>
+
+
+            <p
+                class="step-description"
+                data-i18n="q6desc"
+            >
+                Залиш контакти —
+                ми підтвердимо запис.
+            </p>
+
+
+            <div class="form-field">
+
+                <label data-i18n="nameLabel">
+                    Ім'я
+                </label>
+
+                <input
+                    type="text"
+                    id="clientName"
+                    placeholder="Твоє ім'я"
+                    data-i18n-placeholder="namePlaceholder"
+                >
+
+            </div>
+
+
+            <div class="form-field">
+
+                <label data-i18n="phoneLabel">
+                    Телефон
+                </label>
+
+                <input
+                    type="tel"
+                    id="clientPhone"
+                    placeholder="+420 ..."
+                    data-i18n-placeholder="phonePlaceholder"
+                >
+
+            </div>
+
+
+            <div class="form-field">
+
+                <label data-i18n="emailLabel">
+                    Email
+                </label>
+
+                <input
+                    type="email"
+                    id="clientEmail"
+                    placeholder="you@email.com"
+                    data-i18n-placeholder="emailPlaceholder"
+                >
+
+            </div>
+
+
+            <div class="form-field">
+
+                <label data-i18n="dateLabel">
+                    Бажана дата
+                </label>
+
+                <input
+                    type="date"
+                    id="clientDate"
+                >
+
+            </div>
+
+
+            <div class="form-field">
+
+                <label data-i18n="timeLabel">
+                    Бажаний час
+                </label>
+
+                <input
+                    type="time"
+                    id="clientTime"
+                >
+
+            </div>
+
+
+            <div class="summary">
+
+                <div
+                    class="summary-title"
+                    data-i18n="summaryTitle"
+                >
+                    Твій запис
+                </div>
+
+
+                <div class="summary-row">
+
+                    <span data-i18n="summaryService">
+                        Послуга
+                    </span>
+
+                    <strong id="summaryService">
+                        —
+                    </strong>
+
+                </div>
+
+
+                <div class="summary-row">
+
+                    <span data-i18n="summaryStyle">
+                        Стиль
+                    </span>
+
+                    <strong id="summaryStyle">
+                        —
+                    </strong>
+
+                </div>
+
+
+                <div class="summary-row">
+
+                    <span data-i18n="summaryLength">
+                        Довжина
+                    </span>
+
+                    <strong id="summaryLength">
+                        —
+                    </strong>
+
+                </div>
+
+
+                <div class="summary-row">
+
+                    <span data-i18n="summaryBeard">
+                        Борода
+                    </span>
+
+                    <strong id="summaryBeard">
+                        —
+                    </strong>
+
+                </div>
+
+            </div>
+
         </div>
 
-      </div>
+
+        <!-- NAVIGATION -->
+
+        <div
+            class="booking-navigation"
+            id="bookingNavigation"
+        >
+
+            <button
+                class="nav-button"
+                id="backButton"
+                onclick="previousStep()"
+            >
+                ← Назад
+            </button>
+
+
+            <button
+                class="nav-button next"
+                id="nextButton"
+                onclick="nextStep()"
+            >
+                Далі →
+            </button>
+
+        </div>
+
+
+        <!-- SUCCESS -->
+
+        <div
+            class="success"
+            id="success"
+        >
+
+            <div class="success-icon">
+                ✓
+            </div>
+
+
+            <h3 data-i18n="successTitle">
+                Готово.
+            </h3>
+
+
+            <p data-i18n="successText">
+                Твоя заявка відправлена.
+                Ми зв'яжемося з тобою
+                для підтвердження запису.
+            </p>
+
+        </div>
 
     </div>
-
-
-    <!-- NAVIGATION -->
-
-    <div
-      class="booking-navigation"
-      id="bookingNavigation"
-    >
-
-      <button
-        type="button"
-        class="nav-button"
-        id="backButton"
-        onclick="previousStep()"
-      >
-        ← Назад
-      </button>
-
-      <button
-        type="button"
-        class="nav-button next"
-        id="nextButton"
-        onclick="nextStep()"
-      >
-        Далі →
-      </button>
-
-    </div>
-
-
-    <!-- SUCCESS -->
-
-    <div
-      class="success"
-      id="success"
-    >
-
-      <div class="success-icon">
-        ✓
-      </div>
-
-      <h3 data-i18n="successTitle">
-        Готово.
-      </h3>
-
-      <p data-i18n="successText">
-        Твоя заявка відправлена.
-        Ми зв'яжемося з тобою для
-        підтвердження запису.
-      </p>
-
-    </div>
-
-  </div>
 
 </section>
 
 
-<!-- ================= FOOTER ================= -->
+<!-- =====================================================
+     FOOTER
+===================================================== -->
 
 <footer>
 
-  <div>
-    © 2026 SCISSORS BARBER STUDIO
-  </div>
+    <div>
+        © 2026 SCISSORS BARBER STUDIO
+    </div>
 
-  <div>
-    Cut with character.
-  </div>
+    <div>
+        Cut with character.
+    </div>
 
 </footer>
 
 
-<!-- ================= HIDDEN FORMSPREE FORM ================= -->
+<!-- =====================================================
+     FORMSPREE
+===================================================== -->
 
 <form
-  id="realForm"
-  action="https://formspree.io/f/xnpavyge"
-  method="POST"
-  style="display:none;"
+    id="realForm"
+    action="https://formspree.io/f/xnpavyge"
+    method="POST"
+    style="display:none;"
 >
 
-  <input
-    type="hidden"
-    name="language"
-    id="formLanguage"
-  >
+    <input
+        type="hidden"
+        name="language"
+        id="formLanguage"
+    >
 
-  <input
-    type="hidden"
-    name="service"
-    id="formService"
-  >
+    <input
+        type="hidden"
+        name="service"
+        id="formService"
+    >
 
-  <input
-    type="hidden"
-    name="style"
-    id="formStyle"
-  >
+    <input
+        type="hidden"
+        name="style"
+        id="formStyle"
+    >
 
-  <input
-    type="hidden"
-    name="hair_length"
-    id="formLength"
-  >
+    <input
+        type="hidden"
+        name="hair_length"
+        id="formLength"
+    >
 
-  <input
-    type="hidden"
-    name="beard"
-    id="formBeard"
-  >
+    <input
+        type="hidden"
+        name="beard"
+        id="formBeard"
+    >
 
-  <input
-    type="hidden"
-    name="wishes"
-    id="formWishes"
-  >
+    <input
+        type="hidden"
+        name="wishes"
+        id="formWishes"
+    >
 
-  <input
-    type="hidden"
-    name="reference"
-    id="formReference"
-  >
+    <input
+        type="hidden"
+        name="reference"
+        id="formReference"
+    >
 
-  <input
-    type="hidden"
-    name="name"
-    id="formName"
-  >
+    <input
+        type="hidden"
+        name="name"
+        id="formName"
+    >
 
-  <input
-    type="hidden"
-    name="phone"
-    id="formPhone"
-  >
+    <input
+        type="hidden"
+        name="phone"
+        id="formPhone"
+    >
 
-  <input
-    type="hidden"
-    name="email"
-    id="formEmail"
-  >
+    <input
+        type="hidden"
+        name="email"
+        id="formEmail"
+    >
 
-  <input
-    type="hidden"
-    name="date"
-    id="formDate"
-  >
+    <input
+        type="hidden"
+        name="date"
+        id="formDate"
+    >
 
-  <input
-    type="hidden"
-    name="time"
-    id="formTime"
-  >
+    <input
+        type="hidden"
+        name="time"
+        id="formTime"
+    >
 
-  <input
-    type="hidden"
-    name="_subject"
-    value="Нова заявка — SCISSORS Barber"
-  >
+    <input
+        type="hidden"
+        name="_subject"
+        value="New Barber Booking"
+    >
 
 </form>
 
 
 <script>
 
-/* =========================================================
+/* =====================================================
    TRANSLATIONS
-========================================================= */
+===================================================== */
 
 const translations = {
 
@@ -2327,7 +2865,7 @@ aboutText2:
 
 galleryLabel:"03 / Наші роботи",
 
-bookingTitle:"Tell us your style.",
+bookingTitle:"Розкажи нам про свій стиль.",
 
 q1:"Що хочеш зробити?",
 q1desc:"Обери те, що тобі потрібно.",
@@ -2394,10 +2932,13 @@ q5:"Розкажи свої побажання",
 q5desc:"Тут можеш написати все, що важливо для твоєї стрижки.",
 
 wishesLabel:"Твої побажання",
-wishesPlaceholder:"Наприклад: хочу залишити довжину зверху, боки коротше, як на фото...",
+wishesPlaceholder:
+"Наприклад: хочу залишити довжину зверху, боки коротше, як на фото...",
 
 photoLabel:"Якщо маєш приклад — можеш описати його",
-referencePlaceholder:"Наприклад: хочу приблизно як у David Beckham",
+
+referencePlaceholder:
+"Наприклад: хочу приблизно як у David Beckham",
 
 q6:"Коли та як з тобою зв'язатись?",
 q6desc:"Залиш контакти — ми підтвердимо запис.",
@@ -2422,6 +2963,7 @@ summaryLength:"Довжина",
 summaryBeard:"Борода",
 
 successTitle:"Готово.",
+
 successText:
 "Твоя заявка відправлена. Ми зв'яжемося з тобою для підтвердження запису."
 
@@ -2466,7 +3008,7 @@ aboutText2:
 
 galleryLabel:"03 / Naše práce",
 
-bookingTitle:"Tell us your style.",
+bookingTitle:"Řekněte nám svůj styl.",
 
 q1:"Co si přejete?",
 q1desc:"Vyberte, co potřebujete.",
@@ -2533,13 +3075,19 @@ q5:"Řekněte nám vaše přání",
 q5desc:"Napište vše, co je pro váš střih důležité.",
 
 wishesLabel:"Vaše přání",
-wishesPlaceholder:"Například: nahoře chci ponechat délku, boky kratší...",
+
+wishesPlaceholder:
+"Například: nahoře chci ponechat délku, boky kratší...",
 
 photoLabel:"Máte nějaký příklad?",
-referencePlaceholder:"Například: něco jako David Beckham",
+
+referencePlaceholder:
+"Například: něco jako David Beckham",
 
 q6:"Kdy a jak vás můžeme kontaktovat?",
-q6desc:"Nechte nám kontakt — rezervaci potvrdíme.",
+
+q6desc:
+"Nechte nám kontakt — rezervaci potvrdíme.",
 
 nameLabel:"Jméno",
 namePlaceholder:"Vaše jméno",
@@ -2561,6 +3109,7 @@ summaryLength:"Délka",
 summaryBeard:"Vousy",
 
 successTitle:"Hotovo.",
+
 successText:
 "Vaše žádost byla odeslána. Brzy vás kontaktujeme pro potvrzení rezervace."
 
@@ -2623,7 +3172,8 @@ consultation:"💬 Not sure",
 consultationDesc:"Recommend something",
 
 q2:"What style do you want?",
-q2desc:"If you don't know the name, choose “Recommend something”.",
+q2desc:
+"If you don't know the name, choose “Recommend something”.",
 
 fadeDesc:"Smooth fade",
 
@@ -2669,16 +3219,24 @@ removeBeard:"Remove completely",
 removeBeardDesc:"Clean shave",
 
 q5:"Tell us your wishes",
-q5desc:"Write anything important about your haircut.",
+
+q5desc:
+"Write anything important about your haircut.",
 
 wishesLabel:"Your wishes",
-wishesPlaceholder:"For example: keep the length on top, shorter sides...",
+
+wishesPlaceholder:
+"For example: keep the length on top, shorter sides...",
 
 photoLabel:"Have an example?",
-referencePlaceholder:"For example: something like David Beckham",
+
+referencePlaceholder:
+"For example: something like David Beckham",
 
 q6:"When and how can we contact you?",
-q6desc:"Leave your details — we'll confirm your booking.",
+
+q6desc:
+"Leave your details — we'll confirm your booking.",
 
 nameLabel:"Name",
 namePlaceholder:"Your name",
@@ -2700,6 +3258,7 @@ summaryLength:"Length",
 summaryBeard:"Beard",
 
 successTitle:"Done.",
+
 successText:
 "Your request has been sent. We'll contact you to confirm your booking."
 
@@ -2708,684 +3267,805 @@ successText:
 };
 
 
-/* =========================================================
+/* =====================================================
    STATE
-========================================================= */
+===================================================== */
 
 let currentLanguage =
-localStorage.getItem("barberLanguage") || "uk";
+    localStorage.getItem("barberLanguage") || "";
 
 let currentStep = 1;
 
 const answers = {
-  service:"",
-  style:"",
-  length:"",
-  beard:"",
-  wishes:"",
-  reference:""
+    service:"",
+    style:"",
+    length:"",
+    beard:"",
+    wishes:"",
+    reference:""
 };
 
 
-/* =========================================================
-   LANGUAGE
-========================================================= */
+/* =====================================================
+   INITIAL LANGUAGE
+===================================================== */
 
-function setLanguage(language){
+function chooseInitialLanguage(language){
 
-  currentLanguage = language;
+    currentLanguage = language;
 
-  localStorage.setItem(
-    "barberLanguage",
-    language
-  );
+    localStorage.setItem(
+        "barberLanguage",
+        language
+    );
 
-  document.documentElement.lang = language;
+    applyLanguage();
 
-  document
-    .querySelectorAll("[data-i18n]")
-    .forEach(element => {
-
-      const key =
-        element.getAttribute("data-i18n");
-
-      if(
-        translations[language] &&
-        translations[language][key]
-      ){
-
-        element.textContent =
-          translations[language][key];
-
-      }
-
-    });
-
-
-  document
-    .querySelectorAll("[data-i18n-placeholder]")
-    .forEach(element => {
-
-      const key =
-        element.getAttribute(
-          "data-i18n-placeholder"
+    const screen =
+        document.getElementById(
+            "languageScreen"
         );
 
-      if(
-        translations[language] &&
-        translations[language][key]
-      ){
+    screen.classList.add("hide");
 
-        element.placeholder =
-          translations[language][key];
+    setTimeout(function(){
 
-      }
+        screen.style.display="none";
 
-    });
-
-
-  document
-    .querySelectorAll(".language button")
-    .forEach(button => {
-
-      button.classList.remove("active");
-
-    });
-
-
-  const active =
-    document.getElementById(
-      "lang-" +
-      (
-        language === "uk"
-        ? "uk"
-        : language === "cs"
-        ? "cs"
-        : "en"
-      )
-    );
-
-  if(active){
-    active.classList.add("active");
-  }
-
-
-  updateNavigationText();
-
-  updateSummary();
+    },800);
 
 }
 
 
-/* =========================================================
-   NAVIGATION TRANSLATIONS
-========================================================= */
+/* =====================================================
+   CHANGE LANGUAGE FROM HEADER
+===================================================== */
 
-function updateNavigationText(){
+function changeLanguage(language){
 
-  const t =
-    translations[currentLanguage];
+    currentLanguage = language;
 
-  document.getElementById(
-    "backButton"
-  ).textContent =
-    currentStep === 1
-    ? ""
-    : (
-      currentLanguage === "uk"
-      ? "← Назад"
-      : currentLanguage === "cs"
-      ? "← Zpět"
-      : "← Back"
+    localStorage.setItem(
+        "barberLanguage",
+        language
     );
 
-
-  document.getElementById(
-    "nextButton"
-  ).textContent =
-    currentStep === 6
-    ? (
-      currentLanguage === "uk"
-      ? "✂ Відправити заявку"
-      : currentLanguage === "cs"
-      ? "✂ Odeslat rezervaci"
-      : "✂ Send booking"
-    )
-    : (
-      currentLanguage === "uk"
-      ? "Далі →"
-      : currentLanguage === "cs"
-      ? "Další →"
-      : "Next →"
-    );
-
-
-  document.getElementById(
-    "backButton"
-  ).style.visibility =
-    currentStep === 1
-    ? "hidden"
-    : "visible";
+    applyLanguage();
 
 }
 
 
-/* =========================================================
-   OPTIONS
-========================================================= */
+/* =====================================================
+   APPLY LANGUAGE
+===================================================== */
 
-document
-  .querySelectorAll(".option")
-  .forEach(button => {
+function applyLanguage(){
 
-    button.addEventListener(
-      "click",
-      function(){
+    const t =
+        translations[currentLanguage];
 
-        const question =
-          this.dataset.question;
-
-        const value =
-          this.dataset.value;
+    if(!t) return;
 
 
-        document
-          .querySelectorAll(
-            `.option[data-question="${question}"]`
-          )
-          .forEach(option => {
+    document.documentElement.lang =
+        currentLanguage;
 
-            option.classList.remove(
-              "selected"
+
+    document
+        .querySelectorAll("[data-i18n]")
+        .forEach(function(element){
+
+            const key =
+                element.dataset.i18n;
+
+            if(t[key]){
+                element.textContent =
+                    t[key];
+            }
+
+        });
+
+
+    document
+        .querySelectorAll(
+            "[data-i18n-placeholder]"
+        )
+        .forEach(function(element){
+
+            const key =
+                element.dataset
+                .i18nPlaceholder;
+
+            if(t[key]){
+                element.placeholder =
+                    t[key];
+            }
+
+        });
+
+
+    updateHeaderLanguage();
+
+    updateNavigation();
+
+    updateSummary();
+
+}
+
+
+/* =====================================================
+   HEADER LANGUAGE
+===================================================== */
+
+function updateHeaderLanguage(){
+
+    document
+        .querySelectorAll(
+            ".header-language button"
+        )
+        .forEach(function(button){
+
+            button.classList.remove(
+                "active"
             );
 
-          });
+        });
 
 
-        this.classList.add("selected");
+    const active =
+        document.getElementById(
+            "header-" +
+            currentLanguage
+        );
 
-        answers[question] = value;
+    if(active){
 
-        updateSummary();
+        active.classList.add(
+            "active"
+        );
 
-      }
-    );
+    }
 
-  });
+}
 
 
-/* =========================================================
-   NEXT STEP
-========================================================= */
+/* =====================================================
+   OPTIONS
+===================================================== */
+
+document
+    .querySelectorAll(".option")
+    .forEach(function(button){
+
+        button.addEventListener(
+            "click",
+            function(){
+
+                const question =
+                    this.dataset.question;
+
+                const value =
+                    this.dataset.value;
+
+
+                document
+                    .querySelectorAll(
+                        '.option[data-question="' +
+                        question +
+                        '"]'
+                    )
+                    .forEach(function(option){
+
+                        option.classList.remove(
+                            "selected"
+                        );
+
+                    });
+
+
+                this.classList.add(
+                    "selected"
+                );
+
+
+                answers[question] =
+                    value;
+
+
+                updateSummary();
+
+            }
+        );
+
+    });
+
+
+/* =====================================================
+   NEXT
+===================================================== */
 
 function nextStep(){
 
-  if(currentStep === 1 &&
-     !answers.service){
+    if(
+        currentStep === 1 &&
+        !answers.service
+    ){
 
-    alert(
-      currentLanguage === "uk"
-      ? "Будь ласка, обери, що хочеш зробити."
-      : currentLanguage === "cs"
-      ? "Vyberte prosím, co si přejete."
-      : "Please choose what you would like."
-    );
+        showMessage(
+            "service"
+        );
 
-    return;
-  }
+        return;
+    }
 
 
-  if(currentStep === 2 &&
-     !answers.style){
+    if(
+        currentStep === 2 &&
+        !answers.style
+    ){
 
-    alert(
-      currentLanguage === "uk"
-      ? "Обери бажаний стиль."
-      : currentLanguage === "cs"
-      ? "Vyberte požadovaný styl."
-      : "Please choose a style."
-    );
+        showMessage(
+            "style"
+        );
 
-    return;
-  }
+        return;
+    }
 
 
-  if(currentStep === 3 &&
-     !answers.length){
+    if(
+        currentStep === 3 &&
+        !answers.length
+    ){
 
-    alert(
-      currentLanguage === "uk"
-      ? "Обери бажану довжину."
-      : currentLanguage === "cs"
-      ? "Vyberte požadovanou délku."
-      : "Please choose a length."
-    );
+        showMessage(
+            "length"
+        );
 
-    return;
-  }
+        return;
+    }
 
 
-  if(currentStep === 4 &&
-     !answers.beard){
+    if(
+        currentStep === 4 &&
+        !answers.beard
+    ){
 
-    alert(
-      currentLanguage === "uk"
-      ? "Обери варіант для бороди."
-      : currentLanguage === "cs"
-      ? "Vyberte variantu vousů."
-      : "Please choose a beard option."
-    );
+        showMessage(
+            "beard"
+        );
 
-    return;
-  }
+        return;
+    }
 
 
-  if(currentStep === 5){
+    if(currentStep === 5){
 
-    answers.wishes =
-      document.getElementById(
-        "wishes"
-      ).value;
+        answers.wishes =
+            document.getElementById(
+                "wishes"
+            ).value;
 
-    answers.reference =
-      document.getElementById(
-        "reference"
-      ).value;
+        answers.reference =
+            document.getElementById(
+                "reference"
+            ).value;
 
-  }
-
-
-  if(currentStep === 6){
-
-    submitBooking();
-
-    return;
-
-  }
+    }
 
 
-  currentStep++;
+    if(currentStep === 6){
 
-  showStep();
+        submitBooking();
 
-}
+        return;
+
+    }
 
 
-/* =========================================================
-   PREVIOUS
-========================================================= */
-
-function previousStep(){
-
-  if(currentStep > 1){
-
-    currentStep--;
+    currentStep++;
 
     showStep();
 
-  }
+}
+
+
+/* =====================================================
+   VALIDATION MESSAGE
+===================================================== */
+
+function showMessage(type){
+
+    const messages = {
+
+        uk:{
+            service:"Будь ласка, обери послугу.",
+            style:"Обери бажаний стиль.",
+            length:"Обери бажану довжину.",
+            beard:"Обери варіант для бороди."
+        },
+
+        cs:{
+            service:"Vyberte prosím službu.",
+            style:"Vyberte požadovaný styl.",
+            length:"Vyberte požadovanou délku.",
+            beard:"Vyberte variantu vousů."
+        },
+
+        en:{
+            service:"Please choose a service.",
+            style:"Please choose a style.",
+            length:"Please choose a length.",
+            beard:"Please choose a beard option."
+        }
+
+    };
+
+
+    alert(
+        messages[currentLanguage][type]
+    );
 
 }
 
 
-/* =========================================================
+/* =====================================================
+   PREVIOUS
+===================================================== */
+
+function previousStep(){
+
+    if(currentStep > 1){
+
+        currentStep--;
+
+        showStep();
+
+    }
+
+}
+
+
+/* =====================================================
    SHOW STEP
-========================================================= */
+===================================================== */
 
 function showStep(){
 
-  document
-    .querySelectorAll(".step")
-    .forEach(step => {
+    document
+        .querySelectorAll(".step")
+        .forEach(function(step){
 
-      step.classList.remove(
-        "active"
-      );
+            step.classList.remove(
+                "active"
+            );
 
-    });
-
-
-  const activeStep =
-    document.querySelector(
-      `.step[data-step="${currentStep}"]`
-    );
+        });
 
 
-  if(activeStep){
-
-    activeStep.classList.add(
-      "active"
-    );
-
-  }
-
-
-  document.getElementById(
-    "progressBar"
-  ).style.width =
-    (
-      currentStep / 6 * 100
-    ) + "%";
+    const active =
+        document.querySelector(
+            '.step[data-step="' +
+            currentStep +
+            '"]'
+        );
 
 
-  updateNavigationText();
+    if(active){
 
-  updateSummary();
+        active.classList.add(
+            "active"
+        );
 
-  window.scrollTo({
-    top:
-      document.getElementById(
+    }
+
+
+    document.getElementById(
+        "progressBar"
+    ).style.width =
+        (
+            currentStep / 6 * 100
+        ) + "%";
+
+
+    updateNavigation();
+
+    updateSummary();
+
+
+    document.getElementById(
         "booking"
-      ).offsetTop - 90,
-
-    behavior:"smooth"
-  });
+    ).scrollIntoView({
+        behavior:"smooth"
+    });
 
 }
 
 
-/* =========================================================
+/* =====================================================
+   NAVIGATION
+===================================================== */
+
+function updateNavigation(){
+
+    const back =
+        document.getElementById(
+            "backButton"
+        );
+
+    const next =
+        document.getElementById(
+            "nextButton"
+        );
+
+
+    if(currentStep === 1){
+
+        back.style.visibility =
+            "hidden";
+
+    }else{
+
+        back.style.visibility =
+            "visible";
+
+        back.textContent =
+            currentLanguage === "cs"
+            ? "← Zpět"
+            : currentLanguage === "en"
+            ? "← Back"
+            : "← Назад";
+
+    }
+
+
+    if(currentStep === 6){
+
+        next.textContent =
+            currentLanguage === "cs"
+            ? "✂ Odeslat rezervaci"
+            : currentLanguage === "en"
+            ? "✂ Send booking"
+            : "✂ Відправити заявку";
+
+    }else{
+
+        next.textContent =
+            currentLanguage === "cs"
+            ? "Další →"
+            : currentLanguage === "en"
+            ? "Next →"
+            : "Далі →";
+
+    }
+
+}
+
+
+/* =====================================================
    SUMMARY
-========================================================= */
+===================================================== */
 
 function updateSummary(){
 
-  const t =
-    translations[currentLanguage];
+    const t =
+        translations[currentLanguage];
+
+    if(!t) return;
 
 
-  const serviceNames = {
+    const serviceNames = {
 
-    haircut:
-      t.haircut,
+        haircut:t.haircut,
 
-    beard:
-      t.beard,
+        beard:t.beard,
 
-    hairBeard:
-      t.hairBeard,
+        hairBeard:t.hairBeard,
 
-    consultation:
-      t.consultation
+        consultation:t.consultation
 
-  };
+    };
 
 
-  const styleNames = {
+    const styleNames = {
 
-    fade:"Fade",
+        fade:"Fade",
 
-    classic:t.classic,
+        classic:t.classic,
 
-    crop:"Crop",
+        crop:"Crop",
 
-    longer:t.longer,
+        longer:t.longer,
 
-    advice:t.advice
+        advice:t.advice
 
-  };
-
-
-  const lengthNames = {
-
-    short:t.short,
-
-    medium:t.medium,
-
-    long:t.long,
-
-    dontknow:t.dontKnow
-
-  };
+    };
 
 
-  const beardNames = {
+    const lengthNames = {
 
-    none:t.noBeard,
+        short:t.short,
 
-    trim:t.trimBeard,
+        medium:t.medium,
 
-    shape:t.shapeBeard,
+        long:t.long,
 
-    remove:t.removeBeard
+        dontknow:t.dontKnow
 
-  };
-
-
-  document.getElementById(
-    "summaryService"
-  ).textContent =
-    serviceNames[answers.service]
-    || "—";
+    };
 
 
-  document.getElementById(
-    "summaryStyle"
-  ).textContent =
-    styleNames[answers.style]
-    || "—";
+    const beardNames = {
+
+        none:t.noBeard,
+
+        trim:t.trimBeard,
+
+        shape:t.shapeBeard,
+
+        remove:t.removeBeard
+
+    };
 
 
-  document.getElementById(
-    "summaryLength"
-  ).textContent =
-    lengthNames[answers.length]
-    || "—";
+    document.getElementById(
+        "summaryService"
+    ).textContent =
+        serviceNames[
+            answers.service
+        ] || "—";
 
 
-  document.getElementById(
-    "summaryBeard"
-  ).textContent =
-    beardNames[answers.beard]
-    || "—";
+    document.getElementById(
+        "summaryStyle"
+    ).textContent =
+        styleNames[
+            answers.style
+        ] || "—";
+
+
+    document.getElementById(
+        "summaryLength"
+    ).textContent =
+        lengthNames[
+            answers.length
+        ] || "—";
+
+
+    document.getElementById(
+        "summaryBeard"
+    ).textContent =
+        beardNames[
+            answers.beard
+        ] || "—";
 
 }
 
 
-/* =========================================================
-   SUBMIT BOOKING
-========================================================= */
+/* =====================================================
+   SUBMIT
+===================================================== */
 
 function submitBooking(){
 
-  const name =
+    const name =
+        document.getElementById(
+            "clientName"
+        ).value.trim();
+
+
+    const phone =
+        document.getElementById(
+            "clientPhone"
+        ).value.trim();
+
+
+    const email =
+        document.getElementById(
+            "clientEmail"
+        ).value.trim();
+
+
+    const date =
+        document.getElementById(
+            "clientDate"
+        ).value;
+
+
+    const time =
+        document.getElementById(
+            "clientTime"
+        ).value;
+
+
+    if(
+        !name ||
+        !phone ||
+        !email ||
+        !date ||
+        !time
+    ){
+
+        alert(
+            currentLanguage === "cs"
+            ? "Vyplňte prosím všechna pole."
+            : currentLanguage === "en"
+            ? "Please fill in all fields."
+            : "Будь ласка, заповни всі поля."
+        );
+
+        return;
+    }
+
+
+    answers.wishes =
+        document.getElementById(
+            "wishes"
+        ).value;
+
+
+    answers.reference =
+        document.getElementById(
+            "reference"
+        ).value;
+
+
     document.getElementById(
-      "clientName"
-    ).value.trim();
+        "formLanguage"
+    ).value =
+        currentLanguage;
 
-  const phone =
+
     document.getElementById(
-      "clientPhone"
-    ).value.trim();
+        "formService"
+    ).value =
+        answers.service;
 
-  const email =
+
     document.getElementById(
-      "clientEmail"
-    ).value.trim();
+        "formStyle"
+    ).value =
+        answers.style;
 
-  const date =
+
     document.getElementById(
-      "clientDate"
-    ).value;
+        "formLength"
+    ).value =
+        answers.length;
 
-  const time =
+
     document.getElementById(
-      "clientTime"
-    ).value;
+        "formBeard"
+    ).value =
+        answers.beard;
 
 
-  if(!name ||
-     !phone ||
-     !email ||
-     !date ||
-     !time){
-
-    alert(
-      currentLanguage === "uk"
-      ? "Будь ласка, заповни всі поля."
-      : currentLanguage === "cs"
-      ? "Vyplňte prosím všechna pole."
-      : "Please fill in all fields."
-    );
-
-    return;
-
-  }
-
-
-  answers.wishes =
     document.getElementById(
-      "wishes"
-    ).value;
+        "formWishes"
+    ).value =
+        answers.wishes;
 
-  answers.reference =
+
     document.getElementById(
-      "reference"
-    ).value;
+        "formReference"
+    ).value =
+        answers.reference;
 
 
-  /*
-    Заповнюємо приховану Formspree форму
-  */
-
-  document.getElementById(
-    "formLanguage"
-  ).value =
-    currentLanguage;
+    document.getElementById(
+        "formName"
+    ).value =
+        name;
 
 
-  document.getElementById(
-    "formService"
-  ).value =
-    answers.service;
+    document.getElementById(
+        "formPhone"
+    ).value =
+        phone;
 
 
-  document.getElementById(
-    "formStyle"
-  ).value =
-    answers.style;
+    document.getElementById(
+        "formEmail"
+    ).value =
+        email;
 
 
-  document.getElementById(
-    "formLength"
-  ).value =
-    answers.length;
+    document.getElementById(
+        "formDate"
+    ).value =
+        date;
 
 
-  document.getElementById(
-    "formBeard"
-  ).value =
-    answers.beard;
+    document.getElementById(
+        "formTime"
+    ).value =
+        time;
 
 
-  document.getElementById(
-    "formWishes"
-  ).value =
-    answers.wishes;
+    document.getElementById(
+        "realForm"
+    ).submit();
 
 
-  document.getElementById(
-    "formReference"
-  ).value =
-    answers.reference;
-
-
-  document.getElementById(
-    "formName"
-  ).value =
-    name;
-
-
-  document.getElementById(
-    "formPhone"
-  ).value =
-    phone;
-
-
-  document.getElementById(
-    "formEmail"
-  ).value =
-    email;
-
-
-  document.getElementById(
-    "formDate"
-  ).value =
-    date;
-
-
-  document.getElementById(
-    "formTime"
-  ).value =
-    time;
-
-
-  /*
-    Відправляємо форму на Formspree
-  */
-
-  document.getElementById(
-    "realForm"
-  ).submit();
-
-
-  /*
-    Показуємо підтвердження
-  */
-
-  document.getElementById(
-    "bookingNavigation"
-  ).style.display =
-    "none";
-
-
-  document.querySelector(
-    ".booking-wrapper .booking-head"
-  ).style.display =
-    "none";
-
-
-  document
-    .querySelectorAll(".step")
-    .forEach(step => {
-
-      step.style.display =
+    document.getElementById(
+        "bookingNavigation"
+    ).style.display =
         "none";
 
-    });
+
+    document.querySelector(
+        ".booking-head"
+    ).style.display =
+        "none";
 
 
-  document.getElementById(
-    "success"
-  ).classList.add("show");
+    document
+        .querySelectorAll(".step")
+        .forEach(function(step){
+
+            step.style.display =
+                "none";
+
+        });
+
+
+    document.getElementById(
+        "success"
+    ).classList.add("show");
 
 }
 
 
-/* =========================================================
-   INITIALIZE
-========================================================= */
-
-setLanguage(currentLanguage);
-
-showStep();
-
-
-/* =========================================================
-   MINIMUM DATE = TODAY
-========================================================= */
+/* =====================================================
+   DATE
+===================================================== */
 
 const dateInput =
-  document.getElementById(
-    "clientDate"
-  );
+    document.getElementById(
+        "clientDate"
+    );
 
-const today =
-  new Date()
-  .toISOString()
-  .split("T")[0];
+dateInput.min =
+    new Date()
+    .toISOString()
+    .split("T")[0];
 
-dateInput.min = today;
+
+/* =====================================================
+   START
+===================================================== */
+
+/*
+    Якщо мова вже була вибрана раніше,
+    не показуємо language screen.
+*/
+
+if(currentLanguage){
+
+    document.getElementById(
+        "languageScreen"
+    ).style.display =
+        "none";
+
+    applyLanguage();
+
+}else{
+
+    document.getElementById(
+        "languageScreen"
+    ).style.display =
+        "flex";
+
+}
+
+
+/*
+    Початковий прогрес
+*/
+
+document.getElementById(
+    "progressBar"
+).style.width =
+    "16.66%";
 
 </script>
 
