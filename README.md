@@ -1,37 +1,56 @@
+```html
 <!DOCTYPE html>
 <html lang="uk">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="SCISSORS Barber Studio — чоловічі стрижки, борода та сучасний барберинг.">
+
   <title>SCISSORS — Barber Studio</title>
 
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-    html { scroll-behavior: smooth; }
+    html {
+      scroll-behavior: smooth;
+    }
 
     body {
-      background: #0b0b0b;
-      color: #f5f1e8;
+      background: #080808;
+      color: #f4f0e8;
       font-family: Arial, Helvetica, sans-serif;
       overflow-x: hidden;
     }
 
-    a { color: inherit; text-decoration: none; }
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* ================= HEADER ================= */
 
     header {
       position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 1000;
-      height: 80px;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 82px;
+
       padding: 0 6%;
+
       display: flex;
       align-items: center;
       justify-content: space-between;
-      background: rgba(11,11,11,.88);
-      backdrop-filter: blur(15px);
-      border-bottom: 1px solid #222;
+
+      z-index: 1000;
+
+      background: rgba(8, 8, 8, .75);
+      backdrop-filter: blur(18px);
+
+      border-bottom: 1px solid rgba(255,255,255,.08);
     }
 
     .logo {
@@ -40,108 +59,176 @@
       letter-spacing: 5px;
     }
 
-    .logo span { color: #c9a76a; }
+    .logo span {
+      color: #c9a76a;
+    }
 
-    nav { display: flex; gap: 30px; }
+    nav {
+      display: flex;
+      gap: 30px;
+    }
 
     nav a {
       color: #aaa;
-      font-size: 12px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      transition: .3s;
-    }
-
-    nav a:hover { color: #c9a76a; }
-
-    .header-button {
-      border: 1px solid #c9a76a;
-      color: #c9a76a;
-      padding: 12px 18px;
       font-size: 11px;
       letter-spacing: 2px;
       text-transform: uppercase;
       transition: .3s;
     }
 
-    .header-button:hover {
-      background: #c9a76a;
-      color: #0b0b0b;
+    nav a:hover {
+      color: #c9a76a;
     }
+
+    .book {
+      border: 1px solid #c9a76a;
+      color: #c9a76a;
+
+      padding: 12px 20px;
+
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+
+      transition: .3s;
+    }
+
+    .book:hover {
+      background: #c9a76a;
+      color: #080808;
+    }
+
+    /* ================= HERO ================= */
 
     .hero {
       min-height: 100vh;
+
       position: relative;
+
       display: flex;
       align-items: center;
-      padding: 140px 8% 100px;
+
+      padding: 150px 8% 100px;
+
       overflow: hidden;
+
+      background:
+        linear-gradient(
+          90deg,
+          rgba(8,8,8,.98) 0%,
+          rgba(8,8,8,.85) 38%,
+          rgba(8,8,8,.35) 75%,
+          rgba(8,8,8,.75) 100%
+        ),
+        url("https://images.pexels.com/photos/4969866/pexels-photo-4969866.jpeg?auto=compress&cs=tinysrgb&w=1800")
+        center/cover no-repeat;
+    }
+
+    .hero::after {
+      content: "";
+
+      position: absolute;
+      inset: 0;
+
+      background:
+        linear-gradient(
+          transparent 60%,
+          #080808 100%
+        );
+
+      pointer-events: none;
     }
 
     .hero-content {
       position: relative;
       z-index: 5;
-      max-width: 800px;
+
+      max-width: 850px;
     }
 
-    .small-title, .label {
+    .eyebrow {
       color: #c9a76a;
-      font-size: 12px;
+
+      font-size: 11px;
       letter-spacing: 5px;
       text-transform: uppercase;
+
+      margin-bottom: 25px;
+
+      animation: fadeUp 1s ease forwards;
     }
 
-    .small-title { margin-bottom: 25px; }
-
     h1 {
-      font-size: clamp(70px, 13vw, 170px);
-      line-height: .8;
-      letter-spacing: -8px;
+      font-size: clamp(70px, 13vw, 175px);
+
+      line-height: .78;
+
+      letter-spacing: -9px;
+
       text-transform: uppercase;
+
       font-weight: 900;
+
+      animation: fadeUp 1s .1s ease both;
     }
 
     h1 span {
       color: transparent;
-      -webkit-text-stroke: 1px #f5f1e8;
+
+      -webkit-text-stroke: 1px #f4f0e8;
     }
 
-    .hero-text {
-      max-width: 500px;
-      margin-top: 40px;
-      color: #999;
+    .hero-description {
+      max-width: 510px;
+
+      margin-top: 45px;
+
+      color: #aaa;
+
       font-size: 16px;
+
       line-height: 1.8;
+
+      animation: fadeUp 1s .2s ease both;
     }
 
-    .buttons {
+    .hero-buttons {
       display: flex;
       gap: 15px;
+
       margin-top: 35px;
-      flex-wrap: wrap;
+
+      animation: fadeUp 1s .3s ease both;
     }
 
     .button {
       display: inline-block;
-      padding: 17px 28px;
-      text-transform: uppercase;
+
+      padding: 17px 30px;
+
+      font-size: 10px;
+
       letter-spacing: 2px;
-      font-size: 11px;
+
+      text-transform: uppercase;
+
       transition: .3s;
     }
 
     .button.gold {
       background: #c9a76a;
-      color: #0b0b0b;
+      color: #080808;
     }
 
     .button.gold:hover {
       transform: translateY(-4px);
-      box-shadow: 0 15px 40px rgba(201,167,106,.2);
+
+      box-shadow:
+        0 15px 40px rgba(201,167,106,.25);
     }
 
     .button.outline {
-      border: 1px solid #444;
+      border: 1px solid #555;
       color: #eee;
     }
 
@@ -150,342 +237,602 @@
       color: #c9a76a;
     }
 
+    /* ================= SCISSORS ================= */
+
     .scissors {
       position: absolute;
-      right: 3%;
-      top: 50%;
-      width: 500px;
-      height: 500px;
-      transform: translateY(-50%) rotate(-20deg);
-      opacity: .12;
-      animation: scissorsFloat 6s ease-in-out infinite;
+
+      right: 4%;
+      top: 48%;
+
+      width: 470px;
+      height: 470px;
+
+      z-index: 3;
+
+      opacity: .18;
+
+      transform:
+        translateY(-50%)
+        rotate(-18deg);
+
+      animation: scissorsMove 6s ease-in-out infinite;
     }
 
     .blade {
       position: absolute;
-      width: 350px;
-      height: 35px;
-      left: 60px;
-      top: 230px;
-      border-radius: 50px 5px 5px 50px;
-      background: linear-gradient(90deg,#eee,#555);
+
+      width: 330px;
+      height: 32px;
+
+      left: 50px;
+      top: 220px;
+
+      border-radius: 50px;
+
+      background:
+        linear-gradient(
+          90deg,
+          #fff,
+          #777,
+          #222
+        );
+
+      transform-origin: right center;
     }
 
-    .blade-1 { transform: rotate(25deg); }
-    .blade-2 { transform: rotate(-25deg); }
+    .blade.one {
+      transform: rotate(25deg);
+    }
+
+    .blade.two {
+      transform: rotate(-25deg);
+    }
 
     .ring {
       position: absolute;
-      width: 120px;
-      height: 120px;
-      right: 15px;
-      border: 25px solid #999;
+
+      width: 115px;
+      height: 115px;
+
       border-radius: 50%;
+
+      border: 23px solid #aaa;
+
+      right: 5px;
     }
 
-    .ring-1 { top: 120px; }
-    .ring-2 { top: 275px; }
+    .ring.one {
+      top: 105px;
+    }
 
-    .center {
+    .ring.two {
+      top: 260px;
+    }
+
+    .pivot {
       position: absolute;
+
       width: 38px;
       height: 38px;
-      left: 70px;
-      top: 230px;
+
       border-radius: 50%;
+
       background: #c9a76a;
-      box-shadow: 0 0 30px #c9a76a;
+
+      left: 65px;
+      top: 220px;
+
+      box-shadow:
+        0 0 40px #c9a76a;
     }
 
-    @keyframes scissorsFloat {
-      0%,100% { transform: translateY(-50%) rotate(-20deg); }
-      50% { transform: translateY(calc(-50% - 20px)) rotate(-13deg); }
+    @keyframes scissorsMove {
+      0%,100% {
+        transform:
+          translateY(-50%)
+          rotate(-18deg);
+      }
+
+      50% {
+        transform:
+          translateY(calc(-50% - 20px))
+          rotate(-10deg);
+      }
     }
 
-    .moving-line {
-      width: 100%;
+    /* ================= MARQUEE ================= */
+
+    .marquee {
       overflow: hidden;
+
+      padding: 20px 0;
+
       border-top: 1px solid #222;
       border-bottom: 1px solid #222;
-      padding: 20px 0;
+
       white-space: nowrap;
     }
 
-    .moving-text {
+    .marquee-text {
       display: inline-block;
+
       color: #c9a76a;
-      font-size: 12px;
-      letter-spacing: 5px;
+
+      font-size: 11px;
+
+      letter-spacing: 6px;
+
       text-transform: uppercase;
-      animation: moveText 18s linear infinite;
+
+      animation: marquee 20s linear infinite;
     }
 
-    @keyframes moveText {
-      from { transform: translateX(0); }
-      to { transform: translateX(-50%); }
+    @keyframes marquee {
+      from {
+        transform: translateX(0);
+      }
+
+      to {
+        transform: translateX(-50%);
+      }
     }
 
-    section { padding: 120px 8%; }
+    /* ================= SECTIONS ================= */
 
-    .label { margin-bottom: 20px; }
+    section {
+      padding: 120px 8%;
+    }
 
-    .title {
-      font-size: clamp(50px,8vw,100px);
-      line-height: .9;
+    .label {
+      color: #c9a76a;
+
+      font-size: 10px;
+
+      letter-spacing: 4px;
+
+      text-transform: uppercase;
+
+      margin-bottom: 20px;
+    }
+
+    .section-title {
+      font-size: clamp(50px, 8vw, 100px);
+
+      line-height: .85;
+
       letter-spacing: -5px;
+
       text-transform: uppercase;
-      margin-bottom: 60px;
+
+      margin-bottom: 65px;
     }
+
+    /* ================= SERVICES ================= */
 
     .services {
       display: grid;
+
       grid-template-columns: 1fr 1fr;
+
       border-top: 1px solid #292929;
     }
 
     .service {
       padding: 40px 20px;
+
       border-bottom: 1px solid #292929;
-      transition: .3s;
-      cursor: pointer;
+
+      transition: .4s;
     }
 
-    .service:nth-child(odd) { border-right: 1px solid #292929; }
-    .service:hover { background: #111; }
+    .service:nth-child(odd) {
+      border-right: 1px solid #292929;
+    }
 
-    .number { color: #555; font-size: 12px; }
+    .service:hover {
+      background: #111;
+    }
+
+    .service-number {
+      color: #555;
+
+      font-size: 11px;
+    }
 
     .service h3 {
       margin-top: 20px;
+
       font-size: 25px;
+
       text-transform: uppercase;
     }
 
     .service p {
+      max-width: 470px;
+
       margin-top: 12px;
+
       color: #777;
+
       line-height: 1.7;
-      max-width: 450px;
     }
 
     .price {
       margin-top: 20px;
+
       color: #c9a76a;
+
       font-size: 20px;
     }
 
+    /* ================= ABOUT ================= */
+
     .about {
       display: grid;
+
       grid-template-columns: 1fr 1fr;
-      gap: 100px;
+
+      gap: 90px;
+
       align-items: center;
     }
 
-    .about-picture {
-      min-height: 500px;
-      border: 1px solid #292929;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      overflow: hidden;
+    .about-image {
+      height: 620px;
+
       position: relative;
+
+      overflow: hidden;
+
+      border: 1px solid #292929;
     }
 
-    .big-scissors {
-      font-size: 260px;
-      opacity: .12;
-      transform: rotate(-20deg);
-      animation: bigScissors 5s ease-in-out infinite;
+    .about-image img {
+      width: 100%;
+      height: 100%;
+
+      object-fit: cover;
+
+      transition: 1s;
     }
 
-    @keyframes bigScissors {
-      0%,100% { transform: rotate(-20deg) scale(1); }
-      50% { transform: rotate(-10deg) scale(1.08); }
+    .about-image:hover img {
+      transform: scale(1.05);
+    }
+
+    .about-image::after {
+      content: "";
+
+      position: absolute;
+
+      inset: 0;
+
+      background:
+        linear-gradient(
+          180deg,
+          transparent,
+          rgba(0,0,0,.65)
+        );
     }
 
     .about-text p {
       color: #999;
+
       line-height: 1.9;
+
       margin-bottom: 25px;
+
+      font-size: 15px;
     }
 
+    .signature {
+      margin-top: 35px;
+
+      color: #c9a76a;
+
+      font-style: italic;
+
+      font-size: 20px;
+    }
+
+    /* ================= QUOTE ================= */
+
     .quote {
-      padding: 170px 8%;
+      padding: 180px 8%;
+
       background: #111;
+
       text-align: center;
+
       border-top: 1px solid #222;
       border-bottom: 1px solid #222;
     }
 
     .quote h2 {
-      font-size: clamp(40px,7vw,90px);
-      line-height: .9;
-      letter-spacing: -4px;
+      font-size: clamp(45px, 7vw, 95px);
+
+      line-height: .85;
+
+      letter-spacing: -5px;
+
       text-transform: uppercase;
     }
 
-    .quote span { color: #c9a76a; }
+    .quote span {
+      color: #c9a76a;
+    }
+
+    /* ================= GALLERY ================= */
 
     .gallery {
       display: grid;
-      grid-template-columns: repeat(4,1fr);
+
+      grid-template-columns:
+        1fr
+        1fr
+        1fr;
+
       gap: 15px;
     }
 
     .gallery-card {
-      min-width: 0;
+      height: 480px;
+
+      position: relative;
+
       overflow: hidden;
-      border: 1px solid #292929;
+
       background: #111;
-      transition: .5s;
+
+      border: 1px solid #292929;
     }
 
-    .gallery-card:hover {
-      transform: translateY(-10px);
-      border-color: #c9a76a;
+    .gallery-card:nth-child(2) {
+      transform: translateY(70px);
     }
 
     .gallery-card img {
-      display: block;
       width: 100%;
-      height: 420px;
+      height: 100%;
+
       object-fit: cover;
-      object-position: center;
-      transition: transform .5s;
+
+      transition:
+        transform .7s,
+        filter .7s;
+
+      filter: brightness(.65);
     }
 
-    .gallery-card:hover img { transform: scale(1.04); }
+    .gallery-card:hover img {
+      transform: scale(1.08);
 
-    .gallery-info {
-      padding: 20px;
-      background: #111;
+      filter: brightness(.9);
     }
 
-    .gallery-info h3 {
-      font-size: 15px;
+    .gallery-overlay {
+      position: absolute;
+
+      left: 25px;
+      bottom: 25px;
+
+      z-index: 2;
+
+      color: white;
+
+      font-size: 11px;
+
+      letter-spacing: 3px;
+
       text-transform: uppercase;
-      letter-spacing: 1px;
     }
 
-    .gallery-info p {
-      margin-top: 8px;
-      color: #777;
-      font-size: 12px;
-      line-height: 1.5;
-    }
+    /* ================= BOOKING ================= */
 
     .contact {
       display: grid;
+
       grid-template-columns: 1fr 1fr;
+
       gap: 100px;
     }
 
-    .contact-item { margin-bottom: 35px; }
+    .contact-item {
+      margin-bottom: 35px;
+    }
 
     .contact-item small {
       color: #666;
+
       font-size: 10px;
-      text-transform: uppercase;
+
       letter-spacing: 3px;
+
+      text-transform: uppercase;
     }
 
     .contact-item p {
       margin-top: 10px;
-      font-size: 20px;
+
+      font-size: 19px;
     }
 
     form {
       display: flex;
+
       flex-direction: column;
+
       gap: 15px;
     }
 
-    input, select {
+    input,
+    select {
       width: 100%;
+
       padding: 18px 5px;
+
       background: transparent;
+
       border: none;
+
       border-bottom: 1px solid #333;
+
       outline: none;
+
       color: white;
+
       font-size: 14px;
     }
 
-    input:focus, select:focus { border-color: #c9a76a; }
-    select option { background: #111; }
+    input:focus,
+    select:focus {
+      border-color: #c9a76a;
+    }
+
+    select option {
+      background: #111;
+    }
 
     button {
       border: none;
+
       cursor: pointer;
+
       margin-top: 15px;
     }
 
-    .form-status {
-      min-height: 22px;
-      margin-top: 8px;
-      font-size: 13px;
-      line-height: 1.5;
-    }
-
-    .form-status.success { color: #c9a76a; }
-    .form-status.error { color: #d77; }
+    /* ================= FOOTER ================= */
 
     footer {
       padding: 40px 8%;
+
       border-top: 1px solid #222;
+
       display: flex;
+
       justify-content: space-between;
+
       color: #555;
+
       font-size: 10px;
+
       letter-spacing: 2px;
+
       text-transform: uppercase;
     }
 
-    @media (max-width: 1000px) {
-      .gallery { grid-template-columns: repeat(2,1fr); }
+    /* ================= ANIMATION ================= */
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+
+        transform:
+          translateY(30px);
+      }
+
+      to {
+        opacity: 1;
+
+        transform:
+          translateY(0);
+      }
     }
 
-    @media (max-width: 800px) {
-      header { padding: 0 5%; }
-      nav { display: none; }
-      .header-button { padding: 10px 12px; }
+    /* ================= MOBILE ================= */
 
-      .hero { padding: 130px 7% 80px; }
+    @media (max-width: 800px) {
+
+      header {
+        height: 70px;
+
+        padding: 0 5%;
+      }
+
+      nav {
+        display: none;
+      }
+
+      .logo {
+        font-size: 20px;
+      }
+
+      .book {
+        padding: 10px 12px;
+      }
+
+      .hero {
+        padding:
+          130px
+          7%
+          100px;
+
+        background-position: 65% center;
+      }
 
       h1 {
         font-size: 75px;
+
         letter-spacing: -5px;
       }
 
-      .hero-text { font-size: 14px; }
-
-      .scissors {
-        right: -180px;
-        width: 400px;
-        height: 400px;
-        opacity: .08;
+      .hero-description {
+        font-size: 14px;
       }
 
-      section { padding: 80px 7%; }
+      .scissors {
+        width: 330px;
+        height: 330px;
 
-      .services,
-      .about,
-      .contact { grid-template-columns: 1fr; }
+        right: -150px;
 
-      .service:nth-child(odd) { border-right: none; }
+        opacity: .1;
+      }
 
-      .about { gap: 50px; }
+      section {
+        padding: 80px 7%;
+      }
 
-      .about-picture { min-height: 350px; }
+      .services {
+        grid-template-columns: 1fr;
+      }
 
-      .gallery { grid-template-columns: 1fr; }
+      .service:nth-child(odd) {
+        border-right: none;
+      }
 
-      .gallery-card img { height: 430px; }
+      .about {
+        grid-template-columns: 1fr;
 
-      .contact { gap: 60px; }
+        gap: 50px;
+      }
+
+      .about-image {
+        height: 450px;
+      }
+
+      .gallery {
+        grid-template-columns: 1fr;
+      }
+
+      .gallery-card {
+        height: 450px;
+      }
+
+      .gallery-card:nth-child(2) {
+        transform: none;
+      }
+
+      .contact {
+        grid-template-columns: 1fr;
+
+        gap: 60px;
+      }
 
       footer {
         flex-direction: column;
+
         gap: 15px;
       }
     }
@@ -494,319 +841,526 @@
 
 <body>
 
-<header>
-  <a href="#" class="logo">SCISSORS<span>.</span></a>
 
-  <nav>
-    <a href="#services">Послуги</a>
-    <a href="#about">Про нас</a>
-    <a href="#gallery">Роботи</a>
-    <a href="#contact">Запис</a>
-  </nav>
+  <!-- ================= HEADER ================= -->
 
-  <a href="#contact" class="header-button">Записатись</a>
-</header>
+  <header>
 
-<section class="hero">
-  <div class="hero-content">
-    <div class="small-title">Barber Studio / 2026</div>
+    <a href="#" class="logo">
+      SCISSORS<span>.</span>
+    </a>
 
-    <h1>
-      Your<br>
-      <span>Style.</span>
-    </h1>
+    <nav>
 
-    <p class="hero-text">
-      Чоловічі стрижки, оформлення бороди та
-      класичний барберинг у сучасній атмосфері.
-      Твій стиль починається тут.
-    </p>
+      <a href="#services">
+        Послуги
+      </a>
 
-    <div class="buttons">
-      <a class="button gold" href="#contact">Записатись</a>
-      <a class="button outline" href="#services">Послуги</a>
-    </div>
-  </div>
+      <a href="#about">
+        Про нас
+      </a>
 
-  <div class="scissors" aria-hidden="true">
-    <div class="blade blade-1"></div>
-    <div class="blade blade-2"></div>
-    <div class="ring ring-1"></div>
-    <div class="ring ring-2"></div>
-    <div class="center"></div>
-  </div>
-</section>
+      <a href="#gallery">
+        Роботи
+      </a>
 
-<div class="moving-line">
-  <div class="moving-text">
-    ✂ SCISSORS BARBER STUDIO &nbsp;&nbsp;&nbsp;
-    CUT • SHAVE • STYLE &nbsp;&nbsp;&nbsp;
-    ✂ SCISSORS BARBER STUDIO &nbsp;&nbsp;&nbsp;
-    CUT • SHAVE • STYLE &nbsp;&nbsp;&nbsp;
-  </div>
-</div>
+      <a href="#contact">
+        Запис
+      </a>
 
-<section id="services">
-  <div class="label">01 / Послуги</div>
+    </nav>
 
-  <h2 class="title">
-    Cut.<br>
-    Shave.<br>
-    Style.
-  </h2>
+    <a href="#contact" class="book">
+      Записатись
+    </a>
 
-  <div class="services">
-    <div class="service" data-service="Classic Haircut — €25">
-      <div class="number">01</div>
-      <h3>Classic Haircut</h3>
-      <p>Класична чоловіча стрижка з підбором форми під твоє обличчя.</p>
-      <div class="price">€25</div>
-    </div>
+  </header>
 
-    <div class="service" data-service="Hair + Beard — €35">
-      <div class="number">02</div>
-      <h3>Hair + Beard</h3>
-      <p>Стрижка волосся та професійне оформлення бороди.</p>
-      <div class="price">€35</div>
-    </div>
 
-    <div class="service" data-service="Beard — €18">
-      <div class="number">03</div>
-      <h3>Beard</h3>
-      <p>Корекція довжини, форми та контурів бороди.</p>
-      <div class="price">€18</div>
-    </div>
+  <!-- ================= HERO ================= -->
 
-    <div class="service" data-service="Premium — €45">
-      <div class="number">04</div>
-      <h3>Premium</h3>
-      <p>Повний комплекс: волосся, борода, гарячий рушник та фінальний стайлінг.</p>
-      <div class="price">€45</div>
-    </div>
-  </div>
-</section>
+  <section class="hero">
 
-<section id="about">
-  <div class="about">
-    <div class="about-picture">
-      <div class="big-scissors">✂</div>
-    </div>
+    <div class="hero-content">
 
-    <div class="about-text">
-      <div class="label">02 / Про нас</div>
+      <div class="eyebrow">
+        Barber Studio / 2026
+      </div>
 
-      <h2 class="title">
-        More<br>
-        than<br>
-        a cut.
-      </h2>
+      <h1>
+        Your<br>
+        <span>Style.</span>
+      </h1>
 
-      <p>SCISSORS — це місце для тих, хто цінує стиль, якість та деталі.</p>
-
-      <p>
-        Ми поєднуємо традиційний барберинг із сучасними техніками,
-        щоб кожна стрижка виглядала саме так, як потрібно тобі.
+      <p class="hero-description">
+        Чоловічі стрижки, оформлення бороди
+        та класичний барберинг у сучасній
+        атмосфері.
       </p>
+
+      <div class="hero-buttons">
+
+        <a
+          href="#contact"
+          class="button gold"
+        >
+          Записатись
+        </a>
+
+        <a
+          href="#services"
+          class="button outline"
+        >
+          Послуги
+        </a>
+
+      </div>
+
     </div>
-  </div>
-</section>
 
-<div class="quote">
-  <h2>
-    Sharp scissors.<br>
-    <span>Sharp style.</span>
-  </h2>
-</div>
 
-<section id="gallery">
-  <div class="label">03 / Наші роботи</div>
+    <!-- ANIMATED SCISSORS -->
 
-  <h2 class="title">
-    The<br>
-    Cuts.
-  </h2>
+    <div class="scissors">
 
-  <div class="gallery">
+      <div class="blade one"></div>
+      <div class="blade two"></div>
 
-    <article class="gallery-card">
-      <img src="images/01-textured-crop-fade.jpg"
-           alt="Textured Crop Fade"
-           loading="lazy">
-      <div class="gallery-info">
-        <h3>Textured Crop + Fade</h3>
-        <p>Текстурований верх із плавним fade з боків.</p>
-      </div>
-    </article>
+      <div class="ring one"></div>
+      <div class="ring two"></div>
 
-    <article class="gallery-card">
-      <img src="images/02-pink-shag-mullet.jpg"
-           alt="Shag Mullet"
-           loading="lazy">
-      <div class="gallery-info">
-        <h3>Shag / Mullet</h3>
-        <p>Об'ємна текстурована стрижка з подовженням ззаду.</p>
-      </div>
-    </article>
+      <div class="pivot"></div>
 
-    <article class="gallery-card">
-      <img src="images/03-blue-flat-top-fade.jpg"
-           alt="Modern Flat Top Fade"
-           loading="lazy">
-      <div class="gallery-info">
-        <h3>Modern Flat Top + Fade</h3>
-        <p>Графічний flat top із чітким fade та дизайном.</p>
-      </div>
-    </article>
+    </div>
 
-    <article class="gallery-card">
-      <img src="images/04-classic-textured-fade.jpg"
-           alt="Classic Textured Fade"
-           loading="lazy">
-      <div class="gallery-info">
-        <h3>Classic Textured Fade</h3>
-        <p>Класична форма з текстурованим верхом і плавним переходом.</p>
-      </div>
-    </article>
+  </section>
+
+
+  <!-- ================= MARQUEE ================= -->
+
+  <div class="marquee">
+
+    <div class="marquee-text">
+
+      ✂ SCISSORS BARBER STUDIO
+      &nbsp;&nbsp;&nbsp;
+      CUT • SHAVE • STYLE
+      &nbsp;&nbsp;&nbsp;
+      ✂ SCISSORS BARBER STUDIO
+      &nbsp;&nbsp;&nbsp;
+      CUT • SHAVE • STYLE
+      &nbsp;&nbsp;&nbsp;
+
+    </div>
 
   </div>
-</section>
 
-<section id="contact">
-  <div class="label">04 / Запис</div>
 
-  <h2 class="title">
-    Book<br>
-    your cut.
-  </h2>
+  <!-- ================= SERVICES ================= -->
 
-  <div class="contact">
+  <section id="services">
+
+    <div class="label">
+      01 / Послуги
+    </div>
+
+    <h2 class="section-title">
+      Cut.<br>
+      Shave.<br>
+      Style.
+    </h2>
+
+
+    <div class="services">
+
+      <div class="service">
+
+        <div class="service-number">
+          01
+        </div>
+
+        <h3>
+          Classic Haircut
+        </h3>
+
+        <p>
+          Класична чоловіча стрижка
+          з підбором форми під твоє
+          обличчя та стиль.
+        </p>
+
+        <div class="price">
+          €25
+        </div>
+
+      </div>
+
+
+      <div class="service">
+
+        <div class="service-number">
+          02
+        </div>
+
+        <h3>
+          Hair + Beard
+        </h3>
+
+        <p>
+          Стрижка волосся та професійне
+          оформлення бороди.
+        </p>
+
+        <div class="price">
+          €35
+        </div>
+
+      </div>
+
+
+      <div class="service">
+
+        <div class="service-number">
+          03
+        </div>
+
+        <h3>
+          Beard
+        </h3>
+
+        <p>
+          Корекція форми, довжини
+          та контурів бороди.
+        </p>
+
+        <div class="price">
+          €18
+        </div>
+
+      </div>
+
+
+      <div class="service">
+
+        <div class="service-number">
+          04
+        </div>
+
+        <h3>
+          Premium
+        </h3>
+
+        <p>
+          Повний комплекс: волосся,
+          борода, гарячий рушник
+          та фінальний стайлінг.
+        </p>
+
+        <div class="price">
+          €45
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- ================= ABOUT ================= -->
+
+  <section id="about">
+
+    <div class="about">
+
+      <div class="about-image">
+
+        <img
+          src="https://images.pexels.com/photos/5188621/pexels-photo-5188621.jpeg?auto=compress&cs=tinysrgb&w=1400"
+          alt="Barber with scissors"
+        >
+
+      </div>
+
+
+      <div class="about-text">
+
+        <div class="label">
+          02 / Про нас
+        </div>
+
+        <h2 class="section-title">
+          More<br>
+          than<br>
+          a cut.
+        </h2>
+
+        <p>
+          SCISSORS — це місце для тих,
+          хто цінує стиль, якість
+          та увагу до деталей.
+        </p>
+
+        <p>
+          Ми поєднуємо традиційний
+          барберинг із сучасними
+          техніками, щоб кожна
+          стрижка виглядала саме так,
+          як потрібно тобі.
+        </p>
+
+        <div class="signature">
+          — Your barber
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- ================= QUOTE ================= -->
+
+  <div class="quote">
+
+    <h2>
+
+      Sharp scissors.<br>
+
+      <span>
+        Sharp style.
+      </span>
+
+    </h2>
+
+  </div>
+
+
+  <!-- ================= GALLERY ================= -->
+
+  <section id="gallery">
+
+    <div class="label">
+      03 / Наші роботи
+    </div>
+
+    <h2 class="section-title">
+      The<br>
+      Cuts.
+    </h2>
+
+
+    <div class="gallery">
+
+
+      <div class="gallery-card">
+
+        <img
+          src="https://images.pexels.com/photos/4969866/pexels-photo-4969866.jpeg?auto=compress&cs=tinysrgb&w=1200"
+          alt="Barber haircut"
+        >
+
+        <div class="gallery-overlay">
+          Scissor Cut
+        </div>
+
+      </div>
+
+
+      <div class="gallery-card">
+
+        <img
+          src="https://images.pexels.com/photos/8552631/pexels-photo-8552631.jpeg?auto=compress&cs=tinysrgb&w=1200"
+          alt="Barber scissors"
+        >
+
+        <div class="gallery-overlay">
+          Detail
+        </div>
+
+      </div>
+
+
+      <div class="gallery-card">
+
+        <img
+          src="https://images.pexels.com/photos/5188621/pexels-photo-5188621.jpeg?auto=compress&cs=tinysrgb&w=1200"
+          alt="Barber"
+        >
+
+        <div class="gallery-overlay">
+          Precision
+        </div>
+
+      </div>
+
+
+    </div>
+
+  </section>
+
+
+  <!-- ================= BOOKING ================= -->
+
+  <section id="contact">
+
+    <div class="label">
+      04 / Запис
+    </div>
+
+    <h2 class="section-title">
+      Book<br>
+      your cut.
+    </h2>
+
+
+    <div class="contact">
+
+
+      <div>
+
+        <div class="contact-item">
+
+          <small>
+            Адреса
+          </small>
+
+          <p>
+            Ваша адреса
+          </p>
+
+        </div>
+
+
+        <div class="contact-item">
+
+          <small>
+            Телефон
+          </small>
+
+          <p>
+            +380 00 000 00 00
+          </p>
+
+        </div>
+
+
+        <div class="contact-item">
+
+          <small>
+            Години роботи
+          </small>
+
+          <p>
+            Пн–Пт: 09:00 — 20:00<br>
+            Сб–Нд: 10:00 — 18:00
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <form id="bookingForm">
+
+        <input
+          type="text"
+          placeholder="Ваше ім'я"
+          required
+        >
+
+        <input
+          type="tel"
+          placeholder="Номер телефону"
+          required
+        >
+
+        <select required>
+
+          <option value="">
+            Оберіть послугу
+          </option>
+
+          <option>
+            Classic Haircut — €25
+          </option>
+
+          <option>
+            Hair + Beard — €35
+          </option>
+
+          <option>
+            Beard — €18
+          </option>
+
+          <option>
+            Premium — €45
+          </option>
+
+        </select>
+
+
+        <input
+          type="date"
+          required
+        >
+
+
+        <button
+          type="submit"
+          class="button gold"
+        >
+          Відправити заявку ✂
+        </button>
+
+      </form>
+
+    </div>
+
+  </section>
+
+
+  <!-- ================= FOOTER ================= -->
+
+  <footer>
 
     <div>
-      <div class="contact-item">
-        <small>Адреса</small>
-        <p>Ваша адреса</p>
-      </div>
-
-      <div class="contact-item">
-        <small>Телефон</small>
-        <p>+380 00 000 00 00</p>
-      </div>
-
-      <div class="contact-item">
-        <small>Години роботи</small>
-        <p>
-          Пн–Пт: 09:00 — 20:00<br>
-          Сб–Нд: 10:00 — 18:00
-        </p>
-      </div>
+      © 2026 SCISSORS BARBER STUDIO
     </div>
 
-    <form id="bookingForm"
-          action="https://formspree.io/f/xnpavyge"
-          method="POST">
+    <div>
+      Cut with character.
+    </div>
 
-      <input type="hidden" name="_subject" value="Нова заявка на стрижку — SCISSORS">
+  </footer>
 
-      <input
-        type="text"
-        name="name"
-        placeholder="Ваше ім'я"
-        autocomplete="name"
-        required>
 
-      <input
-        type="tel"
-        name="phone"
-        placeholder="Номер телефону"
-        autocomplete="tel"
-        required>
+  <!-- ================= SCRIPT ================= -->
 
-      <input
-        type="email"
-        name="email"
-        placeholder="Ваш Email"
-        autocomplete="email"
-        required>
+  <script>
 
-      <select name="service" id="serviceSelect" required>
-        <option value="">Оберіть послугу</option>
-        <option value="Classic Haircut — €25">Classic Haircut — €25</option>
-        <option value="Hair + Beard — €35">Hair + Beard — €35</option>
-        <option value="Beard — €18">Beard — €18</option>
-        <option value="Premium — €45">Premium — €45</option>
-      </select>
+    const form =
+      document.getElementById("bookingForm");
 
-      <input
-        type="date"
-        name="date"
-        required>
+    form.addEventListener(
+      "submit",
+      function(event) {
 
-      <button type="submit" class="button gold" id="submitButton">
-        Відправити заявку ✂
-      </button>
+        event.preventDefault();
 
-      <div id="formStatus" class="form-status" aria-live="polite"></div>
-    </form>
+        alert(
+          "✂ Дякуємо за заявку!\n\n" +
+          "Ми зв'яжемося з вами найближчим часом."
+        );
 
-  </div>
-</section>
-
-<footer>
-  <div>© 2026 SCISSORS BARBER STUDIO</div>
-  <div>Cut with character.</div>
-</footer>
-
-<script>
-  const form = document.getElementById("bookingForm");
-  const status = document.getElementById("formStatus");
-  const submitButton = document.getElementById("submitButton");
-  const serviceSelect = document.getElementById("serviceSelect");
-
-  // Натискання на послугу автоматично вибирає її у формі запису.
-  document.querySelectorAll(".service[data-service]").forEach(service => {
-    service.addEventListener("click", () => {
-      serviceSelect.value = service.dataset.service;
-      document.getElementById("contact").scrollIntoView({ behavior: "smooth" });
-    });
-  });
-
-  form.addEventListener("submit", async function(event) {
-    event.preventDefault();
-
-    status.textContent = "Відправляємо заявку...";
-    status.className = "form-status";
-    submitButton.disabled = true;
-    submitButton.style.opacity = "0.6";
-
-    try {
-      const response = await fetch(form.action, {
-        method: "POST",
-        body: new FormData(form),
-        headers: {
-          "Accept": "application/json"
-        }
-      });
-
-      if (response.ok) {
-        status.textContent =
-          "✂ Заявку успішно відправлено! Ми зв'яжемося з вами найближчим часом.";
-        status.className = "form-status success";
         form.reset();
-      } else {
-        status.textContent =
-          "Не вдалося відправити заявку. Спробуйте ще раз.";
-        status.className = "form-status error";
+
       }
-    } catch (error) {
-      status.textContent =
-        "Помилка з'єднання. Перевірте інтернет і спробуйте ще раз.";
-      status.className = "form-status error";
-    } finally {
-      submitButton.disabled = false;
-      submitButton.style.opacity = "1";
-    }
-  });
-</script>
+    );
+
+  </script>
 
 </body>
 </html>
+```
