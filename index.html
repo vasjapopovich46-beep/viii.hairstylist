@@ -36,9 +36,7 @@
       top: 0;
       left: 0;
       right: 0;
-
       height: 82px;
-
       padding: 0 6%;
 
       display: flex;
@@ -83,7 +81,6 @@
     .book {
       border: 1px solid #c9a76a;
       color: #c9a76a;
-
       padding: 12px 20px;
 
       font-size: 10px;
@@ -102,7 +99,6 @@
 
     .hero {
       min-height: 100vh;
-
       position: relative;
 
       display: flex;
@@ -125,7 +121,6 @@
 
     .hero::after {
       content: "";
-
       position: absolute;
       inset: 0;
 
@@ -141,7 +136,6 @@
     .hero-content {
       position: relative;
       z-index: 5;
-
       max-width: 850px;
     }
 
@@ -159,13 +153,9 @@
 
     h1 {
       font-size: clamp(70px, 13vw, 175px);
-
       line-height: 0.78;
-
       letter-spacing: -9px;
-
       text-transform: uppercase;
-
       font-weight: 900;
 
       animation: fadeUp 1s 0.1s ease both;
@@ -173,19 +163,16 @@
 
     h1 span {
       color: transparent;
-
       -webkit-text-stroke: 1px #f4f0e8;
     }
 
     .hero-description {
       max-width: 510px;
-
       margin-top: 45px;
 
       color: #aaa;
 
       font-size: 16px;
-
       line-height: 1.8;
 
       animation: fadeUp 1s 0.2s ease both;
@@ -194,7 +181,6 @@
     .hero-buttons {
       display: flex;
       gap: 15px;
-
       margin-top: 35px;
 
       animation: fadeUp 1s 0.3s ease both;
@@ -206,9 +192,7 @@
       padding: 17px 30px;
 
       font-size: 10px;
-
       letter-spacing: 2px;
-
       text-transform: uppercase;
 
       transition: 0.3s;
@@ -360,9 +344,7 @@
       color: #c9a76a;
 
       font-size: 11px;
-
       letter-spacing: 6px;
-
       text-transform: uppercase;
 
       animation: marquee 20s linear infinite;
@@ -388,9 +370,7 @@
       color: #c9a76a;
 
       font-size: 10px;
-
       letter-spacing: 4px;
-
       text-transform: uppercase;
 
       margin-bottom: 20px;
@@ -400,9 +380,7 @@
       font-size: clamp(50px, 8vw, 100px);
 
       line-height: 0.85;
-
       letter-spacing: -5px;
-
       text-transform: uppercase;
 
       margin-bottom: 65px;
@@ -436,7 +414,6 @@
 
     .service-number {
       color: #555;
-
       font-size: 11px;
     }
 
@@ -444,7 +421,6 @@
       margin-top: 20px;
 
       font-size: 25px;
-
       text-transform: uppercase;
     }
 
@@ -505,7 +481,6 @@
       content: "";
 
       position: absolute;
-
       inset: 0;
 
       background:
@@ -672,7 +647,8 @@
     }
 
     input,
-    select {
+    select,
+    textarea {
       width: 100%;
 
       padding: 18px 5px;
@@ -688,10 +664,19 @@
       color: white;
 
       font-size: 14px;
+
+      font-family: inherit;
+
+      resize: vertical;
+    }
+
+    textarea {
+      min-height: 100px;
     }
 
     input:focus,
-    select:focus {
+    select:focus,
+    textarea:focus {
       border-color: #c9a76a;
     }
 
@@ -783,6 +768,10 @@
         font-size: 14px;
       }
 
+      .hero-buttons {
+        flex-wrap: wrap;
+      }
+
       .scissors {
         width: 330px;
         height: 330px;
@@ -843,7 +832,7 @@
 
 <body>
 
-  <!-- HEADER -->
+  <!-- ================= HEADER ================= -->
 
   <header>
 
@@ -865,7 +854,7 @@
   </header>
 
 
-  <!-- HERO -->
+  <!-- ================= HERO ================= -->
 
   <section class="hero">
 
@@ -907,7 +896,7 @@
     </div>
 
 
-    <!-- BARBER SCISSORS -->
+    <!-- SCISSORS -->
 
     <div class="scissors">
 
@@ -924,7 +913,7 @@
   </section>
 
 
-  <!-- MARQUEE -->
+  <!-- ================= MARQUEE ================= -->
 
   <div class="marquee">
 
@@ -944,7 +933,7 @@
   </div>
 
 
-  <!-- SERVICES -->
+  <!-- ================= SERVICES ================= -->
 
   <section id="services">
 
@@ -1054,7 +1043,7 @@
   </section>
 
 
-  <!-- ABOUT -->
+  <!-- ================= ABOUT ================= -->
 
   <section id="about">
 
@@ -1107,7 +1096,7 @@
   </section>
 
 
-  <!-- QUOTE -->
+  <!-- ================= QUOTE ================= -->
 
   <div class="quote">
 
@@ -1119,7 +1108,7 @@
   </div>
 
 
-  <!-- GALLERY -->
+  <!-- ================= GALLERY ================= -->
 
   <section id="gallery">
 
@@ -1181,7 +1170,7 @@
   </section>
 
 
-  <!-- EXTRA WORK -->
+  <!-- ================= FOURTH PHOTO ================= -->
 
   <section>
 
@@ -1205,7 +1194,7 @@
   </section>
 
 
-  <!-- CONTACT -->
+  <!-- ================= BOOKING ================= -->
 
   <section id="contact">
 
@@ -1265,39 +1254,62 @@
       </div>
 
 
-      <form id="bookingForm">
+      <!-- FORMSPREE -->
+
+      <form
+        action="https://formspree.io/f/xnpavyge"
+        method="POST"
+      >
 
         <input
           type="text"
+          name="name"
           placeholder="Ваше ім'я"
+          autocomplete="name"
           required
         >
+
 
         <input
           type="tel"
+          name="phone"
           placeholder="Номер телефону"
+          autocomplete="tel"
           required
         >
 
-        <select required>
+
+        <input
+          type="email"
+          name="email"
+          placeholder="Ваш Email"
+          autocomplete="email"
+          required
+        >
+
+
+        <select
+          name="service"
+          required
+        >
 
           <option value="">
             Оберіть послугу
           </option>
 
-          <option>
+          <option value="Classic Haircut — €25">
             Classic Haircut — €25
           </option>
 
-          <option>
+          <option value="Hair + Beard — €35">
             Hair + Beard — €35
           </option>
 
-          <option>
+          <option value="Beard — €18">
             Beard — €18
           </option>
 
-          <option>
+          <option value="Premium — €45">
             Premium — €45
           </option>
 
@@ -1306,7 +1318,21 @@
 
         <input
           type="date"
+          name="date"
           required
+        >
+
+
+        <textarea
+          name="message"
+          placeholder="Додатковий коментар"
+        ></textarea>
+
+
+        <input
+          type="hidden"
+          name="_subject"
+          value="Нова заявка — SCISSORS Barber"
         >
 
 
@@ -1324,7 +1350,7 @@
   </section>
 
 
-  <!-- FOOTER -->
+  <!-- ================= FOOTER ================= -->
 
   <footer>
 
@@ -1337,30 +1363,6 @@
     </div>
 
   </footer>
-
-
-  <script>
-
-    const form =
-      document.getElementById("bookingForm");
-
-    form.addEventListener(
-      "submit",
-      function(event) {
-
-        event.preventDefault();
-
-        alert(
-          "✂ Дякуємо за заявку!\n\n" +
-          "Ми зв'яжемося з вами найближчим часом."
-        );
-
-        form.reset();
-
-      }
-    );
-
-  </script>
 
 </body>
 </html>
