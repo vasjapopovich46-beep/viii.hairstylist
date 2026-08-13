@@ -389,6 +389,14 @@ html
       font-size: 20px;
     }
 
+
+    .service-style {
+      color: #c9a76a;
+      font-size: 11px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
     /* ABOUT */
 
     .about {
@@ -477,7 +485,7 @@ html
     .gallery {
       display: grid;
 
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(4, 1fr);
 
       gap: 15px;
     }
@@ -510,6 +518,68 @@ html
     .gallery-card span {
       font-size: 100px;
       opacity: 0.15;
+    }
+
+
+    .gallery-card {
+      height: 520px;
+      position: relative;
+      overflow: hidden;
+      background: #111;
+      border: 1px solid #292929;
+      display: block;
+      transition: 0.5s;
+    }
+
+    .gallery-card img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      object-position: center;
+      filter: grayscale(18%);
+      transition: transform 0.6s ease, filter 0.6s ease;
+    }
+
+    .gallery-card:hover img {
+      transform: scale(1.06);
+      filter: grayscale(0%);
+    }
+
+    .gallery-card::after {
+      content: "";
+      position: absolute;
+      inset: 45% 0 0;
+      background: linear-gradient(transparent, rgba(0,0,0,0.9));
+      pointer-events: none;
+    }
+
+    .gallery-info {
+      position: absolute;
+      left: 25px;
+      right: 25px;
+      bottom: 25px;
+      z-index: 2;
+    }
+
+    .gallery-info small {
+      color: #c9a76a;
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+    }
+
+    .gallery-info h3 {
+      margin-top: 8px;
+      font-size: 22px;
+      text-transform: uppercase;
+    }
+
+    .gallery-info p {
+      margin-top: 7px;
+      color: #bbb;
+      font-size: 13px;
+      line-height: 1.5;
     }
 
     /* CONTACT */
@@ -584,6 +654,17 @@ html
       margin-top: 15px;
     }
 
+
+    input::placeholder {
+      color: #666;
+    }
+
+    button:disabled {
+      opacity: 0.6;
+      cursor: wait;
+      transform: none !important;
+    }
+
     /* FOOTER */
 
     footer {
@@ -602,6 +683,13 @@ html
       letter-spacing: 2px;
 
       text-transform: uppercase;
+    }
+
+
+    @media (max-width: 1100px) and (min-width: 801px) {
+      .gallery {
+        grid-template-columns: repeat(2, 1fr);
+      }
     }
 
     /* MOBILE */
@@ -666,7 +754,7 @@ html
       }
 
       .gallery-card {
-        height: 350px;
+        height: 470px;
       }
 
       .contact {
@@ -805,6 +893,7 @@ html
         <p>
           Класична чоловіча стрижка
           з підбором форми під твоє обличчя.
+          <br><br><span class="service-style">Стиль: Textured Crop / Classic Fade</span>
         </p>
 
         <div class="price">
@@ -823,6 +912,7 @@ html
         <p>
           Стрижка волосся та професійне
           оформлення бороди.
+          <br><br><span class="service-style">Стиль: будь-яка стрижка + Beard</span>
         </p>
 
         <div class="price">
@@ -841,6 +931,7 @@ html
         <p>
           Корекція довжини, форми
           та контурів бороди.
+          <br><br><span class="service-style">Форма під риси обличчя</span>
         </p>
 
         <div class="price">
@@ -860,6 +951,7 @@ html
           Повний комплекс: волосся,
           борода, гарячий рушник
           та фінальний стайлінг.
+          <br><br><span class="service-style">Максимум деталей + укладка</span>
         </p>
 
         <div class="price">
@@ -948,15 +1040,39 @@ html
     <div class="gallery">
 
       <div class="gallery-card">
-        <span>✂</span>
+        <img src="images/01-textured-crop-fade.jpg" alt="Textured Crop + Fade">
+        <div class="gallery-info">
+          <small>01 / Textured Crop</small>
+          <h3>Textured Crop + Fade</h3>
+          <p>Текстурований кроп із плавним fade. Чітко, сучасно та легко укладається.</p>
+        </div>
       </div>
 
       <div class="gallery-card">
-        <span>✂</span>
+        <img src="images/02-pink-shag-mullet.jpg" alt="Curly Shag / Mullet">
+        <div class="gallery-info">
+          <small>02 / Curly Shag</small>
+          <h3>Curly Shag / Mullet</h3>
+          <p>Об'ємна текстурна стрижка з кучерями та подовженням ззаду.</p>
+        </div>
       </div>
 
       <div class="gallery-card">
-        <span>✂</span>
+        <img src="images/03-blue-flat-top-fade.jpg" alt="Modern Flat Top + Fade">
+        <div class="gallery-info">
+          <small>03 / Flat Top</small>
+          <h3>Modern Flat Top + Fade</h3>
+          <p>Високий flat top із геометричною формою та контрастним fade.</p>
+        </div>
+      </div>
+
+      <div class="gallery-card">
+        <img src="images/04-classic-textured-fade.jpg" alt="Classic Textured Fade">
+        <div class="gallery-info">
+          <small>04 / Classic Fade</small>
+          <h3>Classic Textured Fade</h3>
+          <p>Класична текстурована форма з акуратним fade та природним верхом.</p>
+        </div>
       </div>
 
     </div>
@@ -1017,52 +1133,25 @@ html
         </div>
 
       </div>
+      <form
+        id="bookingForm"
+        action="https://formspree.io/f/xnpavyge"
+        method="POST"
+      >
+        <input type="hidden" name="_subject" value="Нова заявка на стрижку — SCISSORS BARBER STUDIO">
+        <input type="text" name="name" placeholder="Ваше ім'я" required>
+        <input type="tel" name="phone" placeholder="Номер телефону" required>
+        <input type="email" name="email" placeholder="Ваш Email" required>
 
-
-      <form id="bookingForm">
-
-        <input
-          type="text"
-          placeholder="Ваше ім'я"
-          required
-        >
-
-        <input
-          type="tel"
-          placeholder="Номер телефону"
-          required
-        >
-
-        <select required>
-
-          <option value="">
-            Оберіть послугу
-          </option>
-
-          <option>
-            Classic Haircut — €25
-          </option>
-
-          <option>
-            Hair + Beard — €35
-          </option>
-
-          <option>
-            Beard — €18
-          </option>
-
-          <option>
-            Premium — €45
-          </option>
-
+        <select name="service" required>
+          <option value="">Оберіть послугу</option>
+          <option value="Classic Haircut — €25">Classic Haircut — €25</option>
+          <option value="Hair + Beard — €35">Hair + Beard — €35</option>
+          <option value="Beard — €18">Beard — €18</option>
+          <option value="Premium — €45">Premium — €45</option>
         </select>
 
-
-        <input
-          type="date"
-          required
-        >
-
+        <input type="date" name="date" required>
 
         <button
           type="submit"
@@ -1070,7 +1159,6 @@ html
         >
           Відправити заявку ✂
         </button>
-
       </form>
 
     </div>
@@ -1092,26 +1180,53 @@ html
 
   </footer>
 
-
   <script>
-
     const form = document.getElementById("bookingForm");
 
-    form.addEventListener("submit", function(event) {
-
+    form.addEventListener("submit", async function (event) {
       event.preventDefault();
 
-      alert(
-        "✂ Дякуємо за заявку!\n\n" +
-        "Ми зв'яжемося з вами найближчим часом."
-      );
+      const button = form.querySelector("button");
+      const originalText = button.textContent;
 
-      form.reset();
+      button.disabled = true;
+      button.textContent = "ВІДПРАВЛЯЄМО...";
 
+      try {
+        const response = await fetch(form.action, {
+          method: "POST",
+          body: new FormData(form),
+          headers: {
+            "Accept": "application/json"
+          }
+        });
+
+        if (response.ok) {
+          alert(
+            "✂ Дякуємо за заявку!
+
+" +
+            "Заявка успішно відправлена. Ми зв'яжемося з вами найближчим часом."
+          );
+          form.reset();
+        } else {
+          alert(
+            "Не вдалося відправити заявку.
+
+" +
+            "Спробуйте ще раз або зв'яжіться з нами телефоном."
+          );
+        }
+      } catch (error) {
+        alert(
+          "Помилка з'єднання.
+
+" +
+          "Перевірте інтернет і спробуйте ще раз."
+        );
+      } finally {
+        button.disabled = false;
+        button.textContent = originalText;
+      }
     });
-
   </script>
-
-</body>
-</html>
-```
