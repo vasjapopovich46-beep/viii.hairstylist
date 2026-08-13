@@ -1,1368 +1,3393 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>SCISSORS — Barber Studio</title>
-
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      background: #080808;
-      color: #f4f0e8;
-      font-family: Arial, Helvetica, sans-serif;
-      overflow-x: hidden;
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    /* ================= HEADER ================= */
-
-    header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 82px;
-      padding: 0 6%;
-
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-
-      z-index: 1000;
-
-      background: rgba(8, 8, 8, 0.82);
-      backdrop-filter: blur(18px);
-
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    }
-
-    .logo {
-      font-size: 24px;
-      font-weight: 900;
-      letter-spacing: 5px;
-    }
-
-    .logo span {
-      color: #c9a76a;
-    }
-
-    nav {
-      display: flex;
-      gap: 30px;
-    }
-
-    nav a {
-      color: #aaa;
-      font-size: 11px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      transition: 0.3s;
-    }
-
-    nav a:hover {
-      color: #c9a76a;
-    }
-
-    .book {
-      border: 1px solid #c9a76a;
-      color: #c9a76a;
-      padding: 12px 20px;
-
-      font-size: 10px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-
-      transition: 0.3s;
-    }
-
-    .book:hover {
-      background: #c9a76a;
-      color: #080808;
-    }
-
-    /* ================= HERO ================= */
-
-    .hero {
-      min-height: 100vh;
-      position: relative;
-
-      display: flex;
-      align-items: center;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>SCISSORS — Barber Studio</title>
+
+<style>
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  background:#080808;
+  color:#f5f1e8;
+  font-family:Arial,Helvetica,sans-serif;
+  overflow-x:hidden;
+}
+
+button,
+input,
+textarea,
+select{
+  font-family:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
+a{
+  color:inherit;
+  text-decoration:none;
+}
 
-      padding: 150px 8% 100px;
+/* ================= HEADER ================= */
 
-      overflow: hidden;
+header{
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  height:80px;
 
-      background:
-        linear-gradient(
-          90deg,
-          rgba(8, 8, 8, 0.98) 0%,
-          rgba(8, 8, 8, 0.86) 38%,
-          rgba(8, 8, 8, 0.40) 75%,
-          rgba(8, 8, 8, 0.70) 100%
-        ),
-        url("01-textured-crop-fade.jpg") center / cover no-repeat;
-    }
-
-    .hero::after {
-      content: "";
-      position: absolute;
-      inset: 0;
+  padding:0 6%;
 
-      background:
-        linear-gradient(
-          transparent 55%,
-          #080808 100%
-        );
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+
+  z-index:1000;
 
-      pointer-events: none;
-    }
+  background:rgba(8,8,8,.82);
+  backdrop-filter:blur(18px);
+
+  border-bottom:1px solid rgba(255,255,255,.08);
+}
+
+.logo{
+  font-size:23px;
+  font-weight:900;
+  letter-spacing:5px;
+}
 
-    .hero-content {
-      position: relative;
-      z-index: 5;
-      max-width: 850px;
-    }
+.logo span{
+  color:#c9a76a;
+}
 
-    .eyebrow {
-      color: #c9a76a;
+nav{
+  display:flex;
+  gap:28px;
+}
 
-      font-size: 11px;
-      letter-spacing: 5px;
-      text-transform: uppercase;
+nav a{
+  color:#aaa;
+  font-size:10px;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  transition:.3s;
+}
 
-      margin-bottom: 25px;
+nav a:hover{
+  color:#c9a76a;
+}
 
-      animation: fadeUp 1s ease forwards;
-    }
+.language{
+  display:flex;
+  gap:5px;
+}
 
-    h1 {
-      font-size: clamp(70px, 13vw, 175px);
-      line-height: 0.78;
-      letter-spacing: -9px;
-      text-transform: uppercase;
-      font-weight: 900;
+.language button{
+  background:none;
+  border:1px solid transparent;
+  color:#777;
 
-      animation: fadeUp 1s 0.1s ease both;
-    }
+  padding:7px 9px;
 
-    h1 span {
-      color: transparent;
-      -webkit-text-stroke: 1px #f4f0e8;
-    }
+  font-size:10px;
+  letter-spacing:1px;
+}
 
-    .hero-description {
-      max-width: 510px;
-      margin-top: 45px;
+.language button.active,
+.language button:hover{
+  color:#c9a76a;
+  border-color:#c9a76a;
+}
 
-      color: #aaa;
+.book{
+  border:1px solid #c9a76a;
+  color:#c9a76a;
 
-      font-size: 16px;
-      line-height: 1.8;
+  padding:11px 18px;
 
-      animation: fadeUp 1s 0.2s ease both;
-    }
+  font-size:10px;
+  letter-spacing:2px;
 
-    .hero-buttons {
-      display: flex;
-      gap: 15px;
-      margin-top: 35px;
+  text-transform:uppercase;
 
-      animation: fadeUp 1s 0.3s ease both;
-    }
+  transition:.3s;
+}
 
-    .button {
-      display: inline-block;
+.book:hover{
+  background:#c9a76a;
+  color:#080808;
+}
 
-      padding: 17px 30px;
+/* ================= HERO ================= */
 
-      font-size: 10px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
+.hero{
+  min-height:100vh;
 
-      transition: 0.3s;
-    }
+  display:flex;
+  align-items:center;
 
-    .button.gold {
-      background: #c9a76a;
-      color: #080808;
-    }
+  padding:150px 8% 100px;
 
-    .button.gold:hover {
-      transform: translateY(-4px);
+  position:relative;
 
-      box-shadow:
-        0 15px 40px rgba(201, 167, 106, 0.25);
-    }
+  overflow:hidden;
 
-    .button.outline {
-      border: 1px solid #555;
-      color: #eee;
-    }
+  background:
+    linear-gradient(
+      90deg,
+      rgba(8,8,8,.98),
+      rgba(8,8,8,.75),
+      rgba(8,8,8,.35)
+    ),
+    url("01-textured-crop-fade.jpg")
+    center/cover no-repeat;
+}
 
-    .button.outline:hover {
-      border-color: #c9a76a;
-      color: #c9a76a;
-    }
+.hero-content{
+  position:relative;
+  z-index:5;
 
-    /* ================= SCISSORS ================= */
+  max-width:850px;
+}
 
-    .scissors {
-      position: absolute;
+.eyebrow{
+  color:#c9a76a;
 
-      right: 4%;
-      top: 50%;
+  font-size:11px;
+  letter-spacing:5px;
 
-      width: 470px;
-      height: 470px;
+  text-transform:uppercase;
 
-      z-index: 4;
+  margin-bottom:25px;
+}
 
-      opacity: 0.18;
+h1{
+  font-size:clamp(70px,13vw,170px);
 
-      transform:
-        translateY(-50%)
-        rotate(-18deg);
+  line-height:.78;
 
-      animation: scissorsMove 6s ease-in-out infinite;
-    }
+  letter-spacing:-9px;
 
-    .blade {
-      position: absolute;
+  text-transform:uppercase;
 
-      width: 330px;
-      height: 32px;
+  font-weight:900;
+}
 
-      left: 50px;
-      top: 220px;
+h1 span{
+  color:transparent;
+  -webkit-text-stroke:1px #f5f1e8;
+}
 
-      border-radius: 50px;
+.hero-description{
+  max-width:520px;
 
-      background:
-        linear-gradient(
-          90deg,
-          #ffffff,
-          #777777,
-          #222222
-        );
+  margin-top:40px;
 
-      transform-origin: right center;
-    }
+  color:#aaa;
 
-    .blade.one {
-      transform: rotate(25deg);
-    }
+  font-size:16px;
 
-    .blade.two {
-      transform: rotate(-25deg);
-    }
+  line-height:1.8;
+}
 
-    .ring {
-      position: absolute;
+.hero-buttons{
+  display:flex;
+  gap:15px;
 
-      width: 115px;
-      height: 115px;
+  margin-top:35px;
+}
 
-      border-radius: 50%;
+.button{
+  display:inline-block;
 
-      border: 23px solid #999;
+  padding:17px 30px;
 
-      right: 5px;
-    }
+  font-size:10px;
 
-    .ring.one {
-      top: 105px;
-    }
+  letter-spacing:2px;
 
-    .ring.two {
-      top: 260px;
-    }
+  text-transform:uppercase;
 
-    .pivot {
-      position: absolute;
+  transition:.3s;
+}
 
-      width: 38px;
-      height: 38px;
+.gold{
+  background:#c9a76a;
+  color:#080808;
+  border:none;
+}
 
-      border-radius: 50%;
+.gold:hover{
+  transform:translateY(-3px);
 
-      background: #c9a76a;
+  box-shadow:
+  0 15px 40px rgba(201,167,106,.25);
+}
 
-      left: 65px;
-      top: 220px;
+.outline{
+  border:1px solid #555;
+  background:transparent;
+  color:#eee;
+}
 
-      box-shadow:
-        0 0 40px #c9a76a;
-    }
+.outline:hover{
+  border-color:#c9a76a;
+  color:#c9a76a;
+}
 
-    @keyframes scissorsMove {
-      0%,
-      100% {
-        transform:
-          translateY(-50%)
-          rotate(-18deg);
-      }
+/* ================= SCISSORS ================= */
 
-      50% {
-        transform:
-          translateY(calc(-50% - 20px))
-          rotate(-10deg);
-      }
-    }
+.scissors{
+  position:absolute;
 
-    /* ================= MARQUEE ================= */
+  right:3%;
+  top:50%;
 
-    .marquee {
-      overflow: hidden;
+  width:460px;
+  height:460px;
 
-      padding: 20px 0;
+  opacity:.15;
 
-      border-top: 1px solid #222;
-      border-bottom: 1px solid #222;
+  transform:
+  translateY(-50%)
+  rotate(-18deg);
 
-      white-space: nowrap;
-    }
+  animation:floatScissors 6s ease-in-out infinite;
+}
 
-    .marquee-text {
-      display: inline-block;
+.blade{
+  position:absolute;
 
-      color: #c9a76a;
+  width:330px;
+  height:30px;
 
-      font-size: 11px;
-      letter-spacing: 6px;
-      text-transform: uppercase;
+  left:45px;
+  top:220px;
 
-      animation: marquee 20s linear infinite;
-    }
+  border-radius:50px;
 
-    @keyframes marquee {
-      from {
-        transform: translateX(0);
-      }
+  background:
+  linear-gradient(
+    90deg,
+    #fff,
+    #777,
+    #222
+  );
 
-      to {
-        transform: translateX(-50%);
-      }
-    }
+  transform-origin:right center;
+}
 
-    /* ================= SECTIONS ================= */
+.blade.one{
+  transform:rotate(25deg);
+}
 
-    section {
-      padding: 120px 8%;
-    }
+.blade.two{
+  transform:rotate(-25deg);
+}
 
-    .label {
-      color: #c9a76a;
+.ring{
+  position:absolute;
 
-      font-size: 10px;
-      letter-spacing: 4px;
-      text-transform: uppercase;
+  width:115px;
+  height:115px;
 
-      margin-bottom: 20px;
-    }
+  border-radius:50%;
 
-    .section-title {
-      font-size: clamp(50px, 8vw, 100px);
+  border:22px solid #999;
 
-      line-height: 0.85;
-      letter-spacing: -5px;
-      text-transform: uppercase;
+  right:0;
+}
 
-      margin-bottom: 65px;
-    }
+.ring.one{
+  top:105px;
+}
 
-    /* ================= SERVICES ================= */
+.ring.two{
+  top:260px;
+}
 
-    .services {
-      display: grid;
+.pivot{
+  position:absolute;
 
-      grid-template-columns: 1fr 1fr;
+  width:38px;
+  height:38px;
 
-      border-top: 1px solid #292929;
-    }
+  border-radius:50%;
 
-    .service {
-      padding: 40px 20px;
+  background:#c9a76a;
 
-      border-bottom: 1px solid #292929;
+  left:62px;
+  top:220px;
 
-      transition: 0.4s;
-    }
+  box-shadow:0 0 40px #c9a76a;
+}
 
-    .service:nth-child(odd) {
-      border-right: 1px solid #292929;
-    }
+@keyframes floatScissors{
 
-    .service:hover {
-      background: #111;
-    }
+  0%,100%{
+    transform:
+    translateY(-50%)
+    rotate(-18deg);
+  }
 
-    .service-number {
-      color: #555;
-      font-size: 11px;
-    }
+  50%{
+    transform:
+    translateY(calc(-50% - 20px))
+    rotate(-10deg);
+  }
 
-    .service h3 {
-      margin-top: 20px;
+}
 
-      font-size: 25px;
-      text-transform: uppercase;
-    }
+/* ================= MARQUEE ================= */
 
-    .service p {
-      max-width: 470px;
+.marquee{
+  overflow:hidden;
 
-      margin-top: 12px;
+  padding:20px 0;
 
-      color: #777;
+  border-top:1px solid #222;
+  border-bottom:1px solid #222;
 
-      line-height: 1.7;
-    }
+  white-space:nowrap;
+}
 
-    .price {
-      margin-top: 20px;
+.marquee-text{
+  display:inline-block;
 
-      color: #c9a76a;
+  color:#c9a76a;
 
-      font-size: 20px;
-    }
+  font-size:11px;
 
-    /* ================= ABOUT ================= */
+  letter-spacing:6px;
 
-    .about {
-      display: grid;
+  text-transform:uppercase;
 
-      grid-template-columns: 1fr 1fr;
+  animation:marquee 20s linear infinite;
+}
 
-      gap: 90px;
+@keyframes marquee{
 
-      align-items: center;
-    }
+  from{
+    transform:translateX(0);
+  }
 
-    .about-image {
-      height: 620px;
+  to{
+    transform:translateX(-50%);
+  }
 
-      position: relative;
+}
 
-      overflow: hidden;
+/* ================= GENERAL ================= */
 
-      border: 1px solid #292929;
-    }
+section{
+  padding:120px 8%;
+}
 
-    .about-image img {
-      width: 100%;
-      height: 100%;
+.label{
+  color:#c9a76a;
 
-      object-fit: cover;
+  font-size:10px;
 
-      transition: 1s;
-    }
+  letter-spacing:4px;
 
-    .about-image:hover img {
-      transform: scale(1.05);
-    }
+  text-transform:uppercase;
 
-    .about-image::after {
-      content: "";
+  margin-bottom:20px;
+}
 
-      position: absolute;
-      inset: 0;
+.section-title{
+  font-size:clamp(50px,8vw,100px);
 
-      background:
-        linear-gradient(
-          180deg,
-          transparent,
-          rgba(0, 0, 0, 0.7)
-        );
-    }
+  line-height:.85;
 
-    .about-text p {
-      color: #999;
+  letter-spacing:-5px;
 
-      line-height: 1.9;
+  text-transform:uppercase;
 
-      margin-bottom: 25px;
+  margin-bottom:65px;
+}
 
-      font-size: 15px;
-    }
+/* ================= SERVICES ================= */
 
-    .signature {
-      margin-top: 35px;
+.services{
+  display:grid;
 
-      color: #c9a76a;
+  grid-template-columns:1fr 1fr;
 
-      font-style: italic;
+  border-top:1px solid #292929;
+}
 
-      font-size: 20px;
-    }
+.service{
+  padding:40px 20px;
 
-    /* ================= QUOTE ================= */
+  border-bottom:1px solid #292929;
 
-    .quote {
-      padding: 180px 8%;
+  transition:.4s;
+}
 
-      background: #111;
+.service:nth-child(odd){
+  border-right:1px solid #292929;
+}
 
-      text-align: center;
+.service:hover{
+  background:#111;
+}
 
-      border-top: 1px solid #222;
-      border-bottom: 1px solid #222;
-    }
+.service-number{
+  color:#555;
+  font-size:11px;
+}
 
-    .quote h2 {
-      font-size: clamp(45px, 7vw, 95px);
+.service h3{
+  margin-top:20px;
 
-      line-height: 0.85;
+  font-size:24px;
 
-      letter-spacing: -5px;
+  text-transform:uppercase;
+}
 
-      text-transform: uppercase;
-    }
+.service p{
+  margin-top:12px;
 
-    .quote span {
-      color: #c9a76a;
-    }
+  max-width:470px;
 
-    /* ================= GALLERY ================= */
+  color:#777;
 
-    .gallery {
-      display: grid;
+  line-height:1.7;
+}
 
-      grid-template-columns:
-        1fr
-        1fr
-        1fr;
+.price{
+  margin-top:20px;
 
-      gap: 15px;
-    }
+  color:#c9a76a;
 
-    .gallery-card {
-      height: 480px;
+  font-size:20px;
+}
 
-      position: relative;
+/* ================= ABOUT ================= */
 
-      overflow: hidden;
+.about{
+  display:grid;
 
-      background: #111;
+  grid-template-columns:1fr 1fr;
 
-      border: 1px solid #292929;
-    }
+  gap:90px;
 
-    .gallery-card:nth-child(2) {
-      transform: translateY(70px);
-    }
+  align-items:center;
+}
 
-    .gallery-card img {
-      width: 100%;
-      height: 100%;
+.about-image{
+  height:620px;
 
-      object-fit: cover;
+  overflow:hidden;
 
-      display: block;
+  border:1px solid #292929;
+}
 
-      transition:
-        transform 0.7s,
-        filter 0.7s;
+.about-image img{
+  width:100%;
+  height:100%;
 
-      filter: brightness(0.68);
-    }
+  object-fit:cover;
 
-    .gallery-card:hover img {
-      transform: scale(1.08);
+  transition:1s;
+}
 
-      filter: brightness(0.95);
-    }
+.about-image:hover img{
+  transform:scale(1.05);
+}
 
-    .gallery-overlay {
-      position: absolute;
+.about-text p{
+  color:#999;
 
-      left: 25px;
-      bottom: 25px;
+  line-height:1.9;
 
-      z-index: 2;
+  margin-bottom:25px;
+}
 
-      color: white;
+.signature{
+  margin-top:35px;
 
-      font-size: 11px;
+  color:#c9a76a;
 
-      letter-spacing: 3px;
+  font-style:italic;
 
-      text-transform: uppercase;
+  font-size:20px;
+}
 
-      text-shadow:
-        0 2px 10px #000;
-    }
+/* ================= QUOTE ================= */
 
-    /* ================= CONTACT ================= */
+.quote{
+  padding:180px 8%;
 
-    .contact {
-      display: grid;
+  background:#111;
 
-      grid-template-columns: 1fr 1fr;
+  text-align:center;
 
-      gap: 100px;
-    }
+  border-top:1px solid #222;
+  border-bottom:1px solid #222;
+}
 
-    .contact-item {
-      margin-bottom: 35px;
-    }
+.quote h2{
+  font-size:clamp(45px,7vw,95px);
 
-    .contact-item small {
-      color: #666;
+  line-height:.85;
 
-      font-size: 10px;
+  letter-spacing:-5px;
 
-      letter-spacing: 3px;
+  text-transform:uppercase;
+}
 
-      text-transform: uppercase;
-    }
+.quote span{
+  color:#c9a76a;
+}
 
-    .contact-item p {
-      margin-top: 10px;
+/* ================= GALLERY ================= */
 
-      font-size: 19px;
-    }
+.gallery{
+  display:grid;
 
-    form {
-      display: flex;
+  grid-template-columns:
+  1fr 1fr 1fr;
 
-      flex-direction: column;
+  gap:15px;
+}
 
-      gap: 15px;
-    }
+.gallery-card{
+  height:480px;
 
-    input,
-    select,
-    textarea {
-      width: 100%;
+  position:relative;
 
-      padding: 18px 5px;
+  overflow:hidden;
 
-      background: transparent;
+  background:#111;
 
-      border: none;
+  border:1px solid #292929;
+}
 
-      border-bottom: 1px solid #333;
+.gallery-card:nth-child(2){
+  transform:translateY(70px);
+}
 
-      outline: none;
+.gallery-card img{
+  width:100%;
+  height:100%;
 
-      color: white;
+  object-fit:cover;
 
-      font-size: 14px;
+  display:block;
 
-      font-family: inherit;
+  filter:brightness(.68);
 
-      resize: vertical;
-    }
+  transition:.7s;
+}
 
-    textarea {
-      min-height: 100px;
-    }
+.gallery-card:hover img{
+  transform:scale(1.08);
 
-    input:focus,
-    select:focus,
-    textarea:focus {
-      border-color: #c9a76a;
-    }
+  filter:brightness(.95);
+}
 
-    select option {
-      background: #111;
-    }
+.gallery-overlay{
+  position:absolute;
 
-    button {
-      border: none;
+  left:25px;
+  bottom:25px;
 
-      cursor: pointer;
+  z-index:2;
 
-      margin-top: 15px;
-    }
+  font-size:11px;
 
-    /* ================= FOOTER ================= */
+  letter-spacing:3px;
 
-    footer {
-      padding: 40px 8%;
+  text-transform:uppercase;
 
-      border-top: 1px solid #222;
+  text-shadow:0 2px 10px #000;
+}
 
-      display: flex;
+/* ================= BOOKING ================= */
 
-      justify-content: space-between;
+.booking-section{
+  background:#0d0d0d;
+}
 
-      color: #555;
+.booking-wrapper{
+  max-width:900px;
 
-      font-size: 10px;
+  margin:auto;
+}
 
-      letter-spacing: 2px;
+.booking-head{
+  text-align:center;
 
-      text-transform: uppercase;
-    }
+  margin-bottom:55px;
+}
 
-    /* ================= ANIMATION ================= */
+.progress{
+  width:100%;
 
-    @keyframes fadeUp {
-      from {
-        opacity: 0;
+  height:3px;
 
-        transform:
-          translateY(30px);
-      }
+  background:#292929;
 
-      to {
-        opacity: 1;
+  margin-bottom:35px;
+}
 
-        transform:
-          translateY(0);
-      }
-    }
+.progress-bar{
+  height:100%;
 
-    /* ================= MOBILE ================= */
+  width:16.66%;
 
-    @media (max-width: 800px) {
+  background:#c9a76a;
 
-      header {
-        height: 70px;
+  transition:.4s;
+}
 
-        padding: 0 5%;
-      }
+.step{
+  display:none;
 
-      nav {
-        display: none;
-      }
+  animation:stepIn .45s ease;
+}
 
-      .logo {
-        font-size: 20px;
-      }
+.step.active{
+  display:block;
+}
 
-      .book {
-        padding: 10px 12px;
-      }
+@keyframes stepIn{
 
-      .hero {
-        padding: 130px 7% 100px;
+  from{
+    opacity:0;
+    transform:translateX(30px);
+  }
 
-        background-position: 65% center;
-      }
+  to{
+    opacity:1;
+    transform:translateX(0);
+  }
 
-      h1 {
-        font-size: 75px;
+}
 
-        letter-spacing: -5px;
-      }
+.step-number{
+  color:#c9a76a;
 
-      .hero-description {
-        font-size: 14px;
-      }
+  font-size:11px;
 
-      .hero-buttons {
-        flex-wrap: wrap;
-      }
+  letter-spacing:3px;
 
-      .scissors {
-        width: 330px;
-        height: 330px;
+  margin-bottom:15px;
+}
 
-        right: -150px;
+.step h3{
+  font-size:clamp(35px,5vw,60px);
 
-        opacity: 0.1;
-      }
+  line-height:1;
 
-      section {
-        padding: 80px 7%;
-      }
+  letter-spacing:-2px;
 
-      .services {
-        grid-template-columns: 1fr;
-      }
+  text-transform:uppercase;
 
-      .service:nth-child(odd) {
-        border-right: none;
-      }
+  margin-bottom:15px;
+}
 
-      .about {
-        grid-template-columns: 1fr;
+.step-description{
+  color:#777;
 
-        gap: 50px;
-      }
+  margin-bottom:35px;
 
-      .about-image {
-        height: 450px;
-      }
+  line-height:1.6;
+}
 
-      .gallery {
-        grid-template-columns: 1fr;
-      }
+.options{
+  display:grid;
 
-      .gallery-card {
-        height: 450px;
-      }
+  grid-template-columns:
+  1fr 1fr;
 
-      .gallery-card:nth-child(2) {
-        transform: none;
-      }
+  gap:12px;
+}
 
-      .contact {
-        grid-template-columns: 1fr;
+.option{
+  min-height:85px;
 
-        gap: 60px;
-      }
+  padding:20px;
 
-      footer {
-        flex-direction: column;
+  background:#151515;
 
-        gap: 15px;
-      }
-    }
-  </style>
+  border:1px solid #292929;
+
+  color:#eee;
+
+  text-align:left;
+
+  transition:.3s;
+}
+
+.option:hover{
+  border-color:#c9a76a;
+
+  transform:translateY(-2px);
+}
+
+.option.selected{
+  border-color:#c9a76a;
+
+  background:#19160f;
+
+  box-shadow:
+  inset 0 0 0 1px #c9a76a;
+}
+
+.option strong{
+  display:block;
+
+  font-size:16px;
+
+  margin-bottom:6px;
+}
+
+.option span{
+  color:#777;
+
+  font-size:12px;
+}
+
+.booking-navigation{
+  display:flex;
+
+  justify-content:space-between;
+
+  gap:15px;
+
+  margin-top:35px;
+}
+
+.nav-button{
+  padding:16px 25px;
+
+  border:1px solid #444;
+
+  background:transparent;
+
+  color:#eee;
+
+  text-transform:uppercase;
+
+  letter-spacing:2px;
+
+  font-size:10px;
+}
+
+.nav-button:hover{
+  border-color:#c9a76a;
+
+  color:#c9a76a;
+}
+
+.nav-button.next{
+  background:#c9a76a;
+
+  border-color:#c9a76a;
+
+  color:#080808;
+}
+
+.nav-button.next:hover{
+  transform:translateY(-2px);
+}
+
+.form-field{
+  margin-bottom:20px;
+}
+
+.form-field label{
+  display:block;
+
+  color:#777;
+
+  font-size:10px;
+
+  letter-spacing:2px;
+
+  text-transform:uppercase;
+
+  margin-bottom:8px;
+}
+
+.form-field input,
+.form-field textarea{
+  width:100%;
+
+  padding:18px 5px;
+
+  background:transparent;
+
+  border:none;
+
+  border-bottom:1px solid #333;
+
+  color:#fff;
+
+  outline:none;
+
+  font-size:15px;
+}
+
+.form-field textarea{
+  min-height:130px;
+
+  resize:vertical;
+}
+
+.form-field input:focus,
+.form-field textarea:focus{
+  border-color:#c9a76a;
+}
+
+.summary{
+  padding:25px;
+
+  margin-top:30px;
+
+  background:#141414;
+
+  border:1px solid #292929;
+}
+
+.summary-title{
+  color:#c9a76a;
+
+  font-size:10px;
+
+  letter-spacing:3px;
+
+  text-transform:uppercase;
+
+  margin-bottom:15px;
+}
+
+.summary-row{
+  display:flex;
+
+  justify-content:space-between;
+
+  gap:20px;
+
+  padding:10px 0;
+
+  border-bottom:1px solid #242424;
+
+  color:#aaa;
+
+  font-size:13px;
+}
+
+.summary-row:last-child{
+  border-bottom:none;
+}
+
+.summary-row strong{
+  color:#fff;
+}
+
+.success{
+  display:none;
+
+  text-align:center;
+
+  padding:50px 20px;
+}
+
+.success.show{
+  display:block;
+}
+
+.success-icon{
+  width:75px;
+  height:75px;
+
+  margin:0 auto 25px;
+
+  display:flex;
+
+  align-items:center;
+  justify-content:center;
+
+  border:1px solid #c9a76a;
+
+  border-radius:50%;
+
+  color:#c9a76a;
+
+  font-size:30px;
+}
+
+.success h3{
+  font-size:45px;
+
+  text-transform:uppercase;
+
+  margin-bottom:15px;
+}
+
+.success p{
+  color:#888;
+
+  line-height:1.7;
+}
+
+/* ================= FOOTER ================= */
+
+footer{
+  padding:40px 8%;
+
+  border-top:1px solid #222;
+
+  display:flex;
+
+  justify-content:space-between;
+
+  color:#555;
+
+  font-size:10px;
+
+  letter-spacing:2px;
+
+  text-transform:uppercase;
+}
+
+/* ================= MOBILE ================= */
+
+@media(max-width:800px){
+
+  header{
+    height:70px;
+
+    padding:0 5%;
+  }
+
+  nav{
+    display:none;
+  }
+
+  .logo{
+    font-size:19px;
+  }
+
+  .book{
+    display:none;
+  }
+
+  .language button{
+    padding:6px;
+  }
+
+  .hero{
+    padding:130px 7% 100px;
+
+    background-position:65% center;
+  }
+
+  h1{
+    font-size:75px;
+
+    letter-spacing:-5px;
+  }
+
+  .hero-description{
+    font-size:14px;
+  }
+
+  .hero-buttons{
+    flex-wrap:wrap;
+  }
+
+  .scissors{
+    width:330px;
+    height:330px;
+
+    right:-150px;
+
+    opacity:.08;
+  }
+
+  section{
+    padding:80px 7%;
+  }
+
+  .services{
+    grid-template-columns:1fr;
+  }
+
+  .service:nth-child(odd){
+    border-right:none;
+  }
+
+  .about{
+    grid-template-columns:1fr;
+
+    gap:50px;
+  }
+
+  .about-image{
+    height:450px;
+  }
+
+  .gallery{
+    grid-template-columns:1fr;
+  }
+
+  .gallery-card{
+    height:450px;
+  }
+
+  .gallery-card:nth-child(2){
+    transform:none;
+  }
+
+  .options{
+    grid-template-columns:1fr;
+  }
+
+  .step h3{
+    font-size:38px;
+  }
+
+  .booking-navigation{
+    flex-direction:column-reverse;
+  }
+
+  .nav-button{
+    width:100%;
+  }
+
+  footer{
+    flex-direction:column;
+
+    gap:15px;
+  }
+
+}
+
+</style>
 </head>
 
 <body>
 
-  <!-- ================= HEADER ================= -->
+<!-- ================= HEADER ================= -->
 
-  <header>
+<header>
 
-    <a href="#" class="logo">
-      SCISSORS<span>.</span>
-    </a>
+  <a href="#" class="logo">
+    SCISSORS<span>.</span>
+  </a>
 
-    <nav>
-      <a href="#services">Послуги</a>
-      <a href="#about">Про нас</a>
-      <a href="#gallery">Роботи</a>
-      <a href="#contact">Запис</a>
-    </nav>
+  <nav>
+    <a href="#services" data-i18n="navServices">Послуги</a>
+    <a href="#about" data-i18n="navAbout">Про нас</a>
+    <a href="#gallery" data-i18n="navGallery">Роботи</a>
+    <a href="#booking" data-i18n="navBooking">Запис</a>
+  </nav>
 
-    <a href="#contact" class="book">
-      Записатись
-    </a>
+  <div class="language">
 
-  </header>
+    <button onclick="setLanguage('uk')" id="lang-uk">
+      UA
+    </button>
+
+    <button onclick="setLanguage('cs')" id="lang-cs">
+      CZ
+    </button>
+
+    <button onclick="setLanguage('en')" id="lang-en">
+      EN
+    </button>
+
+  </div>
+
+</header>
 
 
-  <!-- ================= HERO ================= -->
+<!-- ================= HERO ================= -->
 
-  <section class="hero">
+<section class="hero">
 
-    <div class="hero-content">
+  <div class="hero-content">
 
-      <div class="eyebrow">
-        Barber Studio / 2026
+    <div class="eyebrow" data-i18n="eyebrow">
+      Barber Studio / Prague
+    </div>
+
+    <h1>
+      Your<br>
+      <span>Style.</span>
+    </h1>
+
+    <p
+      class="hero-description"
+      data-i18n="heroDescription"
+    >
+      Стрижки, борода та стиль.
+      Розкажи нам, що хочеш — ми
+      зробимо все інше.
+    </p>
+
+    <div class="hero-buttons">
+
+      <a
+        href="#booking"
+        class="button gold"
+        data-i18n="heroButton"
+      >
+        Почати запис
+      </a>
+
+      <a
+        href="#services"
+        class="button outline"
+        data-i18n="servicesButton"
+      >
+        Послуги
+      </a>
+
+    </div>
+
+  </div>
+
+
+  <div class="scissors">
+
+    <div class="blade one"></div>
+    <div class="blade two"></div>
+
+    <div class="ring one"></div>
+    <div class="ring two"></div>
+
+    <div class="pivot"></div>
+
+  </div>
+
+</section>
+
+
+<!-- ================= MARQUEE ================= -->
+
+<div class="marquee">
+
+  <div class="marquee-text">
+
+    ✂ SCISSORS BARBER STUDIO
+    &nbsp;&nbsp;&nbsp;
+    CUT • SHAVE • STYLE
+    &nbsp;&nbsp;&nbsp;
+    ✂ SCISSORS BARBER STUDIO
+    &nbsp;&nbsp;&nbsp;
+    CUT • SHAVE • STYLE
+
+  </div>
+
+</div>
+
+
+<!-- ================= SERVICES ================= -->
+
+<section id="services">
+
+  <div
+    class="label"
+    data-i18n="servicesLabel"
+  >
+    01 / Послуги
+  </div>
+
+  <h2 class="section-title">
+    Cut.<br>
+    Shave.<br>
+    Style.
+  </h2>
+
+  <div class="services">
+
+    <div class="service">
+
+      <div class="service-number">
+        01
       </div>
 
-      <h1>
-        Your<br>
-        <span>Style.</span>
-      </h1>
+      <h3 data-i18n="service1Title">
+        Classic Haircut
+      </h3>
 
-      <p class="hero-description">
-        Чоловічі стрижки, оформлення бороди
-        та класичний барберинг у сучасній
-        атмосфері.
+      <p data-i18n="service1Text">
+        Класична чоловіча стрижка
+        з підбором форми під тебе.
       </p>
 
-      <div class="hero-buttons">
-
-        <a
-          href="#contact"
-          class="button gold"
-        >
-          Записатись
-        </a>
-
-        <a
-          href="#services"
-          class="button outline"
-        >
-          Послуги
-        </a>
-
+      <div class="price">
+        €25
       </div>
 
     </div>
 
 
-    <!-- SCISSORS -->
+    <div class="service">
 
-    <div class="scissors">
+      <div class="service-number">
+        02
+      </div>
 
-      <div class="blade one"></div>
-      <div class="blade two"></div>
+      <h3 data-i18n="service2Title">
+        Hair + Beard
+      </h3>
 
-      <div class="ring one"></div>
-      <div class="ring two"></div>
+      <p data-i18n="service2Text">
+        Стрижка волосся та
+        оформлення бороди.
+      </p>
 
-      <div class="pivot"></div>
+      <div class="price">
+        €35
+      </div>
 
     </div>
 
-  </section>
+
+    <div class="service">
+
+      <div class="service-number">
+        03
+      </div>
+
+      <h3 data-i18n="service3Title">
+        Beard
+      </h3>
+
+      <p data-i18n="service3Text">
+        Корекція форми та контурів
+        бороди.
+      </p>
+
+      <div class="price">
+        €18
+      </div>
+
+    </div>
 
 
-  <!-- ================= MARQUEE ================= -->
+    <div class="service">
 
-  <div class="marquee">
+      <div class="service-number">
+        04
+      </div>
 
-    <div class="marquee-text">
+      <h3 data-i18n="service4Title">
+        Premium
+      </h3>
 
-      ✂ SCISSORS BARBER STUDIO
-      &nbsp;&nbsp;&nbsp;
-      CUT • SHAVE • STYLE
-      &nbsp;&nbsp;&nbsp;
-      ✂ SCISSORS BARBER STUDIO
-      &nbsp;&nbsp;&nbsp;
-      CUT • SHAVE • STYLE
-      &nbsp;&nbsp;&nbsp;
+      <p data-i18n="service4Text">
+        Повний комплекс волосся,
+        борода та стайлінг.
+      </p>
+
+      <div class="price">
+        €45
+      </div>
 
     </div>
 
   </div>
 
+</section>
 
-  <!-- ================= SERVICES ================= -->
 
-  <section id="services">
+<!-- ================= ABOUT ================= -->
 
-    <div class="label">
-      01 / Послуги
-    </div>
+<section id="about">
 
-    <h2 class="section-title">
-      Cut.<br>
-      Shave.<br>
-      Style.
-    </h2>
+  <div class="about">
 
-    <div class="services">
+    <div class="about-image">
 
-      <div class="service">
-
-        <div class="service-number">
-          01
-        </div>
-
-        <h3>
-          Classic Haircut
-        </h3>
-
-        <p>
-          Класична чоловіча стрижка
-          з підбором форми під твоє
-          обличчя та стиль.
-        </p>
-
-        <div class="price">
-          €25
-        </div>
-
-      </div>
-
-
-      <div class="service">
-
-        <div class="service-number">
-          02
-        </div>
-
-        <h3>
-          Hair + Beard
-        </h3>
-
-        <p>
-          Стрижка волосся та професійне
-          оформлення бороди.
-        </p>
-
-        <div class="price">
-          €35
-        </div>
-
-      </div>
-
-
-      <div class="service">
-
-        <div class="service-number">
-          03
-        </div>
-
-        <h3>
-          Beard
-        </h3>
-
-        <p>
-          Корекція форми, довжини
-          та контурів бороди.
-        </p>
-
-        <div class="price">
-          €18
-        </div>
-
-      </div>
-
-
-      <div class="service">
-
-        <div class="service-number">
-          04
-        </div>
-
-        <h3>
-          Premium
-        </h3>
-
-        <p>
-          Повний комплекс: волосся,
-          борода, гарячий рушник
-          та фінальний стайлінг.
-        </p>
-
-        <div class="price">
-          €45
-        </div>
-
-      </div>
-
-    </div>
-
-  </section>
-
-
-  <!-- ================= ABOUT ================= -->
-
-  <section id="about">
-
-    <div class="about">
-
-      <div class="about-image">
-
-        <img
-          src="04-classic-textured-fade.jpg"
-          alt="Barber haircut"
-        >
-
-      </div>
-
-
-      <div class="about-text">
-
-        <div class="label">
-          02 / Про нас
-        </div>
-
-        <h2 class="section-title">
-          More<br>
-          than<br>
-          a cut.
-        </h2>
-
-        <p>
-          SCISSORS — це місце для тих,
-          хто цінує стиль, якість
-          та увагу до деталей.
-        </p>
-
-        <p>
-          Ми поєднуємо традиційний
-          барберинг із сучасними
-          техніками, щоб кожна
-          стрижка виглядала саме так,
-          як потрібно тобі.
-        </p>
-
-        <div class="signature">
-          — Your barber
-        </div>
-
-      </div>
-
-    </div>
-
-  </section>
-
-
-  <!-- ================= QUOTE ================= -->
-
-  <div class="quote">
-
-    <h2>
-      Sharp scissors.<br>
-      <span>Sharp style.</span>
-    </h2>
-
-  </div>
-
-
-  <!-- ================= GALLERY ================= -->
-
-  <section id="gallery">
-
-    <div class="label">
-      03 / Наші роботи
-    </div>
-
-    <h2 class="section-title">
-      The<br>
-      Cuts.
-    </h2>
-
-
-    <div class="gallery">
-
-      <div class="gallery-card">
-
-        <img
-          src="01-textured-crop-fade.jpg"
-          alt="Textured crop fade"
-        >
-
-        <div class="gallery-overlay">
-          Textured Crop
-        </div>
-
-      </div>
-
-
-      <div class="gallery-card">
-
-        <img
-          src="02-pink-shag-mullet.jpg"
-          alt="Pink shag mullet"
-        >
-
-        <div class="gallery-overlay">
-          Shag Mullet
-        </div>
-
-      </div>
-
-
-      <div class="gallery-card">
-
-        <img
-          src="03-blue-flat-top-fade.jpg"
-          alt="Blue flat top fade"
-        >
-
-        <div class="gallery-overlay">
-          Flat Top Fade
-        </div>
-
-      </div>
-
-    </div>
-
-  </section>
-
-
-  <!-- ================= FOURTH PHOTO ================= -->
-
-  <section>
-
-    <div class="gallery">
-
-      <div class="gallery-card">
-
-        <img
-          src="04-classic-textured-fade.jpg"
-          alt="Classic textured fade"
-        >
-
-        <div class="gallery-overlay">
-          Classic Fade
-        </div>
-
-      </div>
-
-    </div>
-
-  </section>
-
-
-  <!-- ================= BOOKING ================= -->
-
-  <section id="contact">
-
-    <div class="label">
-      04 / Запис
-    </div>
-
-    <h2 class="section-title">
-      Book<br>
-      your cut.
-    </h2>
-
-
-    <div class="contact">
-
-      <div>
-
-        <div class="contact-item">
-
-          <small>
-            Адреса
-          </small>
-
-          <p>
-            Ваша адреса
-          </p>
-
-        </div>
-
-
-        <div class="contact-item">
-
-          <small>
-            Телефон
-          </small>
-
-          <p>
-            +380 00 000 00 00
-          </p>
-
-        </div>
-
-
-        <div class="contact-item">
-
-          <small>
-            Години роботи
-          </small>
-
-          <p>
-            Пн–Пт: 09:00 — 20:00<br>
-            Сб–Нд: 10:00 — 18:00
-          </p>
-
-        </div>
-
-      </div>
-
-
-      <!-- FORMSPREE -->
-
-      <form
-        action="https://formspree.io/f/xnpavyge"
-        method="POST"
+      <img
+        src="04-classic-textured-fade.jpg"
+        alt="Barber"
       >
 
-        <input
-          type="text"
-          name="name"
-          placeholder="Ваше ім'я"
-          autocomplete="name"
-          required
+    </div>
+
+
+    <div class="about-text">
+
+      <div
+        class="label"
+        data-i18n="aboutLabel"
+      >
+        02 / Про нас
+      </div>
+
+      <h2 class="section-title">
+        More<br>
+        than<br>
+        a cut.
+      </h2>
+
+      <p data-i18n="aboutText1">
+        SCISSORS — місце для тих,
+        хто цінує стиль, якість
+        та увагу до деталей.
+      </p>
+
+      <p data-i18n="aboutText2">
+        Традиційний барберинг
+        поєднується із сучасними
+        техніками.
+      </p>
+
+      <div class="signature">
+        — Your barber
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ================= QUOTE ================= -->
+
+<div class="quote">
+
+  <h2>
+    Sharp scissors.<br>
+    <span>Sharp style.</span>
+  </h2>
+
+</div>
+
+
+<!-- ================= GALLERY ================= -->
+
+<section id="gallery">
+
+  <div
+    class="label"
+    data-i18n="galleryLabel"
+  >
+    03 / Наші роботи
+  </div>
+
+  <h2 class="section-title">
+    The<br>
+    Cuts.
+  </h2>
+
+
+  <div class="gallery">
+
+    <div class="gallery-card">
+
+      <img
+        src="01-textured-crop-fade.jpg"
+        alt="Textured Crop"
+      >
+
+      <div class="gallery-overlay">
+        Textured Crop
+      </div>
+
+    </div>
+
+
+    <div class="gallery-card">
+
+      <img
+        src="02-pink-shag-mullet.jpg"
+        alt="Shag Mullet"
+      >
+
+      <div class="gallery-overlay">
+        Shag Mullet
+      </div>
+
+    </div>
+
+
+    <div class="gallery-card">
+
+      <img
+        src="03-blue-flat-top-fade.jpg"
+        alt="Flat Top Fade"
+      >
+
+      <div class="gallery-overlay">
+        Flat Top Fade
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ================= BOOKING QUIZ ================= -->
+
+<section
+  id="booking"
+  class="booking-section"
+>
+
+  <div class="booking-wrapper">
+
+    <div class="booking-head">
+
+      <div class="label">
+        04 / Booking
+      </div>
+
+      <h2
+        class="section-title"
+        data-i18n="bookingTitle"
+      >
+        Tell us<br>
+        your style.
+      </h2>
+
+      <div class="progress">
+
+        <div
+          class="progress-bar"
+          id="progressBar"
+        ></div>
+
+      </div>
+
+    </div>
+
+
+    <!-- STEP 1 -->
+
+    <div
+      class="step active"
+      data-step="1"
+    >
+
+      <div class="step-number">
+        01 / 06
+      </div>
+
+      <h3 data-i18n="q1">
+        Що хочеш зробити?
+      </h3>
+
+      <p
+        class="step-description"
+        data-i18n="q1desc"
+      >
+        Обери те, що тобі потрібно.
+      </p>
+
+
+      <div class="options">
+
+        <button
+          type="button"
+          class="option"
+          data-question="service"
+          data-value="haircut"
         >
 
+          <strong data-i18n="haircut">
+            ✂️ Стрижка
+          </strong>
 
-        <input
-          type="tel"
-          name="phone"
-          placeholder="Номер телефону"
-          autocomplete="tel"
-          required
-        >
+          <span data-i18n="haircutDesc">
+            Волосся
+          </span>
 
-
-        <input
-          type="email"
-          name="email"
-          placeholder="Ваш Email"
-          autocomplete="email"
-          required
-        >
-
-
-        <select
-          name="service"
-          required
-        >
-
-          <option value="">
-            Оберіть послугу
-          </option>
-
-          <option value="Classic Haircut — €25">
-            Classic Haircut — €25
-          </option>
-
-          <option value="Hair + Beard — €35">
-            Hair + Beard — €35
-          </option>
-
-          <option value="Beard — €18">
-            Beard — €18
-          </option>
-
-          <option value="Premium — €45">
-            Premium — €45
-          </option>
-
-        </select>
-
-
-        <input
-          type="date"
-          name="date"
-          required
-        >
-
-
-        <textarea
-          name="message"
-          placeholder="Додатковий коментар"
-        ></textarea>
-
-
-        <input
-          type="hidden"
-          name="_subject"
-          value="Нова заявка — SCISSORS Barber"
-        >
+        </button>
 
 
         <button
-          type="submit"
-          class="button gold"
+          type="button"
+          class="option"
+          data-question="service"
+          data-value="beard"
         >
-          Відправити заявку ✂
+
+          <strong data-i18n="beard">
+            🧔 Борода
+          </strong>
+
+          <span data-i18n="beardDesc">
+            Форма та контури
+          </span>
+
         </button>
 
-      </form>
+
+        <button
+          type="button"
+          class="option"
+          data-question="service"
+          data-value="hairBeard"
+        >
+
+          <strong data-i18n="hairBeard">
+            ✂️ + 🧔 Стрижка + борода
+          </strong>
+
+          <span data-i18n="hairBeardDesc">
+            Повний образ
+          </span>
+
+        </button>
+
+
+        <button
+          type="button"
+          class="option"
+          data-question="service"
+          data-value="consultation"
+        >
+
+          <strong data-i18n="consultation">
+            💬 Не знаю
+          </strong>
+
+          <span data-i18n="consultationDesc">
+            Порадьте мені
+          </span>
+
+        </button>
+
+      </div>
 
     </div>
 
-  </section>
+
+    <!-- STEP 2 -->
+
+    <div
+      class="step"
+      data-step="2"
+    >
+
+      <div class="step-number">
+        02 / 06
+      </div>
+
+      <h3 data-i18n="q2">
+        Який стиль хочеш?
+      </h3>
+
+      <p
+        class="step-description"
+        data-i18n="q2desc"
+      >
+        Якщо не знаєш назву — просто
+        обери «Порадьте мені».
+      </p>
 
 
-  <!-- ================= FOOTER ================= -->
+      <div class="options">
 
-  <footer>
+        <button
+          type="button"
+          class="option"
+          data-question="style"
+          data-value="fade"
+        >
 
-    <div>
-      © 2026 SCISSORS BARBER STUDIO
+          <strong>
+            Fade
+          </strong>
+
+          <span data-i18n="fadeDesc">
+            Плавний перехід
+          </span>
+
+        </button>
+
+
+        <button
+          type="button"
+          class="option"
+          data-question="style"
+          data-value="classic"
+        >
+
+          <strong data-i18n="classic">
+            Classic
+          </strong>
+
+          <span data-i18n="classicDesc">
+            Класичний стиль
+          </span>
+
+        </button>
+
+
+        <button
+          type="button"
+          class="option"
+          data-question="style"
+          data-value="crop"
+        >
+
+          <strong>
+            Crop
+          </strong>
+
+          <span data-i18n="cropDesc">
+            Короткий текстурний стиль
+          </span>
+
+        </button>
+
+
+        <button
+          type="button"
+          class="option"
+          data-question="style"
+          data-value="longer"
+        >
+
+          <strong data-i18n="longer">
+            Longer
+          </strong>
+
+          <span data-i18n="longerDesc">
+            Залишити більше довжини
+          </span>
+
+        </button>
+
+
+        <button
+          type="button"
+          class="option"
+          data-question="style"
+          data-value="advice"
+        >
+
+          <strong data-i18n="advice">
+            💬 Порадьте мені
+          </strong>
+
+          <span data-i18n="adviceDesc">
+            Барбер підбере варіант
+          </span>
+
+        </button>
+
+      </div>
+
     </div>
 
-    <div>
-      Cut with character.
+
+    <!-- STEP 3 -->
+
+    <div
+      class="step"
+      data-step="3"
+    >
+
+      <div class="step-number">
+        03 / 06
+      </div>
+
+      <h3 data-i18n="q3">
+        Скільки залишити?
+      </h3>
+
+      <p
+        class="step-description"
+        data-i18n="q3desc"
+      >
+        Приблизно опиши бажану довжину.
+      </p>
+
+
+      <div class="options">
+
+        <button
+          type="button"
+          class="option"
+          data-question="length"
+          data-value="short"
+        >
+
+          <strong data-i18n="short">
+            Дуже коротко
+          </strong>
+
+          <span data-i18n="shortDesc">
+            Максимально коротко
+          </span>
+
+        </button>
+
+
+        <button
+          type="button"
+          class="option"
+          data-question="length"
+          data-value="medium"
+        >
+
+          <strong data-i18n="medium">
+            Середньо
+          </strong>
+
+          <span data-i18n="mediumDesc">
+            Збалансована довжина
+          </span>
+
+        </button>
+
+
+        <button
+          type="button"
+          class="option"
+          data-question="length"
+          data-value="long"
+        >
+
+          <strong data-i18n="long">
+            Довше
+          </strong>
+
+          <span data-i18n="longDesc">
+            Хочу залишити довжину
+          </span>
+
+        </button>
+
+
+        <button
+          type="button"
+          class="option"
+          data-question="length"
+          data-value="dontknow"
+        >
+
+          <strong data-i18n="dontKnow">
+            Не знаю
+          </strong>
+
+          <span data-i18n="dontKnowDesc">
+            Порадьте по довжині
+          </span>
+
+        </button>
+
+      </div>
+
     </div>
 
-  </footer>
+
+    <!-- STEP 4 -->
+
+    <div
+      class="step"
+      data-step="4"
+    >
+
+      <div class="step-number">
+        04 / 06
+      </div>
+
+      <h3 data-i18n="q4">
+        А що з бородою?
+      </h3>
+
+      <p
+        class="step-description"
+        data-i18n="q4desc"
+      >
+        Обери варіант, який підходить.
+      </p>
+
+
+      <div class="options">
+
+        <button
+          type="button"
+          class="option"
+          data-question="beard"
+          data-value="none"
+        >
+
+          <strong data-i18n="noBeard">
+            Без бороди
+          </strong>
+
+          <span data-i18n="noBeardDesc">
+            Нічого не робити
+          </span>
+
+        </button>
+
+
+        <button
+          type="button"
+          class="option"
+          data-question="beard"
+          data-value="trim"
+        >
+
+          <strong data-i18n="trimBeard">
+            Підрівняти
+          </strong>
+
+          <span data-i18n="trimBeardDesc">
+            Зберегти форму
+          </span>
+
+        </button>
+
+
+        <button
+          type="button"
+          class="option"
+          data-question="beard"
+          data-value="shape"
+        >
+
+          <strong data-i18n="shapeBeard">
+            Нова форма
+          </strong>
+
+          <span data-i18n="shapeBeardDesc">
+            Створити нову форму
+          </span>
+
+        </button>
+
+
+        <button
+          type="button"
+          class="option"
+          data-question="beard"
+          data-value="remove"
+        >
+
+          <strong data-i18n="removeBeard">
+            Повністю прибрати
+          </strong>
+
+          <span data-i18n="removeBeardDesc">
+            Чисте обличчя
+          </span>
+
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <!-- STEP 5 -->
+
+    <div
+      class="step"
+      data-step="5"
+    >
+
+      <div class="step-number">
+        05 / 06
+      </div>
+
+      <h3 data-i18n="q5">
+        Розкажи свої побажання
+      </h3>
+
+      <p
+        class="step-description"
+        data-i18n="q5desc"
+      >
+        Тут можеш написати все, що важливо
+        для твоєї стрижки.
+      </p>
+
+
+      <div class="form-field">
+
+        <label data-i18n="wishesLabel">
+          Твої побажання
+        </label>
+
+        <textarea
+          id="wishes"
+          name="wishes"
+          data-i18n-placeholder="wishesPlaceholder"
+          placeholder="Наприклад: хочу залишити довжину зверху, боки коротше, як на фото..."
+        ></textarea>
+
+      </div>
+
+
+      <div class="form-field">
+
+        <label data-i18n="photoLabel">
+          Якщо маєш приклад — можеш описати його
+        </label>
+
+        <input
+          type="text"
+          id="reference"
+          name="reference"
+          data-i18n-placeholder="referencePlaceholder"
+          placeholder="Наприклад: хочу приблизно як у David Beckham"
+        >
+
+      </div>
+
+    </div>
+
+
+    <!-- STEP 6 -->
+
+    <div
+      class="step"
+      data-step="6"
+    >
+
+      <div class="step-number">
+        06 / 06
+      </div>
+
+      <h3 data-i18n="q6">
+        Коли та як з тобою зв'язатись?
+      </h3>
+
+      <p
+        class="step-description"
+        data-i18n="q6desc"
+      >
+        Залиш контакти — ми підтвердимо запис.
+      </p>
+
+
+      <div class="form-field">
+
+        <label data-i18n="nameLabel">
+          Ім'я
+        </label>
+
+        <input
+          type="text"
+          id="clientName"
+          data-i18n-placeholder="namePlaceholder"
+          placeholder="Твоє ім'я"
+          required
+        >
+
+      </div>
+
+
+      <div class="form-field">
+
+        <label data-i18n="phoneLabel">
+          Телефон
+        </label>
+
+        <input
+          type="tel"
+          id="clientPhone"
+          data-i18n-placeholder="phonePlaceholder"
+          placeholder="+420 ..."
+          required
+        >
+
+      </div>
+
+
+      <div class="form-field">
+
+        <label data-i18n="emailLabel">
+          Email
+        </label>
+
+        <input
+          type="email"
+          id="clientEmail"
+          data-i18n-placeholder="emailPlaceholder"
+          placeholder="you@email.com"
+          required
+        >
+
+      </div>
+
+
+      <div class="form-field">
+
+        <label data-i18n="dateLabel">
+          Бажана дата
+        </label>
+
+        <input
+          type="date"
+          id="clientDate"
+          required
+        >
+
+      </div>
+
+
+      <div class="form-field">
+
+        <label data-i18n="timeLabel">
+          Бажаний час
+        </label>
+
+        <input
+          type="time"
+          id="clientTime"
+          required
+        >
+
+      </div>
+
+
+      <div class="summary">
+
+        <div
+          class="summary-title"
+          data-i18n="summaryTitle"
+        >
+          Твій запис
+        </div>
+
+        <div class="summary-row">
+          <span data-i18n="summaryService">
+            Послуга
+          </span>
+
+          <strong id="summaryService">
+            —
+          </strong>
+        </div>
+
+        <div class="summary-row">
+          <span data-i18n="summaryStyle">
+            Стиль
+          </span>
+
+          <strong id="summaryStyle">
+            —
+          </strong>
+        </div>
+
+        <div class="summary-row">
+          <span data-i18n="summaryLength">
+            Довжина
+          </span>
+
+          <strong id="summaryLength">
+            —
+          </strong>
+        </div>
+
+        <div class="summary-row">
+          <span data-i18n="summaryBeard">
+            Борода
+          </span>
+
+          <strong id="summaryBeard">
+            —
+          </strong>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- NAVIGATION -->
+
+    <div
+      class="booking-navigation"
+      id="bookingNavigation"
+    >
+
+      <button
+        type="button"
+        class="nav-button"
+        id="backButton"
+        onclick="previousStep()"
+      >
+        ← Назад
+      </button>
+
+      <button
+        type="button"
+        class="nav-button next"
+        id="nextButton"
+        onclick="nextStep()"
+      >
+        Далі →
+      </button>
+
+    </div>
+
+
+    <!-- SUCCESS -->
+
+    <div
+      class="success"
+      id="success"
+    >
+
+      <div class="success-icon">
+        ✓
+      </div>
+
+      <h3 data-i18n="successTitle">
+        Готово.
+      </h3>
+
+      <p data-i18n="successText">
+        Твоя заявка відправлена.
+        Ми зв'яжемося з тобою для
+        підтвердження запису.
+      </p>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+  <div>
+    © 2026 SCISSORS BARBER STUDIO
+  </div>
+
+  <div>
+    Cut with character.
+  </div>
+
+</footer>
+
+
+<!-- ================= HIDDEN FORMSPREE FORM ================= -->
+
+<form
+  id="realForm"
+  action="https://formspree.io/f/xnpavyge"
+  method="POST"
+  style="display:none;"
+>
+
+  <input
+    type="hidden"
+    name="language"
+    id="formLanguage"
+  >
+
+  <input
+    type="hidden"
+    name="service"
+    id="formService"
+  >
+
+  <input
+    type="hidden"
+    name="style"
+    id="formStyle"
+  >
+
+  <input
+    type="hidden"
+    name="hair_length"
+    id="formLength"
+  >
+
+  <input
+    type="hidden"
+    name="beard"
+    id="formBeard"
+  >
+
+  <input
+    type="hidden"
+    name="wishes"
+    id="formWishes"
+  >
+
+  <input
+    type="hidden"
+    name="reference"
+    id="formReference"
+  >
+
+  <input
+    type="hidden"
+    name="name"
+    id="formName"
+  >
+
+  <input
+    type="hidden"
+    name="phone"
+    id="formPhone"
+  >
+
+  <input
+    type="hidden"
+    name="email"
+    id="formEmail"
+  >
+
+  <input
+    type="hidden"
+    name="date"
+    id="formDate"
+  >
+
+  <input
+    type="hidden"
+    name="time"
+    id="formTime"
+  >
+
+  <input
+    type="hidden"
+    name="_subject"
+    value="Нова заявка — SCISSORS Barber"
+  >
+
+</form>
+
+
+<script>
+
+/* =========================================================
+   TRANSLATIONS
+========================================================= */
+
+const translations = {
+
+uk:{
+
+navServices:"Послуги",
+navAbout:"Про нас",
+navGallery:"Роботи",
+navBooking:"Запис",
+
+eyebrow:"Barber Studio / Prague",
+
+heroDescription:
+"Стрижки, борода та стиль. Розкажи нам, що хочеш — ми зробимо все інше.",
+
+heroButton:"Почати запис",
+servicesButton:"Послуги",
+
+servicesLabel:"01 / Послуги",
+
+service1Title:"Classic Haircut",
+service1Text:"Класична чоловіча стрижка з підбором форми під тебе.",
+
+service2Title:"Hair + Beard",
+service2Text:"Стрижка волосся та оформлення бороди.",
+
+service3Title:"Beard",
+service3Text:"Корекція форми та контурів бороди.",
+
+service4Title:"Premium",
+service4Text:"Повний комплекс волосся, борода та стайлінг.",
+
+aboutLabel:"02 / Про нас",
+
+aboutText1:
+"SCISSORS — місце для тих, хто цінує стиль, якість та увагу до деталей.",
+
+aboutText2:
+"Традиційний барберинг поєднується із сучасними техніками.",
+
+galleryLabel:"03 / Наші роботи",
+
+bookingTitle:"Tell us your style.",
+
+q1:"Що хочеш зробити?",
+q1desc:"Обери те, що тобі потрібно.",
+
+haircut:"✂️ Стрижка",
+haircutDesc:"Волосся",
+
+beard:"🧔 Борода",
+beardDesc:"Форма та контури",
+
+hairBeard:"✂️ + 🧔 Стрижка + борода",
+hairBeardDesc:"Повний образ",
+
+consultation:"💬 Не знаю",
+consultationDesc:"Порадьте мені",
+
+q2:"Який стиль хочеш?",
+q2desc:"Якщо не знаєш назву — просто обери «Порадьте мені».",
+
+fadeDesc:"Плавний перехід",
+
+classic:"Classic",
+classicDesc:"Класичний стиль",
+
+cropDesc:"Короткий текстурний стиль",
+
+longer:"Longer",
+longerDesc:"Залишити більше довжини",
+
+advice:"💬 Порадьте мені",
+adviceDesc:"Барбер підбере варіант",
+
+q3:"Скільки залишити?",
+q3desc:"Приблизно опиши бажану довжину.",
+
+short:"Дуже коротко",
+shortDesc:"Максимально коротко",
+
+medium:"Середньо",
+mediumDesc:"Збалансована довжина",
+
+long:"Довше",
+longDesc:"Хочу залишити довжину",
+
+dontKnow:"Не знаю",
+dontKnowDesc:"Порадьте по довжині",
+
+q4:"А що з бородою?",
+q4desc:"Обери варіант, який підходить.",
+
+noBeard:"Без бороди",
+noBeardDesc:"Нічого не робити",
+
+trimBeard:"Підрівняти",
+trimBeardDesc:"Зберегти форму",
+
+shapeBeard:"Нова форма",
+shapeBeardDesc:"Створити нову форму",
+
+removeBeard:"Повністю прибрати",
+removeBeardDesc:"Чисте обличчя",
+
+q5:"Розкажи свої побажання",
+q5desc:"Тут можеш написати все, що важливо для твоєї стрижки.",
+
+wishesLabel:"Твої побажання",
+wishesPlaceholder:"Наприклад: хочу залишити довжину зверху, боки коротше, як на фото...",
+
+photoLabel:"Якщо маєш приклад — можеш описати його",
+referencePlaceholder:"Наприклад: хочу приблизно як у David Beckham",
+
+q6:"Коли та як з тобою зв'язатись?",
+q6desc:"Залиш контакти — ми підтвердимо запис.",
+
+nameLabel:"Ім'я",
+namePlaceholder:"Твоє ім'я",
+
+phoneLabel:"Телефон",
+phonePlaceholder:"+420 ...",
+
+emailLabel:"Email",
+emailPlaceholder:"you@email.com",
+
+dateLabel:"Бажана дата",
+timeLabel:"Бажаний час",
+
+summaryTitle:"Твій запис",
+
+summaryService:"Послуга",
+summaryStyle:"Стиль",
+summaryLength:"Довжина",
+summaryBeard:"Борода",
+
+successTitle:"Готово.",
+successText:
+"Твоя заявка відправлена. Ми зв'яжемося з тобою для підтвердження запису."
+
+},
+
+cs:{
+
+navServices:"Služby",
+navAbout:"O nás",
+navGallery:"Práce",
+navBooking:"Rezervace",
+
+eyebrow:"Barber Studio / Prague",
+
+heroDescription:
+"Střih, vousy a styl. Řekni nám, co chceš — o zbytek se postaráme.",
+
+heroButton:"Začít rezervaci",
+servicesButton:"Služby",
+
+servicesLabel:"01 / Služby",
+
+service1Title:"Classic Haircut",
+service1Text:"Klasický pánský střih podle tvaru vašeho obličeje.",
+
+service2Title:"Hair + Beard",
+service2Text:"Střih vlasů a úprava vousů.",
+
+service3Title:"Beard",
+service3Text:"Úprava tvaru a kontur vousů.",
+
+service4Title:"Premium",
+service4Text:"Kompletní péče o vlasy, vousy a styling.",
+
+aboutLabel:"02 / O nás",
+
+aboutText1:
+"SCISSORS je místo pro ty, kteří oceňují styl, kvalitu a smysl pro detail.",
+
+aboutText2:
+"Tradiční barbering kombinujeme s moderními technikami.",
+
+galleryLabel:"03 / Naše práce",
+
+bookingTitle:"Tell us your style.",
+
+q1:"Co si přejete?",
+q1desc:"Vyberte, co potřebujete.",
+
+haircut:"✂️ Střih",
+haircutDesc:"Vlasy",
+
+beard:"🧔 Vousy",
+beardDesc:"Tvar a kontury",
+
+hairBeard:"✂️ + 🧔 Vlasy + vousy",
+hairBeardDesc:"Kompletní look",
+
+consultation:"💬 Nevím",
+consultationDesc:"Poradíme vám",
+
+q2:"Jaký styl chcete?",
+q2desc:"Pokud neznáte název, vyberte „Poradíte mi“.",
+
+fadeDesc:"Plynulý přechod",
+
+classic:"Classic",
+classicDesc:"Klasický styl",
+
+cropDesc:"Krátký texturovaný styl",
+
+longer:"Longer",
+longerDesc:"Chci ponechat více délky",
+
+advice:"💬 Poradíte mi",
+adviceDesc:"Barber vybere vhodný styl",
+
+q3:"Jakou délku?",
+q3desc:"Vyberte přibližnou délku.",
+
+short:"Velmi krátké",
+shortDesc:"Co nejkratší",
+
+medium:"Střední",
+mediumDesc:"Vyvážená délka",
+
+long:"Delší",
+longDesc:"Chci ponechat délku",
+
+dontKnow:"Nevím",
+dontKnowDesc:"Poradíte mi",
+
+q4:"A co vousy?",
+q4desc:"Vyberte variantu.",
+
+noBeard:"Bez vousů",
+noBeardDesc:"Nic neupravovat",
+
+trimBeard:"Zastřihnout",
+trimBeardDesc:"Zachovat tvar",
+
+shapeBeard:"Nový tvar",
+shapeBeardDesc:"Vytvořit nový tvar",
+
+removeBeard:"Úplně oholit",
+removeBeardDesc:"Hladká tvář",
+
+q5:"Řekněte nám vaše přání",
+q5desc:"Napište vše, co je pro váš střih důležité.",
+
+wishesLabel:"Vaše přání",
+wishesPlaceholder:"Například: nahoře chci ponechat délku, boky kratší...",
+
+photoLabel:"Máte nějaký příklad?",
+referencePlaceholder:"Například: něco jako David Beckham",
+
+q6:"Kdy a jak vás můžeme kontaktovat?",
+q6desc:"Nechte nám kontakt — rezervaci potvrdíme.",
+
+nameLabel:"Jméno",
+namePlaceholder:"Vaše jméno",
+
+phoneLabel:"Telefon",
+phonePlaceholder:"+420 ...",
+
+emailLabel:"Email",
+emailPlaceholder:"you@email.com",
+
+dateLabel:"Preferované datum",
+timeLabel:"Preferovaný čas",
+
+summaryTitle:"Vaše rezervace",
+
+summaryService:"Služba",
+summaryStyle:"Styl",
+summaryLength:"Délka",
+summaryBeard:"Vousy",
+
+successTitle:"Hotovo.",
+successText:
+"Vaše žádost byla odeslána. Brzy vás kontaktujeme pro potvrzení rezervace."
+
+},
+
+en:{
+
+navServices:"Services",
+navAbout:"About",
+navGallery:"Work",
+navBooking:"Booking",
+
+eyebrow:"Barber Studio / Prague",
+
+heroDescription:
+"Haircuts, beard and style. Tell us what you want — we'll take care of the rest.",
+
+heroButton:"Start booking",
+servicesButton:"Services",
+
+servicesLabel:"01 / Services",
+
+service1Title:"Classic Haircut",
+service1Text:"A classic men's haircut shaped to suit you.",
+
+service2Title:"Hair + Beard",
+service2Text:"Haircut and professional beard styling.",
+
+service3Title:"Beard",
+service3Text:"Beard shaping and clean contours.",
+
+service4Title:"Premium",
+service4Text:"Full haircut, beard treatment and styling.",
+
+aboutLabel:"02 / About",
+
+aboutText1:
+"SCISSORS is a place for people who value style, quality and attention to detail.",
+
+aboutText2:
+"We combine traditional barbering with modern techniques.",
+
+galleryLabel:"03 / Our work",
+
+bookingTitle:"Tell us your style.",
+
+q1:"What would you like?",
+q1desc:"Choose what you need.",
+
+haircut:"✂️ Haircut",
+haircutDesc:"Hair",
+
+beard:"🧔 Beard",
+beardDesc:"Shape and contours",
+
+hairBeard:"✂️ + 🧔 Hair + beard",
+hairBeardDesc:"Complete look",
+
+consultation:"💬 Not sure",
+consultationDesc:"Recommend something",
+
+q2:"What style do you want?",
+q2desc:"If you don't know the name, choose “Recommend something”.",
+
+fadeDesc:"Smooth fade",
+
+classic:"Classic",
+classicDesc:"Classic style",
+
+cropDesc:"Short textured style",
+
+longer:"Longer",
+longerDesc:"Keep more length",
+
+advice:"💬 Recommend something",
+adviceDesc:"Barber will choose",
+
+q3:"How much length?",
+q3desc:"Choose the approximate length.",
+
+short:"Very short",
+shortDesc:"As short as possible",
+
+medium:"Medium",
+mediumDesc:"Balanced length",
+
+long:"Longer",
+longDesc:"Keep the length",
+
+dontKnow:"Not sure",
+dontKnowDesc:"Recommend a length",
+
+q4:"What about the beard?",
+q4desc:"Choose what works for you.",
+
+noBeard:"No beard",
+noBeardDesc:"Leave it",
+
+trimBeard:"Trim",
+trimBeardDesc:"Keep the shape",
+
+shapeBeard:"New shape",
+shapeBeardDesc:"Create a new shape",
+
+removeBeard:"Remove completely",
+removeBeardDesc:"Clean shave",
+
+q5:"Tell us your wishes",
+q5desc:"Write anything important about your haircut.",
+
+wishesLabel:"Your wishes",
+wishesPlaceholder:"For example: keep the length on top, shorter sides...",
+
+photoLabel:"Have an example?",
+referencePlaceholder:"For example: something like David Beckham",
+
+q6:"When and how can we contact you?",
+q6desc:"Leave your details — we'll confirm your booking.",
+
+nameLabel:"Name",
+namePlaceholder:"Your name",
+
+phoneLabel:"Phone",
+phonePlaceholder:"+420 ...",
+
+emailLabel:"Email",
+emailPlaceholder:"you@email.com",
+
+dateLabel:"Preferred date",
+timeLabel:"Preferred time",
+
+summaryTitle:"Your booking",
+
+summaryService:"Service",
+summaryStyle:"Style",
+summaryLength:"Length",
+summaryBeard:"Beard",
+
+successTitle:"Done.",
+successText:
+"Your request has been sent. We'll contact you to confirm your booking."
+
+}
+
+};
+
+
+/* =========================================================
+   STATE
+========================================================= */
+
+let currentLanguage =
+localStorage.getItem("barberLanguage") || "uk";
+
+let currentStep = 1;
+
+const answers = {
+  service:"",
+  style:"",
+  length:"",
+  beard:"",
+  wishes:"",
+  reference:""
+};
+
+
+/* =========================================================
+   LANGUAGE
+========================================================= */
+
+function setLanguage(language){
+
+  currentLanguage = language;
+
+  localStorage.setItem(
+    "barberLanguage",
+    language
+  );
+
+  document.documentElement.lang = language;
+
+  document
+    .querySelectorAll("[data-i18n]")
+    .forEach(element => {
+
+      const key =
+        element.getAttribute("data-i18n");
+
+      if(
+        translations[language] &&
+        translations[language][key]
+      ){
+
+        element.textContent =
+          translations[language][key];
+
+      }
+
+    });
+
+
+  document
+    .querySelectorAll("[data-i18n-placeholder]")
+    .forEach(element => {
+
+      const key =
+        element.getAttribute(
+          "data-i18n-placeholder"
+        );
+
+      if(
+        translations[language] &&
+        translations[language][key]
+      ){
+
+        element.placeholder =
+          translations[language][key];
+
+      }
+
+    });
+
+
+  document
+    .querySelectorAll(".language button")
+    .forEach(button => {
+
+      button.classList.remove("active");
+
+    });
+
+
+  const active =
+    document.getElementById(
+      "lang-" +
+      (
+        language === "uk"
+        ? "uk"
+        : language === "cs"
+        ? "cs"
+        : "en"
+      )
+    );
+
+  if(active){
+    active.classList.add("active");
+  }
+
+
+  updateNavigationText();
+
+  updateSummary();
+
+}
+
+
+/* =========================================================
+   NAVIGATION TRANSLATIONS
+========================================================= */
+
+function updateNavigationText(){
+
+  const t =
+    translations[currentLanguage];
+
+  document.getElementById(
+    "backButton"
+  ).textContent =
+    currentStep === 1
+    ? ""
+    : (
+      currentLanguage === "uk"
+      ? "← Назад"
+      : currentLanguage === "cs"
+      ? "← Zpět"
+      : "← Back"
+    );
+
+
+  document.getElementById(
+    "nextButton"
+  ).textContent =
+    currentStep === 6
+    ? (
+      currentLanguage === "uk"
+      ? "✂ Відправити заявку"
+      : currentLanguage === "cs"
+      ? "✂ Odeslat rezervaci"
+      : "✂ Send booking"
+    )
+    : (
+      currentLanguage === "uk"
+      ? "Далі →"
+      : currentLanguage === "cs"
+      ? "Další →"
+      : "Next →"
+    );
+
+
+  document.getElementById(
+    "backButton"
+  ).style.visibility =
+    currentStep === 1
+    ? "hidden"
+    : "visible";
+
+}
+
+
+/* =========================================================
+   OPTIONS
+========================================================= */
+
+document
+  .querySelectorAll(".option")
+  .forEach(button => {
+
+    button.addEventListener(
+      "click",
+      function(){
+
+        const question =
+          this.dataset.question;
+
+        const value =
+          this.dataset.value;
+
+
+        document
+          .querySelectorAll(
+            `.option[data-question="${question}"]`
+          )
+          .forEach(option => {
+
+            option.classList.remove(
+              "selected"
+            );
+
+          });
+
+
+        this.classList.add("selected");
+
+        answers[question] = value;
+
+        updateSummary();
+
+      }
+    );
+
+  });
+
+
+/* =========================================================
+   NEXT STEP
+========================================================= */
+
+function nextStep(){
+
+  if(currentStep === 1 &&
+     !answers.service){
+
+    alert(
+      currentLanguage === "uk"
+      ? "Будь ласка, обери, що хочеш зробити."
+      : currentLanguage === "cs"
+      ? "Vyberte prosím, co si přejete."
+      : "Please choose what you would like."
+    );
+
+    return;
+  }
+
+
+  if(currentStep === 2 &&
+     !answers.style){
+
+    alert(
+      currentLanguage === "uk"
+      ? "Обери бажаний стиль."
+      : currentLanguage === "cs"
+      ? "Vyberte požadovaný styl."
+      : "Please choose a style."
+    );
+
+    return;
+  }
+
+
+  if(currentStep === 3 &&
+     !answers.length){
+
+    alert(
+      currentLanguage === "uk"
+      ? "Обери бажану довжину."
+      : currentLanguage === "cs"
+      ? "Vyberte požadovanou délku."
+      : "Please choose a length."
+    );
+
+    return;
+  }
+
+
+  if(currentStep === 4 &&
+     !answers.beard){
+
+    alert(
+      currentLanguage === "uk"
+      ? "Обери варіант для бороди."
+      : currentLanguage === "cs"
+      ? "Vyberte variantu vousů."
+      : "Please choose a beard option."
+    );
+
+    return;
+  }
+
+
+  if(currentStep === 5){
+
+    answers.wishes =
+      document.getElementById(
+        "wishes"
+      ).value;
+
+    answers.reference =
+      document.getElementById(
+        "reference"
+      ).value;
+
+  }
+
+
+  if(currentStep === 6){
+
+    submitBooking();
+
+    return;
+
+  }
+
+
+  currentStep++;
+
+  showStep();
+
+}
+
+
+/* =========================================================
+   PREVIOUS
+========================================================= */
+
+function previousStep(){
+
+  if(currentStep > 1){
+
+    currentStep--;
+
+    showStep();
+
+  }
+
+}
+
+
+/* =========================================================
+   SHOW STEP
+========================================================= */
+
+function showStep(){
+
+  document
+    .querySelectorAll(".step")
+    .forEach(step => {
+
+      step.classList.remove(
+        "active"
+      );
+
+    });
+
+
+  const activeStep =
+    document.querySelector(
+      `.step[data-step="${currentStep}"]`
+    );
+
+
+  if(activeStep){
+
+    activeStep.classList.add(
+      "active"
+    );
+
+  }
+
+
+  document.getElementById(
+    "progressBar"
+  ).style.width =
+    (
+      currentStep / 6 * 100
+    ) + "%";
+
+
+  updateNavigationText();
+
+  updateSummary();
+
+  window.scrollTo({
+    top:
+      document.getElementById(
+        "booking"
+      ).offsetTop - 90,
+
+    behavior:"smooth"
+  });
+
+}
+
+
+/* =========================================================
+   SUMMARY
+========================================================= */
+
+function updateSummary(){
+
+  const t =
+    translations[currentLanguage];
+
+
+  const serviceNames = {
+
+    haircut:
+      t.haircut,
+
+    beard:
+      t.beard,
+
+    hairBeard:
+      t.hairBeard,
+
+    consultation:
+      t.consultation
+
+  };
+
+
+  const styleNames = {
+
+    fade:"Fade",
+
+    classic:t.classic,
+
+    crop:"Crop",
+
+    longer:t.longer,
+
+    advice:t.advice
+
+  };
+
+
+  const lengthNames = {
+
+    short:t.short,
+
+    medium:t.medium,
+
+    long:t.long,
+
+    dontknow:t.dontKnow
+
+  };
+
+
+  const beardNames = {
+
+    none:t.noBeard,
+
+    trim:t.trimBeard,
+
+    shape:t.shapeBeard,
+
+    remove:t.removeBeard
+
+  };
+
+
+  document.getElementById(
+    "summaryService"
+  ).textContent =
+    serviceNames[answers.service]
+    || "—";
+
+
+  document.getElementById(
+    "summaryStyle"
+  ).textContent =
+    styleNames[answers.style]
+    || "—";
+
+
+  document.getElementById(
+    "summaryLength"
+  ).textContent =
+    lengthNames[answers.length]
+    || "—";
+
+
+  document.getElementById(
+    "summaryBeard"
+  ).textContent =
+    beardNames[answers.beard]
+    || "—";
+
+}
+
+
+/* =========================================================
+   SUBMIT BOOKING
+========================================================= */
+
+function submitBooking(){
+
+  const name =
+    document.getElementById(
+      "clientName"
+    ).value.trim();
+
+  const phone =
+    document.getElementById(
+      "clientPhone"
+    ).value.trim();
+
+  const email =
+    document.getElementById(
+      "clientEmail"
+    ).value.trim();
+
+  const date =
+    document.getElementById(
+      "clientDate"
+    ).value;
+
+  const time =
+    document.getElementById(
+      "clientTime"
+    ).value;
+
+
+  if(!name ||
+     !phone ||
+     !email ||
+     !date ||
+     !time){
+
+    alert(
+      currentLanguage === "uk"
+      ? "Будь ласка, заповни всі поля."
+      : currentLanguage === "cs"
+      ? "Vyplňte prosím všechna pole."
+      : "Please fill in all fields."
+    );
+
+    return;
+
+  }
+
+
+  answers.wishes =
+    document.getElementById(
+      "wishes"
+    ).value;
+
+  answers.reference =
+    document.getElementById(
+      "reference"
+    ).value;
+
+
+  /*
+    Заповнюємо приховану Formspree форму
+  */
+
+  document.getElementById(
+    "formLanguage"
+  ).value =
+    currentLanguage;
+
+
+  document.getElementById(
+    "formService"
+  ).value =
+    answers.service;
+
+
+  document.getElementById(
+    "formStyle"
+  ).value =
+    answers.style;
+
+
+  document.getElementById(
+    "formLength"
+  ).value =
+    answers.length;
+
+
+  document.getElementById(
+    "formBeard"
+  ).value =
+    answers.beard;
+
+
+  document.getElementById(
+    "formWishes"
+  ).value =
+    answers.wishes;
+
+
+  document.getElementById(
+    "formReference"
+  ).value =
+    answers.reference;
+
+
+  document.getElementById(
+    "formName"
+  ).value =
+    name;
+
+
+  document.getElementById(
+    "formPhone"
+  ).value =
+    phone;
+
+
+  document.getElementById(
+    "formEmail"
+  ).value =
+    email;
+
+
+  document.getElementById(
+    "formDate"
+  ).value =
+    date;
+
+
+  document.getElementById(
+    "formTime"
+  ).value =
+    time;
+
+
+  /*
+    Відправляємо форму на Formspree
+  */
+
+  document.getElementById(
+    "realForm"
+  ).submit();
+
+
+  /*
+    Показуємо підтвердження
+  */
+
+  document.getElementById(
+    "bookingNavigation"
+  ).style.display =
+    "none";
+
+
+  document.querySelector(
+    ".booking-wrapper .booking-head"
+  ).style.display =
+    "none";
+
+
+  document
+    .querySelectorAll(".step")
+    .forEach(step => {
+
+      step.style.display =
+        "none";
+
+    });
+
+
+  document.getElementById(
+    "success"
+  ).classList.add("show");
+
+}
+
+
+/* =========================================================
+   INITIALIZE
+========================================================= */
+
+setLanguage(currentLanguage);
+
+showStep();
+
+
+/* =========================================================
+   MINIMUM DATE = TODAY
+========================================================= */
+
+const dateInput =
+  document.getElementById(
+    "clientDate"
+  );
+
+const today =
+  new Date()
+  .toISOString()
+  .split("T")[0];
+
+dateInput.min = today;
+
+</script>
 
 </body>
 </html>
