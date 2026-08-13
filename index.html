@@ -2,28 +2,25 @@
 <html lang="uk">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>viii.hairstylist</title>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;1,600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 
 :root{
-    --bg:#101010;
-    --card:#191919;
-    --card2:#222;
-    --white:#f7f5f0;
-    --muted:#999;
-    --pink:#ff4f91;
-    --violet:#9b6cff;
-    --line:rgba(255,255,255,.12);
+    --black:#080808;
+    --white:#f1f0eb;
+    --grey:#8b8b86;
+    --line:rgba(241,240,235,.18);
+    --soft:rgba(241,240,235,.06);
 }
 
 *{
-    box-sizing:border-box;
     margin:0;
     padding:0;
+    box-sizing:border-box;
 }
 
 html{
@@ -31,10 +28,11 @@ html{
 }
 
 body{
-    background:var(--bg);
+    background:var(--black);
     color:var(--white);
-    font-family:"DM Sans",sans-serif;
+    font-family:Inter,Arial,sans-serif;
     overflow-x:hidden;
+    cursor:default;
 }
 
 a{
@@ -49,821 +47,945 @@ textarea{
 }
 
 
-/* =========================
-   LANGUAGE
-========================= */
+/* ==================================================
+   GRAIN
+================================================== */
 
-.language{
+body:after{
+    content:"";
     position:fixed;
     inset:0;
-    z-index:9999;
-    background:#0b0b0b;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    padding:25px;
-    transition:.7s ease;
-}
-
-.language.hide{
-    opacity:0;
-    visibility:hidden;
     pointer-events:none;
+    z-index:9998;
+    opacity:.035;
+    background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.8'/%3E%3C/svg%3E");
 }
 
-.language-box{
-    width:min(1000px,100%);
-    text-align:center;
+
+/* ==================================================
+   LOADER / LANGUAGE
+================================================== */
+
+#language{
+    position:fixed;
+    inset:0;
+    background:var(--black);
+    z-index:10000;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transition:1s cubic-bezier(.76,0,.24,1);
 }
 
-.language-mini{
-    color:var(--pink);
-    text-transform:uppercase;
-    letter-spacing:5px;
+#language.hide{
+    transform:translateY(-100%);
+}
+
+.language-inner{
+    width:min(1100px,90%);
+}
+
+.language-top{
+    display:flex;
+    justify-content:space-between;
+    font-family:"DM Mono",monospace;
+    color:var(--grey);
     font-size:10px;
-    margin-bottom:25px;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    margin-bottom:60px;
 }
 
-.language-logo{
-    font-size:clamp(70px,14vw,170px);
+.language-title{
+    overflow:hidden;
+}
+
+.language-title h1{
+    font-size:clamp(100px,19vw,270px);
+    letter-spacing:-.09em;
+    line-height:.65;
     font-weight:800;
-    letter-spacing:-10px;
-    line-height:.75;
+    transform:translateY(20px);
 }
 
-.language-logo span{
-    color:var(--pink);
+.language-title h1 span{
+    font-weight:300;
 }
 
-.language-name{
-    font-size:12px;
-    letter-spacing:8px;
-    color:#aaa;
-    margin:25px 0 55px;
+.language-sub{
+    margin-top:45px;
+    display:flex;
+    justify-content:space-between;
+    align-items:end;
+    gap:40px;
+}
+
+.language-sub p{
+    max-width:400px;
+    color:var(--grey);
+    font-size:13px;
+    line-height:1.7;
 }
 
 .languages{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:15px;
+    display:flex;
+    gap:6px;
 }
 
 .lang{
     border:1px solid var(--line);
-    background:#141414;
-    color:white;
-    padding:30px 15px;
+    background:transparent;
+    color:var(--white);
+    width:105px;
+    height:105px;
     cursor:pointer;
-    transition:.3s;
+    position:relative;
+    overflow:hidden;
+    transition:.5s cubic-bezier(.76,0,.24,1);
+}
+
+.lang:before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:var(--white);
+    transform:translateY(100%);
+    transition:.5s cubic-bezier(.76,0,.24,1);
 }
 
 .lang:hover{
-    transform:translateY(-8px);
-    border-color:var(--pink);
-    background:#1c1c1c;
+    color:var(--black);
+}
+
+.lang:hover:before{
+    transform:translateY(0);
+}
+
+.lang span,
+.lang b{
+    position:relative;
+    z-index:2;
+}
+
+.lang span{
+    font-size:22px;
 }
 
 .lang b{
     display:block;
-    font-size:16px;
-    margin-top:10px;
-}
-
-.lang small{
-    display:block;
-    color:#777;
-    margin-top:5px;
-}
-
-
-/* =========================
-   HEADER
-========================= */
-
-header{
-    position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    padding:22px 5%;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    z-index:100;
-    transition:.4s;
-}
-
-header.scrolled{
-    background:rgba(16,16,16,.88);
-    backdrop-filter:blur(15px);
-    border-bottom:1px solid var(--line);
-}
-
-.logo{
-    display:flex;
-    align-items:center;
-    gap:10px;
-}
-
-.logo-main{
-    font-size:24px;
-    font-weight:800;
-    letter-spacing:-2px;
-}
-
-.logo-main span{
-    color:var(--pink);
-}
-
-.logo-sub{
-    font-size:8px;
-    letter-spacing:2px;
-    color:#888;
-    border-left:1px solid #444;
-    padding-left:10px;
-}
-
-nav{
-    display:flex;
-    gap:28px;
-    font-size:11px;
-    font-weight:700;
+    margin-top:8px;
+    font-size:10px;
     text-transform:uppercase;
     letter-spacing:1px;
 }
 
-nav a{
-    color:#aaa;
-    transition:.2s;
-}
 
-nav a:hover{
+/* ==================================================
+   TOP BAR
+================================================== */
+
+.header{
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
+    height:80px;
+    padding:0 4vw;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    z-index:500;
+    mix-blend-mode:difference;
     color:white;
 }
 
-.header-book{
-    background:var(--pink);
-    padding:11px 17px;
-    font-size:10px;
+.logo{
+    font-size:18px;
     font-weight:800;
-    color:white;
+    letter-spacing:-1px;
+}
+
+.logo span{
+    font-weight:300;
+}
+
+.header-center{
+    font-family:"DM Mono",monospace;
+    font-size:9px;
+    letter-spacing:2px;
+}
+
+.menu-button{
+    border:0;
+    background:none;
+    color:inherit;
+    cursor:pointer;
+    display:flex;
+    gap:9px;
+    align-items:center;
+    font-family:"DM Mono",monospace;
+    font-size:9px;
+    text-transform:uppercase;
+}
+
+.menu-lines{
+    width:30px;
+}
+
+.menu-lines i{
+    display:block;
+    height:1px;
+    background:currentColor;
+    margin:5px 0;
+    transition:.4s;
+}
+
+.menu-button:hover .menu-lines i:first-child{
+    width:18px;
+}
+
+.menu-button:hover .menu-lines i:last-child{
+    width:24px;
 }
 
 
-/* =========================
+/* ==================================================
+   FULL MENU
+================================================== */
+
+.menu{
+    position:fixed;
+    inset:0;
+    background:#111;
+    z-index:450;
+    transform:translateY(-100%);
+    transition:1s cubic-bezier(.76,0,.24,1);
+    padding:120px 5vw 50px;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+}
+
+.menu.open{
+    transform:translateY(0);
+}
+
+.menu-links{
+    display:flex;
+    flex-direction:column;
+}
+
+.menu-links a{
+    font-size:clamp(55px,10vw,140px);
+    line-height:.82;
+    font-weight:700;
+    letter-spacing:-.07em;
+    border-bottom:1px solid var(--line);
+    padding:15px 0;
+    transition:.4s;
+}
+
+.menu-links a:hover{
+    padding-left:30px;
+    font-style:italic;
+}
+
+.menu-footer{
+    display:flex;
+    justify-content:space-between;
+    font-family:"DM Mono",monospace;
+    color:var(--grey);
+    font-size:9px;
+    letter-spacing:2px;
+}
+
+
+/* ==================================================
    HERO
-========================= */
+================================================== */
 
 .hero{
     min-height:100vh;
-    padding:130px 5% 60px;
     position:relative;
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:50px;
-    align-items:center;
-    overflow:hidden;
-}
-
-.hero-bg{
-    position:absolute;
-    width:650px;
-    height:650px;
-    border-radius:50%;
-    background:var(--violet);
-    filter:blur(160px);
-    opacity:.18;
-    right:-250px;
-    top:-100px;
-}
-
-.hero-left{
-    position:relative;
-    z-index:2;
-}
-
-.hero-small{
-    display:inline-flex;
-    align-items:center;
-    gap:10px;
-    color:#aaa;
-    text-transform:uppercase;
-    font-size:10px;
-    letter-spacing:3px;
-    margin-bottom:30px;
-}
-
-.hero-small i{
-    width:35px;
-    height:1px;
-    background:var(--pink);
-}
-
-.hero h1{
-    font-size:clamp(75px,11vw,165px);
-    line-height:.75;
-    letter-spacing:-10px;
-    font-weight:800;
-}
-
-.hero h1 span{
-    color:var(--pink);
-}
-
-.hero h2{
-    font-family:"Playfair Display",serif;
-    font-style:italic;
-    font-size:clamp(35px,5vw,75px);
-    font-weight:600;
-    margin:25px 0;
-    color:#ddd;
-}
-
-.hero-text{
-    color:#999;
-    max-width:430px;
-    line-height:1.8;
-    font-size:14px;
-    margin-bottom:35px;
-}
-
-.buttons{
+    padding:120px 4vw 50px;
     display:flex;
-    gap:10px;
-    flex-wrap:wrap;
+    flex-direction:column;
+    justify-content:space-between;
+    overflow:hidden;
 }
 
-.btn{
-    padding:15px 24px;
-    font-size:11px;
+.hero-number{
+    position:absolute;
+    right:-3vw;
+    top:8vh;
+    font-size:38vw;
+    line-height:.7;
+    letter-spacing:-.12em;
     font-weight:800;
-    border:1px solid var(--line);
-    transition:.3s;
-}
-
-.btn-primary{
-    background:var(--pink);
-    border-color:var(--pink);
-}
-
-.btn-primary:hover{
-    transform:translateY(-4px);
-    box-shadow:0 15px 40px rgba(255,79,145,.25);
-}
-
-.btn-outline:hover{
-    background:white;
     color:#111;
+    z-index:-1;
+    user-select:none;
 }
 
-.hero-right{
-    position:relative;
-    z-index:2;
-}
-
-.hero-photo{
-    height:650px;
-    position:relative;
-    overflow:hidden;
-    background:
-        radial-gradient(circle at 30% 20%,#ff4f91,#301329 40%,#181818 75%);
-}
-
-.hero-photo::before{
-    content:"VIII";
-    position:absolute;
-    font-size:260px;
-    font-weight:800;
-    letter-spacing:-20px;
-    color:rgba(255,255,255,.08);
-    right:-35px;
-    bottom:-60px;
-}
-
-.scissors{
-    position:absolute;
-    right:30px;
-    top:30px;
-    font-size:45px;
-    transform:rotate(-30deg);
-    z-index:3;
-}
-
-.photo-label{
-    position:absolute;
-    bottom:25px;
-    left:25px;
-    font-size:10px;
-    letter-spacing:3px;
-    text-transform:uppercase;
-    color:#ddd;
-}
-
-
-/* =========================
-   MOVING TEXT
-========================= */
-
-.ticker{
-    border-top:1px solid var(--line);
-    border-bottom:1px solid var(--line);
-    padding:18px 0;
-    overflow:hidden;
-    white-space:nowrap;
-}
-
-.ticker-track{
-    display:inline-block;
-    animation:move 25s linear infinite;
-    font-size:13px;
-    font-weight:800;
-    letter-spacing:3px;
-}
-
-.ticker span{
-    color:var(--pink);
-    margin:0 35px;
-}
-
-@keyframes move{
-    from{transform:translateX(0)}
-    to{transform:translateX(-50%)}
-}
-
-
-/* =========================
-   SECTIONS
-========================= */
-
-section{
-    padding:120px 5%;
-}
-
-.section-head{
+.hero-top{
     display:flex;
     justify-content:space-between;
-    align-items:end;
-    gap:30px;
-    margin-bottom:50px;
+    font-family:"DM Mono",monospace;
+    font-size:9px;
+    color:var(--grey);
+    letter-spacing:2px;
 }
 
-.kicker{
-    color:var(--pink);
-    font-size:10px;
-    font-weight:800;
-    letter-spacing:4px;
-    text-transform:uppercase;
-    margin-bottom:15px;
+.hero-main{
+    margin-top:80px;
 }
 
-.title{
-    font-size:clamp(45px,7vw,90px);
-    line-height:.85;
-    letter-spacing:-5px;
-    font-weight:800;
-}
-
-.description{
-    max-width:390px;
-    color:#888;
-    font-size:13px;
-    line-height:1.8;
-}
-
-
-/* =========================
-   SERVICES
-========================= */
-
-.services{
-    background:#141414;
-}
-
-.service-grid{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:10px;
-}
-
-.service{
-    background:var(--card);
-    border:1px solid var(--line);
-    padding:35px;
-    min-height:260px;
-    position:relative;
+.hero-title{
     overflow:hidden;
-    transition:.35s;
 }
 
-.service:hover{
-    transform:translateY(-7px);
-    border-color:var(--pink);
-}
-
-.service::after{
-    content:"✂";
-    position:absolute;
-    right:-10px;
-    bottom:-20px;
-    font-size:90px;
-    opacity:.05;
-}
-
-.number{
-    color:var(--pink);
-    font-size:10px;
+.hero-title h1{
+    font-size:clamp(90px,17vw,250px);
+    letter-spacing:-.11em;
+    line-height:.68;
     font-weight:800;
+    transform:translateY(100%);
+    animation:titleIn 1.4s .5s cubic-bezier(.76,0,.24,1) forwards;
 }
 
-.service h3{
-    font-family:"Playfair Display",serif;
-    font-style:italic;
-    font-size:32px;
-    margin:35px 0 15px;
-}
-
-.service p{
-    color:#888;
-    line-height:1.7;
-    font-size:13px;
-}
-
-.price{
-    display:block;
-    margin-top:25px;
-    font-size:11px;
-    color:#ccc;
-}
-
-
-/* =========================
-   PORTFOLIO
-========================= */
-
-.portfolio{
-    position:relative;
-}
-
-.portfolio-grid{
-    display:grid;
-    grid-template-columns:1.2fr .8fr .9fr;
-    grid-template-rows:300px 300px;
-    gap:10px;
-}
-
-.work{
-    position:relative;
-    overflow:hidden;
-    background:#222;
-}
-
-.work:nth-child(1){
-    background:linear-gradient(135deg,#ff4f91,#26121d);
-}
-
-.work:nth-child(2){
-    grid-row:span 2;
-    background:linear-gradient(135deg,#9b6cff,#171126);
-}
-
-.work:nth-child(3){
-    background:linear-gradient(135deg,#444,#111);
-}
-
-.work:nth-child(4){
-    background:linear-gradient(135deg,#f0b5c9,#29151e);
-}
-
-.work::before{
-    content:"PHOTO";
-    position:absolute;
-    inset:0;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    font-weight:800;
-    letter-spacing:5px;
-    color:rgba(255,255,255,.4);
-}
-
-.work span{
-    position:absolute;
-    bottom:20px;
-    left:20px;
-    font-size:10px;
-    letter-spacing:3px;
-    z-index:2;
-}
-
-
-/* =========================
-   ABOUT
-========================= */
-
-.about{
-    background:
-        linear-gradient(120deg,#171717,#0e0e0e);
-}
-
-.about-inner{
-    max-width:1000px;
-    margin:auto;
-}
-
-.about-quote{
-    font-family:"Playfair Display",serif;
-    font-style:italic;
-    font-size:clamp(35px,6vw,75px);
-    line-height:1.1;
-}
-
-.about-quote span{
-    color:var(--pink);
-}
-
-.about-text{
-    color:#888;
-    max-width:650px;
-    margin-top:35px;
-    line-height:1.9;
-    font-size:14px;
-}
-
-
-/* =========================
-   BOOKING
-========================= */
-
-.booking{
-    background:#151515;
-}
-
-.booking-box{
-    max-width:900px;
-    margin:auto;
-    background:#0d0d0d;
-    border:1px solid var(--line);
-    padding:45px;
-}
-
-.progress{
-    display:flex;
-    gap:5px;
-    margin-bottom:45px;
-}
-
-.progress span{
-    height:3px;
-    flex:1;
-    background:#292929;
-}
-
-.progress span.active{
-    background:var(--pink);
-}
-
-.step{
-    display:none;
-}
-
-.step.active{
-    display:block;
-    animation:appear .4s ease;
-}
-
-@keyframes appear{
-    from{
-        opacity:0;
-        transform:translateY(15px);
-    }
+@keyframes titleIn{
     to{
-        opacity:1;
         transform:translateY(0);
     }
 }
 
-.step h3{
-    font-size:35px;
-    margin-bottom:10px;
+.hero-title h1 i{
+    font-weight:300;
+    font-style:normal;
 }
 
-.step-sub{
-    color:#777;
+.hero-under{
+    display:grid;
+    grid-template-columns:1fr 1fr 1fr;
+    gap:20px;
+    margin-top:70px;
+    align-items:end;
+}
+
+.hero-description{
+    max-width:330px;
+    color:var(--grey);
+    font-size:13px;
+    line-height:1.8;
+}
+
+.hero-index{
+    font-family:"DM Mono",monospace;
+    color:var(--grey);
+    font-size:10px;
+}
+
+.hero-cta{
+    justify-self:end;
+}
+
+.circle-button{
+    width:130px;
+    height:130px;
+    border:1px solid var(--line);
+    border-radius:50%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    font-family:"DM Mono",monospace;
+    font-size:9px;
+    letter-spacing:1px;
+    transition:.7s cubic-bezier(.76,0,.24,1);
+}
+
+.circle-button:hover{
+    background:var(--white);
+    color:var(--black);
+    transform:rotate(45deg) scale(1.08);
+}
+
+.hero-bottom{
+    border-top:1px solid var(--line);
+    padding-top:15px;
+    display:flex;
+    justify-content:space-between;
+    font-family:"DM Mono",monospace;
+    color:var(--grey);
+    font-size:9px;
+}
+
+
+/* ==================================================
+   MARQUEE
+================================================== */
+
+.marquee{
+    overflow:hidden;
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+    padding:22px 0;
+}
+
+.marquee-track{
+    white-space:nowrap;
+    display:inline-block;
+    animation:marquee 35s linear infinite;
+}
+
+.marquee-track span{
+    font-size:11px;
+    letter-spacing:5px;
+    margin-right:50px;
+}
+
+.marquee-track b{
+    font-weight:300;
+    color:#555;
+}
+
+@keyframes marquee{
+    to{
+        transform:translateX(-50%);
+    }
+}
+
+
+/* ==================================================
+   SECTION BASE
+================================================== */
+
+.section{
+    padding:170px 4vw;
+}
+
+.section-head{
+    display:grid;
+    grid-template-columns:1fr 2fr;
+    gap:30px;
+    margin-bottom:90px;
+}
+
+.section-number{
+    font-family:"DM Mono",monospace;
+    font-size:10px;
+    color:var(--grey);
+}
+
+.section-title{
+    font-size:clamp(55px,9vw,130px);
+    letter-spacing:-.08em;
+    line-height:.8;
+    font-weight:700;
+}
+
+.section-title em{
+    font-weight:300;
+    font-style:italic;
+}
+
+
+/* ==================================================
+   SERVICES — HORIZONTAL
+================================================== */
+
+.services-wrap{
+    overflow:hidden;
+}
+
+.services-track{
+    display:flex;
+    width:max-content;
+    gap:8px;
+}
+
+.service{
+    width:430px;
+    height:500px;
+    border:1px solid var(--line);
+    padding:30px;
+    position:relative;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    overflow:hidden;
+    transition:.6s cubic-bezier(.76,0,.24,1);
+}
+
+.service:after{
+    content:"";
+    position:absolute;
+    width:300px;
+    height:300px;
+    border:1px solid var(--line);
+    border-radius:50%;
+    right:-160px;
+    bottom:-160px;
+    transition:.7s;
+}
+
+.service:hover{
+    background:var(--white);
+    color:var(--black);
+    transform:translateY(-15px);
+}
+
+.service:hover:after{
+    transform:scale(2);
+    border-color:#111;
+}
+
+.service-number{
+    font-family:"DM Mono",monospace;
+    font-size:9px;
+}
+
+.service-name{
+    font-size:55px;
+    letter-spacing:-.06em;
+    line-height:.85;
+}
+
+.service-name em{
+    font-family:Georgia,serif;
+    font-weight:400;
+}
+
+.service-info{
+    max-width:280px;
+    color:var(--grey);
     font-size:12px;
-    margin-bottom:30px;
+    line-height:1.7;
 }
 
-.options{
+.service:hover .service-info{
+    color:#555;
+}
+
+.service-price{
+    font-family:"DM Mono",monospace;
+    font-size:10px;
+}
+
+
+/* ==================================================
+   PORTFOLIO
+================================================== */
+
+.portfolio-grid{
+    display:grid;
+    grid-template-columns:repeat(12,1fr);
+    gap:8px;
+}
+
+.portfolio-item{
+    position:relative;
+    height:650px;
+    overflow:hidden;
+    background:#161616;
+}
+
+.portfolio-item:nth-child(1){
+    grid-column:1 / 6;
+}
+
+.portfolio-item:nth-child(2){
+    grid-column:6 / 13;
+    height:800px;
+}
+
+.portfolio-item:nth-child(3){
+    grid-column:2 / 8;
+    height:500px;
+    margin-top:-150px;
+}
+
+.portfolio-item:nth-child(4){
+    grid-column:8 / 13;
+    height:650px;
+}
+
+.portfolio-visual{
+    position:absolute;
+    inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:
+        linear-gradient(
+            135deg,
+            #242424 0%,
+            #111 45%,
+            #292929 100%
+        );
+    transition:1s cubic-bezier(.76,0,.24,1);
+}
+
+.portfolio-item:hover .portfolio-visual{
+    transform:scale(1.08);
+}
+
+.portfolio-visual:before{
+    content:"VIII";
+    font-size:150px;
+    letter-spacing:-.1em;
+    font-weight:800;
+    color:#333;
+}
+
+.portfolio-label{
+    position:absolute;
+    bottom:20px;
+    left:20px;
+    right:20px;
+    display:flex;
+    justify-content:space-between;
+    font-family:"DM Mono",monospace;
+    font-size:9px;
+    z-index:2;
+}
+
+
+/* ==================================================
+   MANIFESTO
+================================================== */
+
+.manifesto{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+}
+
+.manifesto-text{
+    font-size:clamp(45px,8vw,120px);
+    letter-spacing:-.07em;
+    line-height:1;
+    max-width:1200px;
+}
+
+.manifesto-text span{
+    color:#555;
+}
+
+.manifesto-text em{
+    font-family:Georgia,serif;
+    font-weight:400;
+}
+
+
+/* ==================================================
+   BOOKING
+================================================== */
+
+.booking{
+    background:#e9e8e3;
+    color:#0a0a0a;
+}
+
+.booking .section-number{
+    color:#666;
+}
+
+.booking-box{
+    max-width:1100px;
+    margin:auto;
+}
+
+.progress{
+    height:1px;
+    background:#aaa;
+    margin-bottom:70px;
+    position:relative;
+}
+
+.progress-line{
+    height:2px;
+    background:#111;
+    width:0;
+    transition:.7s;
+}
+
+.booking-step{
+    display:none;
+}
+
+.booking-step.active{
+    display:block;
+    animation:stepIn .8s cubic-bezier(.76,0,.24,1);
+}
+
+@keyframes stepIn{
+    from{
+        opacity:0;
+        transform:translateX(50px);
+    }
+    to{
+        opacity:1;
+        transform:translateX(0);
+    }
+}
+
+.booking-question{
+    font-size:clamp(45px,7vw,100px);
+    line-height:.85;
+    letter-spacing:-.07em;
+    margin-bottom:50px;
+}
+
+.booking-question em{
+    font-family:Georgia,serif;
+    font-weight:400;
+}
+
+.booking-options{
     display:grid;
     grid-template-columns:1fr 1fr;
-    gap:10px;
+    gap:5px;
 }
 
-.option{
+.booking-option{
+    background:transparent;
+    border:1px solid #bbb;
+    padding:25px;
     text-align:left;
-    background:#171717;
-    color:white;
-    border:1px solid #292929;
-    padding:20px;
     cursor:pointer;
-    transition:.25s;
+    min-height:100px;
+    transition:.4s;
 }
 
-.option:hover,
-.option.selected{
-    border-color:var(--pink);
-    background:#21171c;
+.booking-option:hover,
+.booking-option.selected{
+    background:#111;
+    color:#fff;
+    border-color:#111;
 }
 
-.option strong{
+.booking-option strong{
     display:block;
-    font-size:13px;
+    font-size:15px;
 }
 
-.option small{
+.booking-option small{
+    display:block;
+    margin-top:8px;
     color:#777;
-    display:block;
-    margin-top:5px;
 }
 
-.field{
+.booking-option.selected small{
+    color:#aaa;
+}
+
+.booking-field{
     margin-bottom:15px;
 }
 
-.field label{
+.booking-field label{
     display:block;
-    color:#888;
-    font-size:10px;
-    margin-bottom:7px;
+    font-family:"DM Mono",monospace;
+    font-size:9px;
     text-transform:uppercase;
-    letter-spacing:1px;
+    margin-bottom:8px;
+    color:#666;
 }
 
-.field input,
-.field textarea{
+.booking-field input,
+.booking-field textarea{
     width:100%;
-    background:#171717;
-    border:1px solid #292929;
-    color:white;
-    padding:15px;
+    background:transparent;
+    border:0;
+    border-bottom:1px solid #aaa;
+    padding:14px 0;
     outline:none;
+    color:#111;
+    resize:none;
 }
 
-.field input:focus,
-.field textarea:focus{
-    border-color:var(--pink);
+.booking-field input:focus,
+.booking-field textarea:focus{
+    border-color:#111;
 }
 
-.form-grid{
+.booking-fields{
     display:grid;
     grid-template-columns:1fr 1fr;
-    gap:12px;
+    gap:30px;
 }
 
 .booking-nav{
     display:flex;
     justify-content:space-between;
-    margin-top:30px;
+    margin-top:60px;
 }
 
 .booking-nav button{
+    border:1px solid #111;
     background:transparent;
-    color:white;
-    border:1px solid #333;
-    padding:13px 22px;
+    padding:17px 28px;
     cursor:pointer;
+    text-transform:uppercase;
+    font-family:"DM Mono",monospace;
+    font-size:9px;
+    transition:.4s;
 }
 
 .booking-nav .next{
-    background:var(--pink);
-    border-color:var(--pink);
-    font-weight:800;
+    background:#111;
+    color:white;
+}
+
+.booking-nav button:hover{
+    transform:translateY(-4px);
 }
 
 .success{
     display:none;
-    text-align:center;
-    padding:50px 20px;
+    font-size:70px;
+    letter-spacing:-.06em;
 }
 
 .success.show{
     display:block;
 }
 
-.success-icon{
-    font-size:50px;
-    color:var(--pink);
-}
 
-.success h2{
-    margin:20px 0 10px;
-    font-size:40px;
-}
-
-.success p{
-    color:#777;
-}
-
-
-/* =========================
+/* ==================================================
    FOOTER
-========================= */
+================================================== */
 
 footer{
-    padding:90px 5% 30px;
-    background:#090909;
+    padding:100px 4vw 30px;
+    background:#080808;
 }
 
-.footer-logo{
-    font-size:clamp(60px,12vw,150px);
+.footer-big{
+    font-size:clamp(100px,20vw,300px);
     font-weight:800;
-    letter-spacing:-9px;
-    line-height:.8;
+    letter-spacing:-.12em;
+    line-height:.6;
 }
 
-.footer-logo span{
-    color:var(--pink);
+.footer-big span{
+    font-weight:300;
 }
 
-.footer-info{
+.footer-bottom{
+    margin-top:130px;
+    border-top:1px solid var(--line);
+    padding-top:15px;
     display:flex;
     justify-content:space-between;
-    margin-top:70px;
-    border-top:1px solid var(--line);
-    padding-top:20px;
-    color:#666;
-    font-size:10px;
-    text-transform:uppercase;
-    letter-spacing:2px;
+    color:var(--grey);
+    font-family:"DM Mono",monospace;
+    font-size:9px;
 }
 
 
-/* =========================
+/* ==================================================
+   REVEAL
+================================================== */
+
+.reveal{
+    opacity:0;
+    transform:translateY(60px);
+    transition:1.2s cubic-bezier(.76,0,.24,1);
+}
+
+.reveal.visible{
+    opacity:1;
+    transform:translateY(0);
+}
+
+
+/* ==================================================
    MOBILE
-========================= */
+================================================== */
 
 @media(max-width:800px){
 
+    .header-center{
+        display:none;
+    }
+
+    .language-sub{
+        display:block;
+    }
+
     .languages{
-        grid-template-columns:1fr;
+        margin-top:30px;
     }
 
-    .language-logo{
-        letter-spacing:-5px;
-    }
-
-    nav{
-        display:none;
-    }
-
-    .header-book{
-        display:none;
+    .lang{
+        width:80px;
+        height:80px;
     }
 
     .hero{
+        padding-top:110px;
+    }
+
+    .hero-under{
         grid-template-columns:1fr;
-        padding-top:130px;
+        gap:35px;
     }
 
-    .hero h1{
-        letter-spacing:-6px;
+    .hero-cta{
+        justify-self:start;
     }
 
-    .hero-photo{
-        height:500px;
+    .hero-bottom{
+        margin-top:50px;
+    }
+
+    .section{
+        padding:110px 5vw;
     }
 
     .section-head{
-        flex-direction:column;
-        align-items:flex-start;
+        grid-template-columns:1fr;
+        margin-bottom:55px;
     }
 
-    .service-grid{
-        grid-template-columns:1fr;
+    .service{
+        width:80vw;
+        height:420px;
     }
 
     .portfolio-grid{
-        grid-template-columns:1fr 1fr;
-        grid-template-rows:220px 220px 220px;
+        display:block;
     }
 
-    .work:nth-child(2){
-        grid-row:span 1;
+    .portfolio-item,
+    .portfolio-item:nth-child(1),
+    .portfolio-item:nth-child(2),
+    .portfolio-item:nth-child(3),
+    .portfolio-item:nth-child(4){
+        height:500px;
+        margin:0 0 6px;
     }
 
-    .booking-box{
-        padding:25px 18px;
-    }
-
-    .options{
+    .booking-options{
         grid-template-columns:1fr;
     }
 
-    .form-grid{
+    .booking-fields{
         grid-template-columns:1fr;
+        gap:0;
     }
 
-    .footer-info{
+    .booking-question{
+        font-size:52px;
+    }
+
+    .menu-links a{
+        font-size:55px;
+    }
+
+    .footer-bottom{
         flex-direction:column;
         gap:15px;
     }
@@ -872,49 +994,53 @@ footer{
 </style>
 </head>
 
-
 <body>
 
 
-<!-- =========================
-     LANGUAGE SCREEN
-========================= -->
+<!-- ==================================================
+     LANGUAGE
+================================================== -->
 
-<div class="language" id="language">
+<div id="language">
 
-    <div class="language-box">
+    <div class="language-inner">
 
-        <div class="language-mini">
-            welcome to
+        <div class="language-top">
+            <span>VIII.HAIRSTYLIST</span>
+            <span>SELECT LANGUAGE / 001</span>
         </div>
 
-        <div class="language-logo">
-            viii<span>.</span>
+        <div class="language-title">
+            <h1>
+                viii<span>.</span>
+            </h1>
         </div>
 
-        <div class="language-name">
-            HAIRSTYLIST
-        </div>
+        <div class="language-sub">
 
-        <div class="languages">
+            <p>
+                Personal hairstylist.<br>
+                Prague / CZ.
+            </p>
 
-            <button class="lang" onclick="setLanguage('cs')">
-                🇨🇿
-                <b>Čeština</b>
-                <small>Pokračovat česky</small>
-            </button>
+            <div class="languages">
 
-            <button class="lang" onclick="setLanguage('uk')">
-                🇺🇦
-                <b>Українська</b>
-                <small>Продовжити українською</small>
-            </button>
+                <button class="lang" onclick="setLanguage('cs')">
+                    <span>🇨🇿</span>
+                    <b>Čeština</b>
+                </button>
 
-            <button class="lang" onclick="setLanguage('en')">
-                🇬🇧
-                <b>English</b>
-                <small>Continue in English</small>
-            </button>
+                <button class="lang" onclick="setLanguage('uk')">
+                    <span>🇺🇦</span>
+                    <b>Українська</b>
+                </button>
+
+                <button class="lang" onclick="setLanguage('en')">
+                    <span>🇬🇧</span>
+                    <b>English</b>
+                </button>
+
+            </div>
 
         </div>
 
@@ -923,284 +1049,322 @@ footer{
 </div>
 
 
-<!-- =========================
+<!-- ==================================================
      HEADER
-========================= -->
+================================================== -->
 
-<header id="header">
+<header class="header">
 
     <a href="#home" class="logo">
-
-        <div class="logo-main">
-            viii<span>.</span>
-        </div>
-
-        <div class="logo-sub">
-            HAIRSTYLIST
-        </div>
-
+        viii<span>.</span>hairstylist
     </a>
 
+    <div class="header-center">
+        PRAGUE / CZ
+    </div>
 
-    <nav>
+    <button class="menu-button" onclick="toggleMenu()">
 
-        <a href="#services" data-t="services">Послуги</a>
+        MENU
 
-        <a href="#portfolio" data-t="portfolio">Роботи</a>
+        <div class="menu-lines">
+            <i></i>
+            <i></i>
+        </div>
 
-        <a href="#about" data-t="about">Про мене</a>
-
-        <a href="#booking" data-t="booking">Запис</a>
-
-    </nav>
-
-
-    <a href="#booking"
-       class="header-book"
-       data-t="book">
-       BOOK
-    </a>
+    </button>
 
 </header>
 
 
-<!-- =========================
+<!-- ==================================================
+     MENU
+================================================== -->
+
+<div class="menu" id="menu">
+
+    <div class="menu-links">
+
+        <a href="#home" onclick="toggleMenu()" data-t="home">
+            00 / Home
+        </a>
+
+        <a href="#services" onclick="toggleMenu()" data-t="services">
+            01 / Services
+        </a>
+
+        <a href="#portfolio" onclick="toggleMenu()" data-t="work">
+            02 / Work
+        </a>
+
+        <a href="#about" onclick="toggleMenu()" data-t="about">
+            03 / Philosophy
+        </a>
+
+        <a href="#booking" onclick="toggleMenu()" data-t="booking">
+            04 / Booking
+        </a>
+
+    </div>
+
+    <div class="menu-footer">
+        <span>@viii.hairstylist</span>
+        <span>PRAGUE / 2026</span>
+    </div>
+
+</div>
+
+
+<!-- ==================================================
      HERO
-========================= -->
+================================================== -->
 
-<section class="hero" id="home">
+<main id="home">
 
-    <div class="hero-bg"></div>
+<section class="hero">
 
-    <div class="hero-left">
+    <div class="hero-number">
+        8
+    </div>
 
-        <div class="hero-small">
-            <i></i>
-            PERSONAL HAIRSTYLIST
+    <div class="hero-top">
+
+        <span>001 / PERSONAL HAIRSTYLIST</span>
+
+        <span>PRAGUE — CZECH REPUBLIC</span>
+
+    </div>
+
+
+    <div class="hero-main">
+
+        <div class="hero-title">
+
+            <h1>
+                viii<span>.</span>
+                <i>hair</i>
+            </h1>
+
         </div>
 
-        <h1>
-            viii<span>.</span>
-        </h1>
 
-        <h2>
-            your hair.<br>
-            your identity.
-        </h2>
+        <div class="hero-under">
 
-        <p class="hero-text"
-           data-t="heroText">
-            Індивідуальні стрижки, укладки та стиль,
-            створений саме для тебе.
-        </p>
+            <div class="hero-description" data-t="hero">
+                Стиль — це не стрижка.
+                Це те, як ти себе відчуваєш.
+            </div>
 
-        <div class="buttons">
+            <div class="hero-index">
+                SCROLL TO<br>
+                EXPLORE ↓
+            </div>
 
-            <a href="#booking"
-               class="btn btn-primary"
-               data-t="book">
-               Записатися
-            </a>
+            <div class="hero-cta">
 
-            <a href="#portfolio"
-               class="btn btn-outline"
-               data-t="works">
-               Дивитися роботи
-            </a>
+                <a href="#booking" class="circle-button">
+                    BOOK<br>
+                    APPOINTMENT
+                </a>
+
+            </div>
 
         </div>
 
     </div>
 
 
-    <div class="hero-right">
+    <div class="hero-bottom">
 
-        <div class="hero-photo">
+        <span>HAIR / FORM / IDENTITY</span>
 
-            <div class="scissors">
-                ✂
-            </div>
-
-            <div class="photo-label">
-                VIII.HAIRSTYLIST — PRAGUE
-            </div>
-
-        </div>
+        <span>SCROLL ↓</span>
 
     </div>
 
 </section>
 
 
-<!-- TICKER -->
+<!-- ==================================================
+     MARQUEE
+================================================== -->
 
-<div class="ticker">
+<div class="marquee">
 
-    <div class="ticker-track">
+    <div class="marquee-track">
 
-        VIII.HAIRSTYLIST
-        <span>✂</span>
-        HAIR • STYLE • IDENTITY
-        <span>✂</span>
-        YOUR STYLE
-        <span>✂</span>
-        VIII.HAIRSTYLIST
-        <span>✂</span>
-        HAIR • STYLE • IDENTITY
-        <span>✂</span>
-        YOUR STYLE
-        <span>✂</span>
+        <span>VIII.HAIRSTYLIST</span>
+        <b>✂</b>
+
+        <span>HAIR IS FORM</span>
+        <b>✂</b>
+
+        <span>STYLE IS IDENTITY</span>
+        <b>✂</b>
+
+        <span>VIII.HAIRSTYLIST</span>
+        <b>✂</b>
+
+        <span>HAIR IS FORM</span>
+        <b>✂</b>
+
+        <span>STYLE IS IDENTITY</span>
+        <b>✂</b>
 
     </div>
 
 </div>
 
 
-<!-- =========================
+<!-- ==================================================
      SERVICES
-========================= -->
+================================================== -->
 
-<section class="services" id="services">
+<section class="section" id="services">
 
-    <div class="section-head">
+    <div class="section-head reveal">
 
-        <div>
-
-            <div class="kicker">
-                01 — services
-            </div>
-
-            <h2 class="title"
-                data-t="services">
-                Послуги
-            </h2>
-
+        <div class="section-number">
+            01 / WHAT I DO
         </div>
 
-        <p class="description"
-           data-t="servicesDesc">
-            Обери потрібну послугу або дозволь майстру
-            підібрати найкращий варіант.
-        </p>
+        <h2 class="section-title" data-t="servicesTitle">
+            Not services.<br>
+            <em>Transformations.</em>
+        </h2>
 
     </div>
 
 
-    <div class="service-grid">
+    <div class="services-wrap">
 
-        <div class="service">
-
-            <div class="number">01</div>
-
-            <h3 data-t="haircut">
-                Haircut
-            </h3>
-
-            <p data-t="haircutText">
-                Індивідуальна стрижка з урахуванням
-                форми обличчя та структури волосся.
-            </p>
-
-            <span class="price">
-                from € XX
-            </span>
-
-        </div>
+        <div class="services-track">
 
 
-        <div class="service">
+            <article class="service">
 
-            <div class="number">02</div>
+                <div class="service-number">01</div>
 
-            <h3 data-t="styling">
-                Styling
-            </h3>
+                <div>
 
-            <p data-t="stylingText">
-                Укладка для повсякденного або
-                особливого образу.
-            </p>
+                    <div class="service-name">
+                        Hair<br>
+                        <em>cut</em>
+                    </div>
 
-            <span class="price">
-                from € XX
-            </span>
+                    <p class="service-info">
+                        Форма, довжина та текстура,
+                        підібрані під тебе.
+                    </p>
 
-        </div>
+                </div>
 
+                <div class="service-price">
+                    FROM € XX
+                </div>
 
-        <div class="service">
-
-            <div class="number">03</div>
-
-            <h3 data-t="beard">
-                Beard
-            </h3>
-
-            <p data-t="beardText">
-                Форма та догляд за бородою.
-            </p>
-
-            <span class="price">
-                from € XX
-            </span>
-
-        </div>
+            </article>
 
 
-        <div class="service">
+            <article class="service">
 
-            <div class="number">04</div>
+                <div class="service-number">02</div>
 
-            <h3 data-t="complex">
-                Complete
-            </h3>
+                <div>
 
-            <p data-t="complexText">
-                Стрижка + борода + укладка.
-            </p>
+                    <div class="service-name">
+                        Hair<br>
+                        <em>style</em>
+                    </div>
 
-            <span class="price">
-                from € XX
-            </span>
+                    <p class="service-info">
+                        Укладка, яка доповнює
+                        твій характер.
+                    </p>
 
-        </div>
+                </div>
 
+                <div class="service-price">
+                    FROM € XX
+                </div>
 
-        <div class="service">
-
-            <div class="number">05</div>
-
-            <h3 data-t="consult">
-                Consultation
-            </h3>
-
-            <p data-t="consultText">
-                Допомога з вибором нового образу.
-            </p>
-
-            <span class="price">
-                Let's talk
-            </span>
-
-        </div>
+            </article>
 
 
-        <div class="service">
+            <article class="service">
 
-            <div class="number">06</div>
+                <div class="service-number">03</div>
 
-            <h3 data-t="other">
-                Other
-            </h3>
+                <div>
 
-            <p data-t="otherText">
-                Не знайшов потрібну послугу?
-                Просто напиши побажання.
-            </p>
+                    <div class="service-name">
+                        Beard<br>
+                        <em>form</em>
+                    </div>
 
-            <span class="price">
-                Tell me
-            </span>
+                    <p class="service-info">
+                        Чітка форма та правильні
+                        пропорції.
+                    </p>
+
+                </div>
+
+                <div class="service-price">
+                    FROM € XX
+                </div>
+
+            </article>
+
+
+            <article class="service">
+
+                <div class="service-number">04</div>
+
+                <div>
+
+                    <div class="service-name">
+                        Full<br>
+                        <em>look</em>
+                    </div>
+
+                    <p class="service-info">
+                        Повний образ — від волосся
+                        до фінальної укладки.
+                    </p>
+
+                </div>
+
+                <div class="service-price">
+                    FROM € XX
+                </div>
+
+            </article>
+
+
+            <article class="service">
+
+                <div class="service-number">05</div>
+
+                <div>
+
+                    <div class="service-name">
+                        New<br>
+                        <em>you</em>
+                    </div>
+
+                    <p class="service-info">
+                        Не знаєш, чого хочеш?
+                        Почнемо з консультації.
+                    </p>
+
+                </div>
+
+                <div class="service-price">
+                    LET'S TALK
+                </div>
+
+            </article>
+
 
         </div>
 
@@ -1209,115 +1373,119 @@ footer{
 </section>
 
 
-<!-- =========================
+<!-- ==================================================
      PORTFOLIO
-========================= -->
+================================================== -->
 
-<section class="portfolio" id="portfolio">
+<section class="section" id="portfolio">
 
-    <div class="section-head">
+    <div class="section-head reveal">
 
-        <div>
+        <div class="section-number">
+            02 / SELECTED WORK
+        </div>
 
-            <div class="kicker">
-                02 — portfolio
+        <h2 class="section-title">
+            Hair as<br>
+            <em>visual language.</em>
+        </h2>
+
+    </div>
+
+
+    <div class="portfolio-grid reveal">
+
+        <div class="portfolio-item">
+
+            <div class="portfolio-visual"></div>
+
+            <div class="portfolio-label">
+                <span>01 / CUT</span>
+                <span>VIII</span>
             </div>
 
-            <h2 class="title"
-                data-t="portfolio">
-                Роботи
-            </h2>
+        </div>
+
+
+        <div class="portfolio-item">
+
+            <div class="portfolio-visual"></div>
+
+            <div class="portfolio-label">
+                <span>02 / FORM</span>
+                <span>VIII</span>
+            </div>
 
         </div>
 
-        <p class="description"
-           data-t="portfolioDesc">
-            Тут будуть реальні фотографії робіт.
-        </p>
 
-    </div>
+        <div class="portfolio-item">
 
+            <div class="portfolio-visual"></div>
 
-    <div class="portfolio-grid">
+            <div class="portfolio-label">
+                <span>03 / TEXTURE</span>
+                <span>VIII</span>
+            </div>
 
-        <div class="work">
-            <span>HAIRCUT</span>
         </div>
 
-        <div class="work">
-            <span>STYLE</span>
+
+        <div class="portfolio-item">
+
+            <div class="portfolio-visual"></div>
+
+            <div class="portfolio-label">
+                <span>04 / DETAIL</span>
+                <span>VIII</span>
+            </div>
+
         </div>
-
-        <div class="work">
-            <span>DETAIL</span>
-        </div>
-
-        <div class="work">
-            <span>VIII</span>
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- =========================
-     ABOUT
-========================= -->
-
-<section class="about" id="about">
-
-    <div class="about-inner">
-
-        <div class="kicker">
-            03 — about
-        </div>
-
-        <div class="about-quote"
-             data-t="aboutQuote">
-            hair is not just hair.
-            <span>it's your identity.</span>
-        </div>
-
-        <p class="about-text"
-           data-t="aboutText">
-            Мета — не просто повторити фото з Pinterest.
-            Форма та стиль підбираються індивідуально
-            під людину, її волосся, риси обличчя
-            та спосіб життя.
-        </p>
 
     </div>
 
 </section>
 
 
-<!-- =========================
+<!-- ==================================================
+     MANIFESTO
+================================================== -->
+
+<section class="section manifesto" id="about">
+
+    <div class="manifesto-text reveal">
+
+        Good hair
+        <span>doesn't make you</span>
+        someone else.
+
+        <br><br>
+
+        It makes
+        <em>you</em>
+        <span>look like yourself.</span>
+
+    </div>
+
+</section>
+
+
+<!-- ==================================================
      BOOKING
-========================= -->
+================================================== -->
 
-<section class="booking" id="booking">
+<section class="section booking" id="booking">
 
     <div class="section-head">
 
-        <div>
-
-            <div class="kicker">
-                04 — booking
-            </div>
-
-            <h2 class="title"
-                data-t="booking">
-                Запис
-            </h2>
-
+        <div class="section-number">
+            04 / BOOKING
         </div>
 
-        <p class="description"
-           data-t="bookingDesc">
-            Кілька простих питань — і майстер
-            краще зрозуміє, що тобі потрібно.
-        </p>
+        <h2 class="section-title">
+            Let's make<br>
+            <em>your look.</em>
+        </h2>
 
     </div>
 
@@ -1325,14 +1493,7 @@ footer{
     <div class="booking-box">
 
         <div class="progress">
-
-            <span class="active"></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-
+            <div class="progress-line" id="progressLine"></div>
         </div>
 
 
@@ -1343,376 +1504,209 @@ footer{
 
             <!-- STEP 1 -->
 
-            <div class="step active">
+            <div class="booking-step active">
 
-                <h3 data-t="step1">
-                    Що хочеш зробити?
+                <h3 class="booking-question">
+                    What are<br>
+                    you looking <em>for?</em>
                 </h3>
 
-                <p class="step-sub"
-                   data-t="step1sub">
-                    Обери основну послугу
-                </p>
-
-
-                <div class="options">
+                <div class="booking-options">
 
                     <button type="button"
-                            class="option"
+                            class="booking-option"
+                            data-field="service"
                             data-value="Haircut">
 
-                        <strong data-t="haircut">
-                            Стрижка
-                        </strong>
-
-                        <small data-t="haircutSmall">
-                            Нова форма та довжина
-                        </small>
+                        <strong>Haircut</strong>
+                        <small>New shape / new length</small>
 
                     </button>
 
-
                     <button type="button"
-                            class="option"
+                            class="booking-option"
+                            data-field="service"
                             data-value="Styling">
 
-                        <strong data-t="styling">
-                            Укладка
-                        </strong>
-
-                        <small data-t="stylingSmall">
-                            Створити образ
-                        </small>
+                        <strong>Styling</strong>
+                        <small>Create a new look</small>
 
                     </button>
 
-
                     <button type="button"
-                            class="option"
+                            class="booking-option"
+                            data-field="service"
                             data-value="Beard">
 
-                        <strong data-t="beard">
-                            Борода
-                        </strong>
-
-                        <small data-t="beardSmall">
-                            Форма та догляд
-                        </small>
+                        <strong>Beard</strong>
+                        <small>Shape / care</small>
 
                     </button>
 
-
                     <button type="button"
-                            class="option"
-                            data-value="Complete">
+                            class="booking-option"
+                            data-field="service"
+                            data-value="Full look">
 
-                        <strong data-t="complex">
-                            Комплекс
-                        </strong>
-
-                        <small data-t="complexSmall">
-                            Стрижка + борода
-                        </small>
+                        <strong>Full look</strong>
+                        <small>Everything together</small>
 
                     </button>
 
                 </div>
-
-                <input type="hidden"
-                       name="service"
-                       id="service">
 
             </div>
 
 
             <!-- STEP 2 -->
 
-            <div class="step">
+            <div class="booking-step">
 
-                <h3 data-t="step2">
-                    Який стиль?
+                <h3 class="booking-question">
+                    What kind of<br>
+                    <em>energy?</em>
                 </h3>
 
-                <p class="step-sub"
-                   data-t="step2sub">
-                    Обери найближчий варіант
-                </p>
-
-
-                <div class="options">
+                <div class="booking-options">
 
                     <button type="button"
-                            class="option"
+                            class="booking-option"
+                            data-field="style"
                             data-value="Classic">
 
-                        <strong>
-                            Classic
-                        </strong>
-
-                        <small data-t="classic">
-                            Акуратно та стримано
-                        </small>
+                        <strong>Classic</strong>
+                        <small>Clean / timeless</small>
 
                     </button>
 
-
                     <button type="button"
-                            class="option"
+                            class="booking-option"
+                            data-field="style"
                             data-value="Modern">
 
-                        <strong>
-                            Modern
-                        </strong>
-
-                        <small data-t="modern">
-                            Сучасний стиль
-                        </small>
+                        <strong>Modern</strong>
+                        <small>Sharp / contemporary</small>
 
                     </button>
 
-
                     <button type="button"
-                            class="option"
+                            class="booking-option"
+                            data-field="style"
                             data-value="Textured">
 
-                        <strong>
-                            Textured
-                        </strong>
-
-                        <small data-t="textured">
-                            Текстура та об'єм
-                        </small>
+                        <strong>Textured</strong>
+                        <small>Movement / volume</small>
 
                     </button>
 
-
                     <button type="button"
-                            class="option"
-                            data-value="Not sure">
+                            class="booking-option"
+                            data-field="style"
+                            data-value="Surprise me">
 
-                        <strong data-t="notSure">
-                            Не знаю
-                        </strong>
-
-                        <small data-t="recommend">
-                            Порадьте мені
-                        </small>
+                        <strong>Surprise me</strong>
+                        <small>I trust you</small>
 
                     </button>
 
                 </div>
-
-                <input type="hidden"
-                       name="style"
-                       id="style">
 
             </div>
 
 
             <!-- STEP 3 -->
 
-            <div class="step">
+            <div class="booking-step">
 
-                <h3 data-t="step3">
-                    Яка довжина?
+                <h3 class="booking-question">
+                    How much<br>
+                    <em>length?</em>
                 </h3>
 
-                <p class="step-sub"
-                   data-t="step3sub">
-                    Обери бажану довжину
-                </p>
-
-
-                <div class="options">
+                <div class="booking-options">
 
                     <button type="button"
-                            class="option"
+                            class="booking-option"
+                            data-field="length"
                             data-value="Short">
 
-                        <strong data-t="short">
-                            Коротка
-                        </strong>
-
-                        <small data-t="shortSmall">
-                            Мінімум довжини
-                        </small>
+                        <strong>Short</strong>
+                        <small>Keep it clean</small>
 
                     </button>
 
-
                     <button type="button"
-                            class="option"
+                            class="booking-option"
+                            data-field="length"
                             data-value="Medium">
 
-                        <strong data-t="medium">
-                            Середня
-                        </strong>
-
-                        <small data-t="mediumSmall">
-                            Баланс форми та довжини
-                        </small>
+                        <strong>Medium</strong>
+                        <small>Balanced length</small>
 
                     </button>
 
-
                     <button type="button"
-                            class="option"
+                            class="booking-option"
+                            data-field="length"
                             data-value="Long">
 
-                        <strong data-t="long">
-                            Довга
-                        </strong>
-
-                        <small data-t="longSmall">
-                            Зберегти довжину
-                        </small>
+                        <strong>Long</strong>
+                        <small>Keep the length</small>
 
                     </button>
 
-
                     <button type="button"
-                            class="option"
-                            data-value="Stylist choice">
+                            class="booking-option"
+                            data-field="length"
+                            data-value="You decide">
 
-                        <strong data-t="choice">
-                            На розсуд майстра
-                        </strong>
-
-                        <small data-t="choiceSmall">
-                            Порадьте найкращий варіант
-                        </small>
+                        <strong>You decide</strong>
+                        <small>Recommend what works</small>
 
                     </button>
 
                 </div>
-
-                <input type="hidden"
-                       name="length"
-                       id="length">
 
             </div>
 
 
             <!-- STEP 4 -->
 
-            <div class="step">
+            <div class="booking-step">
 
-                <h3 data-t="step4">
-                    Щось додати?
+                <h3 class="booking-question">
+                    Tell me<br>
+                    <em>everything.</em>
                 </h3>
 
-                <p class="step-sub"
-                   data-t="step4sub">
-                    Можна вибрати декілька
-                </p>
+                <div class="booking-field">
 
+                    <label>Anything I should know?</label>
 
-                <div class="options">
-
-                    <button type="button"
-                            class="option multi"
-                            data-value="Beard">
-
-                        <strong data-t="addBeard">
-                            Борода
-                        </strong>
-
-                    </button>
-
-
-                    <button type="button"
-                            class="option multi"
-                            data-value="Wash">
-
-                        <strong data-t="wash">
-                            Миття
-                        </strong>
-
-                    </button>
-
-
-                    <button type="button"
-                            class="option multi"
-                            data-value="Styling">
-
-                        <strong data-t="addStyling">
-                            Укладка
-                        </strong>
-
-                    </button>
-
-
-                    <button type="button"
-                            class="option multi"
-                            data-value="Consultation">
-
-                        <strong data-t="consultation">
-                            Консультація
-                        </strong>
-
-                    </button>
+                    <textarea
+                        name="wishes"
+                        rows="7"
+                        placeholder="Tell me what you want, what you don't want, reference ideas..."></textarea>
 
                 </div>
-
-                <input type="hidden"
-                       name="extras"
-                       id="extras">
 
             </div>
 
 
             <!-- STEP 5 -->
 
-            <div class="step">
+            <div class="booking-step">
 
-                <h3 data-t="step5">
-                    Розкажи більше
+                <h3 class="booking-question">
+                    Where can<br>
+                    I <em>find you?</em>
                 </h3>
 
-                <p class="step-sub"
-                   data-t="step5sub">
-                    Тут можна написати будь-які побажання
-                </p>
+                <div class="booking-fields">
 
+                    <div class="booking-field">
 
-                <div class="field">
-
-                    <label data-t="wishes">
-                        Побажання
-                    </label>
-
-                    <textarea
-                        name="wishes"
-                        rows="7"
-                        placeholder="Наприклад: хочу залишити довжину зверху..."
-                        data-t-placeholder="wishesPlaceholder"></textarea>
-
-                </div>
-
-            </div>
-
-
-            <!-- STEP 6 -->
-
-            <div class="step">
-
-                <h3 data-t="step6">
-                    Твої контакти
-                </h3>
-
-                <p class="step-sub"
-                   data-t="step6sub">
-                    Ми зв'яжемося з тобою для підтвердження
-                </p>
-
-
-                <div class="form-grid">
-
-                    <div class="field">
-
-                        <label data-t="name">
-                            Ім'я
-                        </label>
+                        <label>Name</label>
 
                         <input
                             type="text"
@@ -1722,11 +1716,9 @@ footer{
                     </div>
 
 
-                    <div class="field">
+                    <div class="booking-field">
 
-                        <label data-t="phone">
-                            Телефон
-                        </label>
+                        <label>Phone</label>
 
                         <input
                             type="tel"
@@ -1736,11 +1728,9 @@ footer{
                     </div>
 
 
-                    <div class="field">
+                    <div class="booking-field">
 
-                        <label>
-                            Email
-                        </label>
+                        <label>Email</label>
 
                         <input
                             type="email"
@@ -1749,11 +1739,9 @@ footer{
                     </div>
 
 
-                    <div class="field">
+                    <div class="booking-field">
 
-                        <label data-t="date">
-                            Бажана дата
-                        </label>
+                        <label>Date</label>
 
                         <input
                             type="date"
@@ -1763,11 +1751,9 @@ footer{
                     </div>
 
 
-                    <div class="field">
+                    <div class="booking-field">
 
-                        <label data-t="time">
-                            Бажаний час
-                        </label>
+                        <label>Preferred time</label>
 
                         <input
                             type="time"
@@ -1781,23 +1767,36 @@ footer{
             </div>
 
 
+            <input type="hidden"
+                   name="service"
+                   id="service">
+
+            <input type="hidden"
+                   name="style"
+                   id="style">
+
+            <input type="hidden"
+                   name="length"
+                   id="length">
+
+            <input type="hidden"
+                   name="_subject"
+                   value="New booking — VIII.HAIRSTYLIST">
+
+
             <div class="booking-nav">
 
                 <button type="button"
                         id="back"
-                        onclick="prevStep()"
-                        style="display:none"
-                        data-t="back">
-                    Назад
+                        onclick="prevStep()">
+                    ← BACK
                 </button>
-
 
                 <button type="button"
                         class="next"
                         id="next"
-                        onclick="nextStep()"
-                        data-t="next">
-                    Далі →
+                        onclick="nextStep()">
+                    NEXT →
                 </button>
 
             </div>
@@ -1805,43 +1804,31 @@ footer{
         </form>
 
 
-        <div class="success"
-             id="success">
-
-            <div class="success-icon">
-                ✂
-            </div>
-
-            <h2 data-t="success">
-                Дякую!
-            </h2>
-
-            <p data-t="successText">
-                Заявку отримано. Ми зв'яжемося з тобою
-                для підтвердження запису.
-            </p>
-
+        <div class="success" id="success">
+            Thank you.
         </div>
 
     </div>
 
 </section>
 
+</main>
 
-<!-- =========================
+
+<!-- ==================================================
      FOOTER
-========================= -->
+================================================== -->
 
 <footer>
 
-    <div class="footer-logo">
+    <div class="footer-big">
         viii<span>.</span>
     </div>
 
-    <div class="footer-info">
+    <div class="footer-bottom">
 
         <span>
-            VIII.HAIRSTYLIST
+            viii.hairstylist
         </span>
 
         <span>
@@ -1849,7 +1836,7 @@ footer{
         </span>
 
         <span>
-            © 2026
+            Prague / CZ
         </span>
 
     </div>
@@ -1859,346 +1846,73 @@ footer{
 
 <script>
 
-/* =========================
-   TRANSLATIONS
-========================= */
+/* ==================================================
+   LANGUAGE
+================================================== */
 
-const text={
+let currentLanguage =
+    localStorage.getItem("viii-language") || null;
+
+const translations={
 
 uk:{
-services:"Послуги",
-portfolio:"Роботи",
-about:"Про мене",
-booking:"Запис",
-book:"Записатися",
-works:"Дивитися роботи",
-
-heroText:"Індивідуальні стрижки, укладки та стиль, створений саме для тебе.",
-
-servicesDesc:"Обери потрібну послугу або дозволь майстру підібрати найкращий варіант.",
-
-haircut:"Стрижка",
-haircutText:"Індивідуальна стрижка з урахуванням форми обличчя та структури волосся.",
-haircutSmall:"Нова форма та довжина",
-
-styling:"Укладка",
-stylingText:"Укладка для повсякденного або особливого образу.",
-stylingSmall:"Створити образ",
-
-beard:"Борода",
-beardText:"Форма та догляд за бородою.",
-beardSmall:"Форма та догляд",
-
-complex:"Комплекс",
-complexText:"Стрижка + борода + укладка.",
-complexSmall:"Стрижка + борода",
-
-consult:"Консультація",
-consultText:"Допомога з вибором нового образу.",
-
-other:"Інше",
-otherText:"Не знайшов потрібну послугу? Просто напиши побажання.",
-
-portfolioDesc:"Тут будуть реальні фотографії робіт.",
-
-aboutQuote:"hair is not just hair. <span>it's your identity.</span>",
-aboutText:"Мета — не просто повторити фото з Pinterest. Форма та стиль підбираються індивідуально під людину, її волосся, риси обличчя та спосіб життя.",
-
-bookingDesc:"Кілька простих питань — і майстер краще зрозуміє, що тобі потрібно.",
-
-step1:"Що хочеш зробити?",
-step1sub:"Обери основну послугу",
-
-step2:"Який стиль?",
-step2sub:"Обери найближчий варіант",
-
-step3:"Яка довжина?",
-step3sub:"Обери бажану довжину",
-
-step4:"Щось додати?",
-step4sub:"Можна вибрати декілька",
-
-step5:"Розкажи більше",
-step5sub:"Тут можна написати будь-які побажання",
-
-step6:"Твої контакти",
-step6sub:"Ми зв'яжемося з тобою для підтвердження",
-
-classic:"Акуратно та стримано",
-modern:"Сучасний стиль",
-textured:"Текстура та об'єм",
-notSure:"Не знаю",
-recommend:"Порадьте мені",
-
-short:"Коротка",
-shortSmall:"Мінімум довжини",
-medium:"Середня",
-mediumSmall:"Баланс форми та довжини",
-long:"Довга",
-longSmall:"Зберегти довжину",
-choice:"На розсуд майстра",
-choiceSmall:"Порадьте найкращий варіант",
-
-addBeard:"Борода",
-wash:"Миття",
-addStyling:"Укладка",
-consultation:"Консультація",
-
-wishes:"Побажання",
-wishesPlaceholder:"Наприклад: хочу залишити довжину зверху...",
-
-name:"Ім'я",
-phone:"Телефон",
-date:"Бажана дата",
-time:"Бажаний час",
-
-back:"Назад",
-next:"Далі →",
-success:"Дякую!",
-successText:"Заявку отримано. Ми зв'яжемося з тобою для підтвердження запису."
+    hero:"Стиль — це не стрижка. Це те, як ти себе відчуваєш.",
+    servicesTitle:"Не послуги.<br><em>Трансформації.</em>"
 },
 
 cs:{
-services:"Služby",
-portfolio:"Práce",
-about:"O mně",
-booking:"Rezervace",
-book:"Objednat se",
-works:"Moje práce",
-
-heroText:"Individuální střihy, styling a styl vytvořený přesně pro tebe.",
-
-servicesDesc:"Vyber si službu nebo nech stylistku doporučit nejlepší variantu.",
-
-haircut:"Střih",
-haircutText:"Individuální střih podle tvaru obličeje a struktury vlasů.",
-haircutSmall:"Nový tvar a délka",
-
-styling:"Styling",
-stylingText:"Styling pro každý den nebo speciální příležitost.",
-stylingSmall:"Vytvořit look",
-
-beard:"Vousy",
-beardText:"Úprava a péče o vousy.",
-beardSmall:"Tvar a péče",
-
-complex:"Komplet",
-complexText:"Střih + vousy + styling.",
-complexSmall:"Střih + vousy",
-
-consult:"Konzultace",
-consultText:"Pomoc s výběrem nového looku.",
-
-other:"Jiné",
-otherText:"Nenašel jsi službu? Napiš své přání.",
-
-portfolioDesc:"Galerie skutečných prací.",
-
-aboutQuote:"hair is not just hair. <span>it's your identity.</span>",
-aboutText:"Cílem není jen kopírovat Pinterest. Tvar a styl se vybírá individuálně podle člověka, vlasů, obličeje a životního stylu.",
-
-bookingDesc:"Pár jednoduchých otázek a lépe pochopíme, co chceš.",
-
-step1:"Co chceš?",
-step1sub:"Vyber hlavní službu",
-
-step2:"Jaký styl?",
-step2sub:"Vyber nejbližší variantu",
-
-step3:"Jaká délka?",
-step3sub:"Vyber požadovanou délku",
-
-step4:"Něco navíc?",
-step4sub:"Můžeš vybrat více možností",
-
-step5:"Řekni mi více",
-step5sub:"Napiš jakékoliv přání",
-
-step6:"Tvoje údaje",
-step6sub:"Ozveme se pro potvrzení",
-
-classic:"Čistý a klasický",
-modern:"Moderní styl",
-textured:"Textura a objem",
-notSure:"Nevím",
-recommend:"Doporuč mi",
-
-short:"Krátká",
-shortSmall:"Minimum délky",
-medium:"Střední",
-mediumSmall:"Rovnováha tvaru a délky",
-long:"Dlouhá",
-longSmall:"Zachovat délku",
-choice:"Nechám to na stylistce",
-choiceSmall:"Doporuč nejlepší variantu",
-
-addBeard:"Vousy",
-wash:"Mytí",
-addStyling:"Styling",
-consultation:"Konzultace",
-
-wishes:"Přání",
-wishesPlaceholder:"Například: chci zachovat délku nahoře...",
-
-name:"Jméno",
-phone:"Telefon",
-date:"Preferované datum",
-time:"Preferovaný čas",
-
-back:"Zpět",
-next:"Další →",
-success:"Děkuji!",
-successText:"Žádost byla odeslána. Ozveme se pro potvrzení rezervace."
+    hero:"Styl není jen střih. Je to způsob, jak se cítíš.",
+    servicesTitle:"Ne služby.<br><em>Transformace.</em>"
 },
 
 en:{
-services:"Services",
-portfolio:"Work",
-about:"About",
-booking:"Booking",
-book:"Book now",
-works:"View work",
-
-heroText:"Individual haircuts, styling and a look created especially for you.",
-
-servicesDesc:"Choose a service or let the stylist recommend the best option.",
-
-haircut:"Haircut",
-haircutText:"An individual haircut based on your face shape and hair structure.",
-haircutSmall:"New shape and length",
-
-styling:"Styling",
-stylingText:"Styling for everyday or special occasions.",
-stylingSmall:"Create a look",
-
-beard:"Beard",
-beardText:"Beard shaping and care.",
-beardSmall:"Shape and care",
-
-complex:"Complete",
-complexText:"Haircut + beard + styling.",
-complexSmall:"Haircut + beard",
-
-consult:"Consultation",
-consultText:"Help choosing a new look.",
-
-other:"Other",
-otherText:"Didn't find what you need? Tell us what you want.",
-
-portfolioDesc:"Real work gallery.",
-
-aboutQuote:"hair is not just hair. <span>it's your identity.</span>",
-aboutText:"The goal isn't simply to copy Pinterest. Shape and style are chosen individually according to the person, their hair, facial features and lifestyle.",
-
-bookingDesc:"A few simple questions will help us understand exactly what you're looking for.",
-
-step1:"What would you like?",
-step1sub:"Choose the main service",
-
-step2:"What style?",
-step2sub:"Choose the closest option",
-
-step3:"What length?",
-step3sub:"Choose your preferred length",
-
-step4:"Anything extra?",
-step4sub:"You can choose multiple",
-
-step5:"Tell me more",
-step5sub:"Write any wishes you have",
-
-step6:"Your details",
-step6sub:"We'll contact you to confirm",
-
-classic:"Clean and classic",
-modern:"Modern style",
-textured:"Texture and volume",
-notSure:"Not sure",
-recommend:"Recommend something",
-
-short:"Short",
-shortSmall:"Minimum length",
-medium:"Medium",
-mediumSmall:"Balance of shape and length",
-long:"Long",
-longSmall:"Keep the length",
-choice:"Stylist's choice",
-choiceSmall:"Recommend the best option",
-
-addBeard:"Beard",
-wash:"Wash",
-addStyling:"Styling",
-consultation:"Consultation",
-
-wishes:"Your wishes",
-wishesPlaceholder:"For example: I want to keep the length on top...",
-
-name:"Name",
-phone:"Phone",
-date:"Preferred date",
-time:"Preferred time",
-
-back:"Back",
-next:"Next →",
-success:"Thank you!",
-successText:"Your request has been sent. We'll contact you to confirm the booking."
+    hero:"Style isn't just a haircut. It's how you feel.",
+    servicesTitle:"Not services.<br><em>Transformations.</em>"
 }
 
 };
 
+function setLanguage(lang){
 
-/* =========================
-   LANGUAGE
-========================= */
+    currentLanguage=lang;
 
-let lang="uk";
-
-function setLanguage(language){
-
-    lang=language;
-
-    localStorage.setItem("viii-language",language);
+    localStorage.setItem(
+        "viii-language",
+        lang
+    );
 
     applyLanguage();
 
     document
         .getElementById("language")
         .classList.add("hide");
+
 }
 
 function applyLanguage(){
 
-    document.documentElement.lang=lang;
+    if(!currentLanguage) return;
 
-    const dictionary=text[lang];
-
-    document.querySelectorAll("[data-t]").forEach(el=>{
+    document.querySelectorAll("[data-t]")
+    .forEach(el=>{
 
         const key=el.dataset.t;
 
-        if(dictionary[key]){
-            el.innerHTML=dictionary[key];
-        }
+        if(
+            translations[currentLanguage] &&
+            translations[currentLanguage][key]
+        ){
 
-    });
+            el.innerHTML=
+                translations[currentLanguage][key];
 
-    document.querySelectorAll("[data-t-placeholder]").forEach(el=>{
-
-        const key=el.dataset.tPlaceholder;
-
-        if(dictionary[key]){
-            el.placeholder=dictionary[key];
         }
 
     });
 
 }
 
-const saved=localStorage.getItem("viii-language");
-
-if(saved){
-
-    lang=saved;
+if(currentLanguage){
 
     applyLanguage();
 
@@ -2209,77 +1923,147 @@ if(saved){
 }
 
 
-/* =========================
-   HEADER
-========================= */
+/* ==================================================
+   MENU
+================================================== */
 
-window.addEventListener("scroll",()=>{
+function toggleMenu(){
 
     document
-        .getElementById("header")
-        .classList.toggle(
-            "scrolled",
-            window.scrollY>40
-        );
+        .getElementById("menu")
+        .classList.toggle("open");
+
+}
+
+
+/* ==================================================
+   SCROLL REVEAL
+================================================== */
+
+const observer=
+    new IntersectionObserver(
+        entries=>{
+
+            entries.forEach(entry=>{
+
+                if(entry.isIntersecting){
+
+                    entry.target
+                        .classList
+                        .add("visible");
+
+                }
+
+            });
+
+        },
+        {
+            threshold:.12
+        }
+    );
+
+document
+    .querySelectorAll(".reveal")
+    .forEach(el=>observer.observe(el));
+
+
+/* ==================================================
+   HORIZONTAL SERVICES DRAG
+================================================== */
+
+const track=
+    document.querySelector(".services-track");
+
+let isDown=false;
+let startX;
+let scrollLeft;
+
+track.addEventListener("mousedown",e=>{
+
+    isDown=true;
+    startX=e.pageX-track.offsetLeft;
+
+});
+
+track.addEventListener("mouseleave",()=>{
+    isDown=false;
+});
+
+track.addEventListener("mouseup",()=>{
+    isDown=false;
+});
+
+track.addEventListener("mousemove",e=>{
+
+    if(!isDown) return;
+
+    e.preventDefault();
+
+    const x=e.pageX-track.offsetLeft;
+
+    const walk=(x-startX)*1.5;
+
+    track.style.transform=
+        `translateX(${walk}px)`;
 
 });
 
 
-/* =========================
+/* ==================================================
    BOOKING
-========================= */
+================================================== */
 
-let current=0;
+let step=0;
 
-const steps=document.querySelectorAll(".step");
-const bars=document.querySelectorAll(".progress span");
+const steps=
+    document.querySelectorAll(".booking-step");
 
-const next=document.getElementById("next");
-const back=document.getElementById("back");
+const progress=
+    document.getElementById("progressLine");
+
+const next=
+    document.getElementById("next");
+
+const back=
+    document.getElementById("back");
 
 
-function showStep(){
+function updateBooking(){
 
-    steps.forEach((step,i)=>{
+    steps.forEach((s,i)=>{
 
-        step.classList.toggle(
+        s.classList.toggle(
             "active",
-            i===current
+            i===step
         );
 
     });
 
-    bars.forEach((bar,i)=>{
+    progress.style.width=
+        ((step+1)/steps.length*100)+"%";
 
-        bar.classList.toggle(
-            "active",
-            i<=current
-        );
-
-    });
-
-    back.style.display=
-        current===0 ? "none" : "block";
+    back.style.visibility=
+        step===0 ? "hidden" : "visible";
 
     next.innerHTML=
-        current===steps.length-1
-        ? (lang==="en" ? "Send ✓" : lang==="cs" ? "Odeslat ✓" : "Надіслати ✓")
-        : text[lang].next;
+        step===steps.length-1
+        ? "SEND ✓"
+        : "NEXT →";
 
 }
 
 
 function nextStep(){
 
-    if(current<steps.length-1){
+    if(step<steps.length-1){
 
-        current++;
+        step++;
 
-        showStep();
+        updateBooking();
 
     }else{
 
-        sendForm();
+        submitBooking();
 
     }
 
@@ -2288,52 +2072,47 @@ function nextStep(){
 
 function prevStep(){
 
-    if(current>0){
+    if(step>0){
 
-        current--;
+        step--;
 
-        showStep();
+        updateBooking();
 
     }
 
 }
 
 
-/* =========================
-   OPTIONS
-========================= */
+/* ==================================================
+   BOOKING OPTIONS
+================================================== */
 
-document.querySelectorAll(".option").forEach(option=>{
+document
+.querySelectorAll(".booking-option")
+.forEach(button=>{
 
-    option.addEventListener("click",()=>{
+    button.addEventListener("click",()=>{
 
-        const step=option.closest(".step");
+        const field=
+            button.dataset.field;
 
-        if(option.classList.contains("multi")){
+        document
+        .querySelectorAll(
+            `.booking-option[data-field="${field}"]`
+        )
+        .forEach(x=>
+            x.classList.remove("selected")
+        );
 
-            option.classList.toggle("selected");
+        button.classList.add("selected");
 
-            const selected=
-                step.querySelectorAll(".multi.selected");
+        const hidden=
+            document.getElementById(field);
 
-            document.getElementById("extras").value=
-                [...selected]
-                .map(x=>x.dataset.value)
-                .join(", ");
+        if(hidden){
 
-        }else{
-
-            step.querySelectorAll(".option")
-                .forEach(x=>x.classList.remove("selected"));
-
-            option.classList.add("selected");
-
-            const hidden=
-                step.querySelector("input[type=hidden]");
-
-            if(hidden){
-                hidden.value=option.dataset.value;
-            }
+            hidden.value=
+                button.dataset.value;
 
         }
 
@@ -2342,11 +2121,11 @@ document.querySelectorAll(".option").forEach(option=>{
 });
 
 
-/* =========================
-   SEND FORM
-========================= */
+/* ==================================================
+   SUBMIT
+================================================== */
 
-async function sendForm(){
+async function submitBooking(){
 
     const form=
         document.getElementById("bookingForm");
@@ -2361,7 +2140,7 @@ async function sendForm(){
 
     next.disabled=true;
 
-    next.innerHTML="...";
+    next.innerHTML="SENDING...";
 
     try{
 
@@ -2372,7 +2151,8 @@ async function sendForm(){
                     method:"POST",
                     body:new FormData(form),
                     headers:{
-                        "Accept":"application/json"
+                        "Accept":
+                        "application/json"
                     }
                 }
             );
@@ -2391,25 +2171,21 @@ async function sendForm(){
 
         }
 
-    }catch(e){
+    }catch(error){
 
         alert(
-            lang==="en"
-            ? "Something went wrong. Please try again."
-            : lang==="cs"
-            ? "Něco se pokazilo. Zkus to znovu."
-            : "Щось пішло не так. Спробуй ще раз."
+            "Something went wrong. Please try again."
         );
 
         next.disabled=false;
 
-        next.innerHTML=text[lang].next;
+        next.innerHTML="SEND ✓";
 
     }
 
 }
 
-showStep();
+updateBooking();
 
 </script>
 
