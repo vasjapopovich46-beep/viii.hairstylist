@@ -26,8 +26,8 @@
     }
 
     a {
-      text-decoration: none;
       color: inherit;
+      text-decoration: none;
     }
 
     /* ================= HEADER ================= */
@@ -37,6 +37,7 @@
       top: 0;
       left: 0;
       right: 0;
+
       height: 82px;
 
       padding: 0 6%;
@@ -47,10 +48,10 @@
 
       z-index: 1000;
 
-      background: rgba(8, 8, 8, .75);
+      background: rgba(8, 8, 8, 0.82);
       backdrop-filter: blur(18px);
 
-      border-bottom: 1px solid rgba(255,255,255,.08);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     }
 
     .logo {
@@ -73,7 +74,7 @@
       font-size: 11px;
       letter-spacing: 2px;
       text-transform: uppercase;
-      transition: .3s;
+      transition: 0.3s;
     }
 
     nav a:hover {
@@ -90,7 +91,7 @@
       letter-spacing: 2px;
       text-transform: uppercase;
 
-      transition: .3s;
+      transition: 0.3s;
     }
 
     .book:hover {
@@ -115,13 +116,12 @@
       background:
         linear-gradient(
           90deg,
-          rgba(8,8,8,.98) 0%,
-          rgba(8,8,8,.85) 38%,
-          rgba(8,8,8,.35) 75%,
-          rgba(8,8,8,.75) 100%
+          rgba(8, 8, 8, 0.98) 0%,
+          rgba(8, 8, 8, 0.86) 38%,
+          rgba(8, 8, 8, 0.40) 75%,
+          rgba(8, 8, 8, 0.70) 100%
         ),
-        url("https://images.pexels.com/photos/4969866/pexels-photo-4969866.jpeg?auto=compress&cs=tinysrgb&w=1800")
-        center/cover no-repeat;
+        url("01-textured-crop-fade.jpg") center / cover no-repeat;
     }
 
     .hero::after {
@@ -132,7 +132,7 @@
 
       background:
         linear-gradient(
-          transparent 60%,
+          transparent 55%,
           #080808 100%
         );
 
@@ -161,7 +161,7 @@
     h1 {
       font-size: clamp(70px, 13vw, 175px);
 
-      line-height: .78;
+      line-height: 0.78;
 
       letter-spacing: -9px;
 
@@ -169,7 +169,7 @@
 
       font-weight: 900;
 
-      animation: fadeUp 1s .1s ease both;
+      animation: fadeUp 1s 0.1s ease both;
     }
 
     h1 span {
@@ -189,7 +189,7 @@
 
       line-height: 1.8;
 
-      animation: fadeUp 1s .2s ease both;
+      animation: fadeUp 1s 0.2s ease both;
     }
 
     .hero-buttons {
@@ -198,7 +198,7 @@
 
       margin-top: 35px;
 
-      animation: fadeUp 1s .3s ease both;
+      animation: fadeUp 1s 0.3s ease both;
     }
 
     .button {
@@ -212,7 +212,7 @@
 
       text-transform: uppercase;
 
-      transition: .3s;
+      transition: 0.3s;
     }
 
     .button.gold {
@@ -224,7 +224,7 @@
       transform: translateY(-4px);
 
       box-shadow:
-        0 15px 40px rgba(201,167,106,.25);
+        0 15px 40px rgba(201, 167, 106, 0.25);
     }
 
     .button.outline {
@@ -243,14 +243,14 @@
       position: absolute;
 
       right: 4%;
-      top: 48%;
+      top: 50%;
 
       width: 470px;
       height: 470px;
 
-      z-index: 3;
+      z-index: 4;
 
-      opacity: .18;
+      opacity: 0.18;
 
       transform:
         translateY(-50%)
@@ -273,9 +273,9 @@
       background:
         linear-gradient(
           90deg,
-          #fff,
-          #777,
-          #222
+          #ffffff,
+          #777777,
+          #222222
         );
 
       transform-origin: right center;
@@ -297,7 +297,7 @@
 
       border-radius: 50%;
 
-      border: 23px solid #aaa;
+      border: 23px solid #999;
 
       right: 5px;
     }
@@ -328,7 +328,8 @@
     }
 
     @keyframes scissorsMove {
-      0%,100% {
+      0%,
+      100% {
         transform:
           translateY(-50%)
           rotate(-18deg);
@@ -399,7 +400,7 @@
     .section-title {
       font-size: clamp(50px, 8vw, 100px);
 
-      line-height: .85;
+      line-height: 0.85;
 
       letter-spacing: -5px;
 
@@ -423,7 +424,7 @@
 
       border-bottom: 1px solid #292929;
 
-      transition: .4s;
+      transition: 0.4s;
     }
 
     .service:nth-child(odd) {
@@ -512,7 +513,7 @@
         linear-gradient(
           180deg,
           transparent,
-          rgba(0,0,0,.65)
+          rgba(0, 0, 0, 0.7)
         );
     }
 
@@ -552,7 +553,7 @@
     .quote h2 {
       font-size: clamp(45px, 7vw, 95px);
 
-      line-height: .85;
+      line-height: 0.85;
 
       letter-spacing: -5px;
 
@@ -598,17 +599,19 @@
 
       object-fit: cover;
 
-      transition:
-        transform .7s,
-        filter .7s;
+      display: block;
 
-      filter: brightness(.65);
+      transition:
+        transform 0.7s,
+        filter 0.7s;
+
+      filter: brightness(0.68);
     }
 
     .gallery-card:hover img {
       transform: scale(1.08);
 
-      filter: brightness(.9);
+      filter: brightness(0.95);
     }
 
     .gallery-overlay {
@@ -626,9 +629,12 @@
       letter-spacing: 3px;
 
       text-transform: uppercase;
+
+      text-shadow:
+        0 2px 10px #000;
     }
 
-    /* ================= BOOKING ================= */
+    /* ================= CONTACT ================= */
 
     .contact {
       display: grid;
@@ -763,10 +769,7 @@
       }
 
       .hero {
-        padding:
-          130px
-          7%
-          100px;
+        padding: 130px 7% 100px;
 
         background-position: 65% center;
       }
@@ -787,7 +790,7 @@
 
         right: -150px;
 
-        opacity: .1;
+        opacity: 0.1;
       }
 
       section {
@@ -841,8 +844,7 @@
 
 <body>
 
-
-  <!-- ================= HEADER ================= -->
+  <!-- HEADER -->
 
   <header>
 
@@ -851,23 +853,10 @@
     </a>
 
     <nav>
-
-      <a href="#services">
-        Послуги
-      </a>
-
-      <a href="#about">
-        Про нас
-      </a>
-
-      <a href="#gallery">
-        Роботи
-      </a>
-
-      <a href="#contact">
-        Запис
-      </a>
-
+      <a href="#services">Послуги</a>
+      <a href="#about">Про нас</a>
+      <a href="#gallery">Роботи</a>
+      <a href="#contact">Запис</a>
     </nav>
 
     <a href="#contact" class="book">
@@ -877,7 +866,7 @@
   </header>
 
 
-  <!-- ================= HERO ================= -->
+  <!-- HERO -->
 
   <section class="hero">
 
@@ -919,7 +908,7 @@
     </div>
 
 
-    <!-- ANIMATED SCISSORS -->
+    <!-- BARBER SCISSORS -->
 
     <div class="scissors">
 
@@ -936,7 +925,7 @@
   </section>
 
 
-  <!-- ================= MARQUEE ================= -->
+  <!-- MARQUEE -->
 
   <div class="marquee">
 
@@ -956,7 +945,7 @@
   </div>
 
 
-  <!-- ================= SERVICES ================= -->
+  <!-- SERVICES -->
 
   <section id="services">
 
@@ -969,7 +958,6 @@
       Shave.<br>
       Style.
     </h2>
-
 
     <div class="services">
 
@@ -1067,7 +1055,7 @@
   </section>
 
 
-  <!-- ================= ABOUT ================= -->
+  <!-- ABOUT -->
 
   <section id="about">
 
@@ -1076,8 +1064,8 @@
       <div class="about-image">
 
         <img
-          src="https://images.pexels.com/photos/5188621/pexels-photo-5188621.jpeg?auto=compress&cs=tinysrgb&w=1400"
-          alt="Barber with scissors"
+          src="04-classic-textured-fade.jpg"
+          alt="Barber haircut"
         >
 
       </div>
@@ -1120,24 +1108,19 @@
   </section>
 
 
-  <!-- ================= QUOTE ================= -->
+  <!-- QUOTE -->
 
   <div class="quote">
 
     <h2>
-
       Sharp scissors.<br>
-
-      <span>
-        Sharp style.
-      </span>
-
+      <span>Sharp style.</span>
     </h2>
 
   </div>
 
 
-  <!-- ================= GALLERY ================= -->
+  <!-- GALLERY -->
 
   <section id="gallery">
 
@@ -1153,16 +1136,15 @@
 
     <div class="gallery">
 
-
       <div class="gallery-card">
 
         <img
-          src="https://images.pexels.com/photos/4969866/pexels-photo-4969866.jpeg?auto=compress&cs=tinysrgb&w=1200"
-          alt="Barber haircut"
+          src="01-textured-crop-fade.jpg"
+          alt="Textured crop fade"
         >
 
         <div class="gallery-overlay">
-          Scissor Cut
+          Textured Crop
         </div>
 
       </div>
@@ -1171,12 +1153,12 @@
       <div class="gallery-card">
 
         <img
-          src="https://images.pexels.com/photos/8552631/pexels-photo-8552631.jpeg?auto=compress&cs=tinysrgb&w=1200"
-          alt="Barber scissors"
+          src="02-pink-shag-mullet.jpg"
+          alt="Pink shag mullet"
         >
 
         <div class="gallery-overlay">
-          Detail
+          Shag Mullet
         </div>
 
       </div>
@@ -1185,23 +1167,46 @@
       <div class="gallery-card">
 
         <img
-          src="https://images.pexels.com/photos/5188621/pexels-photo-5188621.jpeg?auto=compress&cs=tinysrgb&w=1200"
-          alt="Barber"
+          src="03-blue-flat-top-fade.jpg"
+          alt="Blue flat top fade"
         >
 
         <div class="gallery-overlay">
-          Precision
+          Flat Top Fade
         </div>
 
       </div>
-
 
     </div>
 
   </section>
 
 
-  <!-- ================= BOOKING ================= -->
+  <!-- EXTRA WORK -->
+
+  <section>
+
+    <div class="gallery">
+
+      <div class="gallery-card">
+
+        <img
+          src="04-classic-textured-fade.jpg"
+          alt="Classic textured fade"
+        >
+
+        <div class="gallery-overlay">
+          Classic Fade
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- CONTACT -->
 
   <section id="contact">
 
@@ -1216,7 +1221,6 @@
 
 
     <div class="contact">
-
 
       <div>
 
@@ -1321,7 +1325,7 @@
   </section>
 
 
-  <!-- ================= FOOTER ================= -->
+  <!-- FOOTER -->
 
   <footer>
 
@@ -1335,8 +1339,6 @@
 
   </footer>
 
-
-  <!-- ================= SCRIPT ================= -->
 
   <script>
 
